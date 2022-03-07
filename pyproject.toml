@@ -38,7 +38,7 @@ pycountry = "^22.1.10"
 
 [tool.poetry.dev-dependencies]
 aresponses = "^2.1.5"
-bandit = "^1.7.3"
+bandit = "^1.7.4"
 black = "^22.1"
 blacken-docs = "^1.12.1"
 codespell = "^2.1.0"
