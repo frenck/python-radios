@@ -38,7 +38,7 @@ class RadioBrowser:
     _host: str | None = None
 
     @backoff.on_exception(
-        backoff.expo, RadioBrowserConnectionError, max_tries=3, logger=None
+        backoff.expo, RadioBrowserConnectionError, max_tries=5, logger=None
     )
     async def _request(
         self,
@@ -105,10 +105,12 @@ class RadioBrowser:
             return await response.json()
 
         except asyncio.TimeoutError as exception:
+            self._host = None
             raise RadioBrowserConnectionTimeoutError(
                 "Timeout occurred while connecting to the Radio Browser API"
             ) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
+            self._host = None
             raise RadioBrowserConnectionError(
                 "Error occurred while communicating with the Radio Browser API"
             ) from exception
