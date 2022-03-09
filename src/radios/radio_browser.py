@@ -171,7 +171,10 @@ class RadioBrowser:
 
         for country in countries:
             country["code"] = country["name"]
-            if resolved_country := pycountry.countries.get(alpha_2=country["name"]):
+            # https://github.com/frenck/python-radios/issues/19
+            if country["name"] == "XK":
+                country["name"] = "Kosovo"
+            elif resolved_country := pycountry.countries.get(alpha_2=country["name"]):
                 country["name"] = resolved_country.name
 
         # Because we enrichted the countries we need to re-order in this case
