@@ -65,7 +65,7 @@ pyupgrade = "^2.34.0"
 safety = "^1.10.3"
 vulture = "^2.4"
 yamllint = "^1.26.3"
-types-cachetools = "^5.0.2"
+types-cachetools = "^5.2.0"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/frenck/python-radios/issues"
