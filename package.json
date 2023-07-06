@@ -10,7 +10,7 @@
   "author": "Franck Nijhof <opensource@frenck.dev>",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "pyright": "^1.1.316"
   }
 }
