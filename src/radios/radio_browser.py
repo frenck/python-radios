@@ -228,7 +228,8 @@ class RadioBrowser:
 
         return [Language.from_dict(language) for language in languages]
 
-    async def search(
+    # pylint: disable-next=too-many-arguments, too-many-locals
+    async def search(  # noqa: PLR0913
         self,
         *,
         filter_by: FilterBy | None = None,
@@ -263,11 +264,11 @@ class RadioBrowser:
             name_exact: Search by exact name.
             country: Search by country.
             country_exact: Search by exact country.
-            state_exact:  Search by exact state.
-            language_exact:  Search by exact language.
-            tag_exact:  Search by exact tag.
-            bitrate_min:  Search by minimum bitrate.
-            bitrate_max:  Search by maximum bitrate.
+            state_exact: Search by exact state.
+            language_exact: Search by exact language.
+            tag_exact: Search by exact tag.
+            bitrate_min: Search by minimum bitrate.
+            bitrate_max: Search by maximum bitrate.
 
         Returns:
         -------
@@ -279,7 +280,7 @@ class RadioBrowser:
             if filter_term is not None:
                 uri = f"{uri}/{filter_term}"
 
-        stations = await self._request(
+        stations_data = await self._request(
             uri,
             params={
                 "hidebroken": hide_broken,
@@ -298,7 +299,8 @@ class RadioBrowser:
                 "bitrate_max": bitrate_max,
             },
         )
-        return parse_obj_as(list[Station], stations)
+        stations = orjson.loads(stations_data)  # pylint: disable=no-member
+        return [Station.from_dict(station) for station in stations]
 
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
