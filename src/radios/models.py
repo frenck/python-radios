@@ -1,11 +1,14 @@
 """Models for the Radio Browser API."""
+# pylint: disable=too-few-public-methods
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 import pycountry
 from awesomeversion import AwesomeVersion
+
+# pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field, validator
 
 
@@ -30,24 +33,24 @@ class Station(BaseModel):
     bitrate: int
     change_uuid: str = Field(..., alias="changeuuid")
     click_count: int = Field(..., alias="clickcount")
-    click_timestamp: Optional[datetime] = Field(..., alias="clicktimestamp_iso8601")
+    click_timestamp: datetime | None = Field(..., alias="clicktimestamp_iso8601")
     click_trend: int = Field(..., alias="clicktrend")
     codec: str
     country_code: str = Field(..., alias="countrycode")
     favicon: str
-    latitude: Optional[float] = Field(..., alias="geo_lat")
-    longitude: Optional[float] = Field(..., alias="geo_long")
+    latitude: float | None = Field(..., alias="geo_lat")
+    longitude: float | None = Field(..., alias="geo_long")
     has_extended_info: bool
     hls: bool
     homepage: str
-    iso_3166_2: Optional[str]
+    iso_3166_2: str | None
     language: list[str]
     language_codes: list[str] = Field(..., alias="languagecodes")
-    lastchange_time: Optional[datetime] = Field(..., alias="lastchangetime_iso8601")
+    lastchange_time: datetime | None = Field(..., alias="lastchangetime_iso8601")
     lastcheckok: bool
-    last_check_ok_time: Optional[datetime] = Field(..., alias="lastcheckoktime_iso8601")
-    last_check_time: Optional[datetime] = Field(..., alias="lastchecktime_iso8601")
-    last_local_check_time: Optional[datetime] = Field(
+    last_check_ok_time: datetime | None = Field(..., alias="lastcheckoktime_iso8601")
+    last_check_time: datetime | None = Field(..., alias="lastchecktime_iso8601")
+    last_local_check_time: datetime | None = Field(
         ..., alias="lastlocalchecktime_iso8601"
     )
     name: str
@@ -61,13 +64,15 @@ class Station(BaseModel):
 
     @validator("tags", "language", "language_codes", pre=True)
     @classmethod
-    def _split(cls, value: str) -> list[str]:  # noqa: F841
+    def _split(cls, value: str) -> list[str]:
         """Split comma separated string into a list of strings.
 
         Arguments:
+        ---------
             value: Comma separated string.
 
         Returns:
+        -------
             List of strings.
         """
         return [item.strip() for item in value.split(",")]
@@ -76,7 +81,8 @@ class Station(BaseModel):
     def country(self) -> str | None:
         """Return country name of this station.
 
-        Returns:
+        Returns
+        -------
             Country name or None if no country code is set.
         """
         if resolved_country := pycountry.countries.get(alpha_2=self.country_code):
@@ -95,7 +101,8 @@ class Country(BaseModel):
     def favicon(self) -> str:
         """Return the favicon URL for the country.
 
-        Returns:
+        Returns
+        -------
             URL to the favicon.
         """
         return f"https://flagcdn.com/256x192/{self.code.lower()}.png"
@@ -104,7 +111,7 @@ class Country(BaseModel):
 class Language(BaseModel):
     """Object information for a Language from the Radio Browser."""
 
-    code: Optional[str] = Field(..., alias="iso_639")
+    code: str | None = Field(..., alias="iso_639")
     name: str
     station_count: str = Field(..., alias="stationcount")
 
@@ -112,7 +119,8 @@ class Language(BaseModel):
     def favicon(self) -> str | None:
         """Return the favicon URL for the language.
 
-        Returns:
+        Returns
+        -------
             URL to the favicon.
         """
         if self.code:
