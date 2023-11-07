@@ -37,6 +37,7 @@ async def main() -> None:
         print(await radios.tags(limit=10, order=Order.STATION_COUNT, reverse=True))
         print(await radios.countries(limit=10, order=Order.NAME))
         print(await radios.languages(limit=10, order=Order.NAME))
+        print(await radios.search(name="538", limit=10, order=Order.NAME))
 
 
 if __name__ == "__main__":
