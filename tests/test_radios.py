@@ -22,4 +22,4 @@ async def test_json_request(aresponses: ResponsesMockServer) -> None:
         radio = RadioBrowser(session=session, user_agent="Test")
         radio._host = "example.com"
         response = await radio._request("test")
-        assert response == {"status": "ok"}
+        assert response == '{"status": "ok"}'
