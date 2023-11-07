@@ -9,10 +9,10 @@ from typing import Any, Self
 
 import aiohttp
 import backoff
+import orjson
 import pycountry
 from aiodns import DNSResolver
 from aiohttp import hdrs
-from pydantic import parse_obj_as  # pylint: disable=no-name-in-module
 from yarl import URL
 
 from .const import FilterBy, Order
@@ -44,7 +44,7 @@ class RadioBrowser:
         uri: str = "",
         method: str = hdrs.METH_GET,
         params: dict[str, Any] | None = None,
-    ) -> Any:
+    ) -> str:
         """Handle a request to the Radio Browser API.
 
         A generic method for sending/handling HTTP requests done against
@@ -58,8 +58,7 @@ class RadioBrowser:
 
         Returns:
         -------
-            A Python dictionary (JSON decoded) with the response from the
-            Radio Browser API.
+            The response from the Radio Browser API.
 
         Raises:
         ------
@@ -100,12 +99,9 @@ class RadioBrowser:
                 )
 
             content_type = response.headers.get("Content-Type", "")
+            text = await response.text()
             if "application/json" not in content_type:
-                raise RadioBrowserError(
-                    response.status, {"message": await response.text()}
-                )
-            return await response.json()
-
+                raise RadioBrowserError(response.status, {"message": text})
         except asyncio.TimeoutError as exception:
             self._host = None
             msg = "Timeout occurred while connecting to the Radio Browser API"
@@ -115,6 +111,8 @@ class RadioBrowser:
             msg = "Error occurred while communicating with the Radio Browser API"
             raise RadioBrowserConnectionError(msg) from exception
 
+        return text
+
     async def stats(self) -> Stats:
         """Get Radio Browser service stats.
 
@@ -123,7 +121,7 @@ class RadioBrowser:
             A Stats object, with information about the Radio Browser API.
         """
         response = await self._request("stats")
-        return Stats.parse_obj(response)
+        return Stats.from_json(response)
 
     async def station_click(self, *, uuid: str) -> None:
         """Register click on a station.
@@ -163,7 +161,7 @@ class RadioBrowser:
         -------
             A Stats object, with information about the Radio Browser API.
         """
-        countries = await self._request(
+        countries_data = await self._request(
             "countrycodes",
             params={
                 "hidebroken": hide_broken,
@@ -174,6 +172,7 @@ class RadioBrowser:
             },
         )
 
+        countries = orjson.loads(countries_data)  # pylint: disable=no-member
         for country in countries:
             country["code"] = country["name"]
             # https://github.com/frenck/python-radios/issues/19
@@ -186,7 +185,7 @@ class RadioBrowser:
         if order == Order.NAME:
             countries.sort(key=lambda country: country["name"])
 
-        return parse_obj_as(list[Country], countries)
+        return [Country.from_dict(country) for country in countries]
 
     # pylint: disable-next=too-many-arguments
     async def languages(  # noqa: PLR0913
@@ -212,7 +211,7 @@ class RadioBrowser:
         -------
             A list of Language objects.
         """
-        languages = await self._request(
+        languages_data = await self._request(
             "languages",
             params={
                 "hidebroken": hide_broken,
@@ -223,10 +222,11 @@ class RadioBrowser:
             },
         )
 
+        languages = orjson.loads(languages_data)  # pylint: disable=no-member
         for language in languages:
             language["name"] = language["name"].title()
 
-        return parse_obj_as(list[Language], languages)
+        return [Language.from_dict(language) for language in languages]
 
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
@@ -282,7 +282,7 @@ class RadioBrowser:
             if filter_term is not None:
                 uri = f"{uri}/{filter_term}"
 
-        stations = await self._request(
+        stations_data = await self._request(
             uri,
             params={
                 "hidebroken": hide_broken,
@@ -292,7 +292,8 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        return parse_obj_as(list[Station], stations)
+        stations = orjson.loads(stations_data)  # pylint: disable=no-member
+        return [Station.from_dict(station) for station in stations]
 
     # pylint: disable-next=too-many-arguments
     async def tags(  # noqa: PLR0913
@@ -318,7 +319,7 @@ class RadioBrowser:
         -------
             A list of Tags objects.
         """
-        tags = await self._request(
+        tags_data = await self._request(
             "tags",
             params={
                 "hidebroken": hide_broken,
@@ -328,7 +329,8 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        return parse_obj_as(list[Tag], tags)
+        tags = orjson.loads(tags_data)  # pylint: disable=no-member
+        return [Tag.from_dict(tag) for tag in tags]
 
     async def close(self) -> None:
         """Close open client session."""

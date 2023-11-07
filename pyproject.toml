@@ -30,10 +30,11 @@ aiohttp = ">=3.0.0"
 awesomeversion = ">=21.10.1"
 backoff = ">=1.9.0"
 cachetools = ">=4.0.0"
-pydantic = ">=1.9,<2.0"
+mashumaro = ">=3.10"
+orjson = ">=3.9.8"
+pycountry = "^22.1.10"
 python = "^3.11"
 yarl = ">=1.6.0"
-pycountry = "^22.1.10"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/frenck/python-radios/issues"
@@ -160,7 +161,7 @@ known-first-party = ["radios"]
 
 [tool.ruff.lint.flake8-type-checking]
 runtime-evaluated-base-classes = [
-  "pydantic.BaseModel",
+  "mashumaro.mixins.orjson.DataClassORJSONMixin",
 ]
 
 [tool.ruff.mccabe]
