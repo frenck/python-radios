@@ -5,15 +5,14 @@ import asyncio
 import random
 import socket
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Self
 
 import aiohttp
-import async_timeout
 import backoff
 import pycountry
 from aiodns import DNSResolver
 from aiohttp import hdrs
-from pydantic import parse_obj_as
+from pydantic import parse_obj_as  # pylint: disable=no-name-in-module
 from yarl import URL
 
 from .const import FilterBy, Order
@@ -52,16 +51,19 @@ class RadioBrowser:
         the Radio Browser API.
 
         Args:
+        ----
             uri: Request URI, for example `stats`.
             method: HTTP method to use for the request.E.g., "GET" or "POST".
             params: Dictionary of data to send to the Radio Browser API.
 
         Returns:
+        -------
             A Python dictionary (JSON decoded) with the response from the
             Radio Browser API.
 
         Raises:
-            RadioBrowserConnectionError: An error occurred while communitcation with
+        ------
+            RadioBrowserConnectionError: An error occurred while communication with
                 the Radio Browser API.
             RadioBrowserConnectionTimeoutError: A timeout occurred while communicating
                 with the Radio Browser API.
@@ -85,7 +87,7 @@ class RadioBrowser:
                 if isinstance(value, bool):
                     params[key] = str(value).lower()
         try:
-            async with async_timeout.timeout(self.request_timeout):
+            async with asyncio.timeout(self.request_timeout):
                 response = await self.session.request(
                     method,
                     url,
@@ -106,19 +108,18 @@ class RadioBrowser:
 
         except asyncio.TimeoutError as exception:
             self._host = None
-            raise RadioBrowserConnectionTimeoutError(
-                "Timeout occurred while connecting to the Radio Browser API"
-            ) from exception
+            msg = "Timeout occurred while connecting to the Radio Browser API"
+            raise RadioBrowserConnectionTimeoutError(msg) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
             self._host = None
-            raise RadioBrowserConnectionError(
-                "Error occurred while communicating with the Radio Browser API"
-            ) from exception
+            msg = "Error occurred while communicating with the Radio Browser API"
+            raise RadioBrowserConnectionError(msg) from exception
 
     async def stats(self) -> Stats:
         """Get Radio Browser service stats.
 
-        Returns:
+        Returns
+        -------
             A Stats object, with information about the Radio Browser API.
         """
         response = await self._request("stats")
@@ -133,11 +134,13 @@ class RadioBrowser:
         address and for the same station only gets counted once per day.
 
         Args:
+        ----
             uuid: UUID of the station.
         """
         await self._request(f"url/{uuid}")
 
-    async def countries(
+    # pylint: disable-next=too-many-arguments
+    async def countries(  # noqa: PLR0913
         self,
         *,
         hide_broken: bool = False,
@@ -149,6 +152,7 @@ class RadioBrowser:
         """Get list of available countries.
 
         Args:
+        ----
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
@@ -156,6 +160,7 @@ class RadioBrowser:
             reverse: Reverse the order of the results.
 
         Returns:
+        -------
             A Stats object, with information about the Radio Browser API.
         """
         countries = await self._request(
@@ -183,7 +188,8 @@ class RadioBrowser:
 
         return parse_obj_as(list[Country], countries)
 
-    async def languages(
+    # pylint: disable-next=too-many-arguments
+    async def languages(  # noqa: PLR0913
         self,
         *,
         hide_broken: bool = False,
@@ -195,6 +201,7 @@ class RadioBrowser:
         """Get list of available languages.
 
         Args:
+        ----
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
@@ -202,6 +209,7 @@ class RadioBrowser:
             reverse: Reverse the order of the results.
 
         Returns:
+        -------
             A list of Language objects.
         """
         languages = await self._request(
@@ -224,9 +232,11 @@ class RadioBrowser:
         """Get station by UUID.
 
         Args:
+        ----
             uuid: UUID of the station.
 
         Returns:
+        -------
             A  Station object if found.
         """
         stations = await self.stations(
@@ -238,7 +248,8 @@ class RadioBrowser:
             return None
         return stations[0]
 
-    async def stations(
+    # pylint: disable-next=too-many-arguments
+    async def stations(  # noqa: PLR0913
         self,
         *,
         filter_by: FilterBy | None = None,
@@ -252,6 +263,7 @@ class RadioBrowser:
         """Get list of radio stations.
 
         Args:
+        ----
             filter_by: Filter the results by a specific field.
             filter_term: Search term to filter the results.
             hide_broken: Do not count broken stations.
@@ -261,6 +273,7 @@ class RadioBrowser:
             reverse: Reverse the order of the results.
 
         Returns:
+        -------
             A list of Station objects.
         """
         uri = "stations"
@@ -281,7 +294,8 @@ class RadioBrowser:
         )
         return parse_obj_as(list[Station], stations)
 
-    async def tags(
+    # pylint: disable-next=too-many-arguments
+    async def tags(  # noqa: PLR0913
         self,
         *,
         hide_broken: bool = False,
@@ -293,6 +307,7 @@ class RadioBrowser:
         """Get list of available tags.
 
         Args:
+        ----
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
@@ -300,6 +315,7 @@ class RadioBrowser:
             reverse: Reverse the order of the results.
 
         Returns:
+        -------
             A list of Tags objects.
         """
         tags = await self._request(
@@ -319,18 +335,20 @@ class RadioBrowser:
         if self.session and self._close_session:
             await self.session.close()
 
-    async def __aenter__(self) -> RadioBrowser:
+    async def __aenter__(self) -> Self:
         """Async enter.
 
-        Returns:
+        Returns
+        -------
             The RadioBrowser object.
         """
         return self
 
-    async def __aexit__(self, *_exc_info: Any) -> None:
+    async def __aexit__(self, *_exc_info: object) -> None:
         """Async exit.
 
         Args:
+        ----
             _exc_info: Exec type.
         """
         await self.close()
