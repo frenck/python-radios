@@ -1189,16 +1189,14 @@ idna = ["idna (>=2.1)"]
 
 [[package]]
 name = "pycountry"
-version = "22.3.5"
+version = "23.12.7"
 description = "ISO country, subdivision, language, currency and script definitions and their translations"
 optional = false
-python-versions = ">=3.6, <4"
+python-versions = ">=3.8"
 files = [
-    {file = "pycountry-22.3.5.tar.gz", hash = "sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646"},
+    {file = "pycountry-23.12.7-py3-none-any.whl", hash = "sha256:894e9ba3736940eef36d14919862f9fa5c6d7aea2c5732499d7718682dbe26a9"},
+    {file = "pycountry-23.12.7.tar.gz", hash = "sha256:24827ba680e569279ecf6991ca3acc7f2bdd568dc7043283c0af97aed792cf7c"},
 ]
-
-[package.dependencies]
-setuptools = "*"
 
 [[package]]
 name = "pycparser"
@@ -1726,4 +1724,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "c35eea19d31de6e3acb3d522f0471775c3baa3c5d7556bd1153451ee3dc88640"
+content-hash = "21479d0c9ddb35aac2c2761f86b2aaa63b44bc16a10dc82a3266722d305f9c3d"
