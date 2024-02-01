@@ -102,6 +102,7 @@ class Station(DataClassORJSONMixin):
         Returns
         -------
             Country name or None if no country code is set.
+
         """
         if resolved_country := pycountry.countries.get(alpha_2=self.country_code):
             return cast(str, resolved_country.name)
@@ -123,6 +124,7 @@ class Country(DataClassORJSONMixin):
         Returns
         -------
             URL to the favicon.
+
         """
         return f"https://flagcdn.com/256x192/{self.code.lower()}.png"
 
@@ -142,6 +144,7 @@ class Language(DataClassORJSONMixin):
         Returns
         -------
             URL to the favicon.
+
         """
         if self.code:
             return f"https://flagcdn.com/256x192/{self.code.lower()}.png"

@@ -68,6 +68,7 @@ class RadioBrowser:
                 with the Radio Browser API.
             RadioBrowserError: Received an unexpected response from the
                 Radio Browser API.
+
         """
         if self._host is None:
             resolver = DNSResolver()
@@ -119,6 +120,7 @@ class RadioBrowser:
         Returns
         -------
             A Stats object, with information about the Radio Browser API.
+
         """
         response = await self._request("stats")
         return Stats.from_json(response)
@@ -134,6 +136,7 @@ class RadioBrowser:
         Args:
         ----
             uuid: UUID of the station.
+
         """
         await self._request(f"url/{uuid}")
 
@@ -160,6 +163,7 @@ class RadioBrowser:
         Returns:
         -------
             A Stats object, with information about the Radio Browser API.
+
         """
         countries_data = await self._request(
             "countrycodes",
@@ -210,6 +214,7 @@ class RadioBrowser:
         Returns:
         -------
             A list of Language objects.
+
         """
         languages_data = await self._request(
             "languages",
@@ -273,6 +278,7 @@ class RadioBrowser:
         Returns:
         -------
             A list of Station objects.
+
         """
         uri = "stations/search"
         if filter_by is not None:
@@ -312,6 +318,7 @@ class RadioBrowser:
         Returns:
         -------
             A  Station object if found.
+
         """
         stations = await self.stations(
             filter_by=FilterBy.UUID,
@@ -349,6 +356,7 @@ class RadioBrowser:
         Returns:
         -------
             A list of Station objects.
+
         """
         uri = "stations"
         if filter_by is not None:
@@ -392,6 +400,7 @@ class RadioBrowser:
         Returns:
         -------
             A list of Tags objects.
+
         """
         tags_data = await self._request(
             "tags",
@@ -417,6 +426,7 @@ class RadioBrowser:
         Returns
         -------
             The RadioBrowser object.
+
         """
         return self
 
@@ -426,5 +436,6 @@ class RadioBrowser:
         Args:
         ----
             _exc_info: Exec type.
+
         """
         await self.close()
