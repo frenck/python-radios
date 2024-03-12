@@ -1,4 +1,5 @@
 """Asynchronous Python client for the Radio Browser API."""
+
 from pathlib import Path
 
 
