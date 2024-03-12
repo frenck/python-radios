@@ -1,4 +1,5 @@
 """Asynchronous Python client for the Radio Browser API."""
+
 # pylint: disable=protected-access
 import aiohttp
 from aresponses import ResponsesMockServer
