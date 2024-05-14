@@ -178,7 +178,7 @@ class RadioBrowser:
         )
 
         countries = orjson.loads(countries_data)  # pylint: disable=no-member
-        for country in countries:
+        for country in countries:  # pylint: disable=not-an-iterable
             country["code"] = country["name"]
             # https://github.com/frenck/python-radios/issues/19
             if country["name"] == "XK":
@@ -190,6 +190,7 @@ class RadioBrowser:
         if order == Order.NAME:
             countries.sort(key=lambda country: country["name"])
 
+        # pylint: disable-next=not-an-iterable
         return [Country.from_dict(country) for country in countries]
 
     # pylint: disable-next=too-many-arguments
@@ -229,9 +230,10 @@ class RadioBrowser:
         )
 
         languages = orjson.loads(languages_data)  # pylint: disable=no-member
-        for language in languages:
+        for language in languages:  # pylint: disable=not-an-iterable
             language["name"] = language["name"].title()
 
+        # pylint: disable-next=not-an-iterable
         return [Language.from_dict(language) for language in languages]
 
     # pylint: disable-next=too-many-arguments, too-many-locals
@@ -307,6 +309,7 @@ class RadioBrowser:
             },
         )
         stations = orjson.loads(stations_data)  # pylint: disable=no-member
+        # pylint: disable-next=not-an-iterable
         return [Station.from_dict(station) for station in stations]
 
     async def station(self, *, uuid: str) -> Station | None:
@@ -376,6 +379,7 @@ class RadioBrowser:
             },
         )
         stations = orjson.loads(stations_data)  # pylint: disable=no-member
+        # pylint: disable-next=not-an-iterable
         return [Station.from_dict(station) for station in stations]
 
     # pylint: disable-next=too-many-arguments
@@ -414,6 +418,7 @@ class RadioBrowser:
             },
         )
         tags = orjson.loads(tags_data)  # pylint: disable=no-member
+        # pylint: disable-next=not-an-iterable
         return [Tag.from_dict(tag) for tag in tags]
 
     async def close(self) -> None:
