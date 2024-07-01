@@ -32,7 +32,7 @@ backoff = ">=1.9.0"
 cachetools = ">=4.0.0"
 mashumaro = ">=3.10"
 orjson = ">=3.9.8"
-pycountry = "^23.0.0"
+pycountry = "^24.0.0"
 python = "^3.11"
 yarl = ">=1.6.0"
 
