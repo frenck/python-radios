@@ -55,7 +55,7 @@ pytest-cov = "5.0.0"
 ruff = "0.5.2"
 safety = "3.2.4"
 syrupy = "4.6.1"
-types-cachetools = "5.3.0.7"
+types-cachetools = "5.4.0.20240717"
 yamllint = "1.35.1"
 
 [tool.coverage.run]
