@@ -142,7 +142,7 @@ class RadioBrowser:
         await self._request(f"url/{uuid}")
 
     # pylint: disable-next=too-many-arguments
-    async def countries(  # noqa: PLR0913
+    async def countries(
         self,
         *,
         hide_broken: bool = False,
@@ -194,7 +194,7 @@ class RadioBrowser:
         return [Country.from_dict(country) for country in countries]
 
     # pylint: disable-next=too-many-arguments
-    async def languages(  # noqa: PLR0913
+    async def languages(
         self,
         *,
         hide_broken: bool = False,
@@ -383,7 +383,7 @@ class RadioBrowser:
         return [Station.from_dict(station) for station in stations]
 
     # pylint: disable-next=too-many-arguments
-    async def tags(  # noqa: PLR0913
+    async def tags(
         self,
         *,
         hide_broken: bool = False,
