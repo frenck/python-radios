@@ -10,15 +10,15 @@ from .models import Country, Language, Station, Stats, Tag
 from .radio_browser import RadioBrowser
 
 __all__ = [
-    "RadioBrowser",
-    "Stats",
-    "Station",
-    "Order",
     "Country",
-    "Language",
-    "Tag",
     "FilterBy",
+    "Language",
+    "Order",
+    "RadioBrowser",
     "RadioBrowserConnectionError",
     "RadioBrowserConnectionTimeoutError",
     "RadioBrowserError",
+    "Station",
+    "Stats",
+    "Tag",
 ]
