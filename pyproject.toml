@@ -54,7 +54,7 @@ pytest-asyncio = "0.24.0"
 pytest-cov = "6.0.0"
 ruff = "0.8.0"
 safety = "3.2.11"
-syrupy = "4.7.2"
+syrupy = "4.8.0"
 types-cachetools = "5.5.0.20240820"
 yamllint = "1.35.1"
 
