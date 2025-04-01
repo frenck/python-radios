@@ -106,7 +106,7 @@ class Station(DataClassORJSONMixin):
 
         """
         if resolved_country := pycountry.countries.get(alpha_2=self.country_code):
-            return cast(str, resolved_country.name)
+            return cast("str", resolved_country.name)
         return None
 
 
