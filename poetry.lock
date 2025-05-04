@@ -2507,13 +2507,13 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 
 [[package]]
 name = "yamllint"
-version = "1.37.0"
+version = "1.37.1"
 description = "A linter for YAML files."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "yamllint-1.37.0-py3-none-any.whl", hash = "sha256:c03ab4e79ab4af964c8eb16ac9746880fc76a3bb0ffb14925b9a55220ae7dda0"},
-    {file = "yamllint-1.37.0.tar.gz", hash = "sha256:ead81921d4d87216b2528b7a055664708f9fb8267beb0c427cb706ac6ab93580"},
+    {file = "yamllint-1.37.1-py3-none-any.whl", hash = "sha256:364f0d79e81409f591e323725e6a9f4504c8699ddf2d7263d8d2b539cd66a583"},
+    {file = "yamllint-1.37.1.tar.gz", hash = "sha256:81f7c0c5559becc8049470d86046b36e96113637bcbe4753ecef06977c00245d"},
 ]
 
 [package.dependencies]
@@ -2644,4 +2644,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6bf9d3117663e78b53586f1df6d8dc136be328ac78bf6c2707c1c2c4c0fe07d1"
+content-hash = "a122150981ce6185ca09d2a06e74f136d3c350dc50e07f06914210fd744c93c2"
