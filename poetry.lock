@@ -2817,13 +2817,13 @@ shellingham = ">=1.3.0"
 
 [[package]]
 name = "types-cachetools"
-version = "6.2.0.20260317"
+version = "6.2.0.20260408"
 description = "Typing stubs for cachetools"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "types_cachetools-6.2.0.20260317-py3-none-any.whl", hash = "sha256:92fa9bc50e4629e31fca67ceb3fb1de71791e314fa16c0a0d2728724dc222c8b"},
-    {file = "types_cachetools-6.2.0.20260317.tar.gz", hash = "sha256:6d91855bcc944665897c125e720aa3c80aace929b77a64e796343701df4f61c6"},
+    {file = "types_cachetools-6.2.0.20260408-py3-none-any.whl", hash = "sha256:470e0b274737feae74beed3d764885bf4664002ecc393fba3778846b13ce92cb"},
+    {file = "types_cachetools-6.2.0.20260408.tar.gz", hash = "sha256:0d8ae2dd5ba0b4cfe6a55c34396dd0415f1be07d0033d84781cdc4ed9c2ebc6b"},
 ]
 
 [[package]]
@@ -3048,4 +3048,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5ef650e11fbb44e0c33cd86cfd4351d3e0d335391af264cba422d79fadcf5caf"
+content-hash = "5cd63a8cea06a23f02deeb88a285c1fbfd72158e7170c2c9c51f779f3109b85e"
