@@ -77,7 +77,8 @@ class RadioBrowser:
             random.shuffle(result)
             self._host = result[0].host
 
-        url = URL.build(scheme="https", host=self._host, path="/json/").join(URL(uri))
+        url = URL.build(scheme="https", host=self._host,
+                        path="/json/").join(URL(uri))
 
         if self.session is None:
             self.session = aiohttp.ClientSession()
@@ -251,6 +252,7 @@ class RadioBrowser:
         name_exact: bool = False,
         country: str | None = "",
         country_exact: bool = False,
+        country_code: str | None = "",
         state_exact: bool = False,
         language_exact: bool = False,
         tag_exact: bool = False,
@@ -272,6 +274,7 @@ class RadioBrowser:
             name_exact: Search by exact name.
             country: Search by country.
             country_exact: Search by exact country.
+            country_code: Search by country code.
             state_exact: Search by exact state.
             language_exact: Search by exact language.
             tag_exact: Search by exact tag.
@@ -288,25 +291,30 @@ class RadioBrowser:
             uri = f"{uri}/{filter_by.value}"
             if filter_term is not None:
                 uri = f"{uri}/{filter_term}"
+        params = {
+            "hidebroken": hide_broken,
+            "offset": offset,
+            "order": order.value,
+            "reverse": reverse,
+            "limit": limit,
+            "name": name,
+            "name_exact": name_exact,
+            "state_exact": state_exact,
+            "language_exact": language_exact,
+            "tag_exact": tag_exact,
+            "bitrate_min": bitrate_min,
+            "bitrate_max": bitrate_max,
+        }
+        if country_code:
+            params["countrycode"] = country_code
+        elif country:
+            params["country"] = country
+            if country_exact:
+                params["country_exact"] = country_exact
 
         stations_data = await self._request(
             uri,
-            params={
-                "hidebroken": hide_broken,
-                "offset": offset,
-                "order": order.value,
-                "reverse": reverse,
-                "limit": limit,
-                "name": name,
-                "name_exact": name_exact,
-                "country": country,
-                "country_exact": country_exact,
-                "state_exact": state_exact,
-                "language_exact": language_exact,
-                "tag_exact": tag_exact,
-                "bitrate_min": bitrate_min,
-                "bitrate_max": bitrate_max,
-            },
+            params=params
         )
         stations = orjson.loads(stations_data)  # pylint: disable=no-member
         # pylint: disable-next=not-an-iterable
