@@ -22,7 +22,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/frenck/python-radios"
-version = "0.0.0"
+version = "0.3.3"
 
 [tool.poetry.dependencies]
 aiodns = ">=3.0"
