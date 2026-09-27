@@ -251,8 +251,12 @@ class RadioBrowser:
         name_exact: bool = False,
         country: str | None = "",
         country_exact: bool = False,
+        country_code: str | None = None,
+        state: str | None = None,
         state_exact: bool = False,
+        language: str | None = None,
         language_exact: bool = False,
+        tag: str | None = None,
         tag_exact: bool = False,
         bitrate_min: int = 0,
         bitrate_max: int = 1000000,
@@ -272,8 +276,12 @@ class RadioBrowser:
             name_exact: Search by exact name.
             country: Search by country.
             country_exact: Search by exact country.
+            country_code: Search by country code.
+            state: Search by state.
             state_exact: Search by exact state.
+            language: Search by language.
             language_exact: Search by exact language.
+            tag: Search by tag.
             tag_exact: Search by exact tag.
             bitrate_min: Search by minimum bitrate.
             bitrate_max: Search by maximum bitrate.
@@ -289,24 +297,30 @@ class RadioBrowser:
             if filter_term is not None:
                 uri = f"{uri}/{filter_term}"
 
+        params = {
+            "hidebroken": hide_broken,
+            "offset": offset,
+            "order": order.value,
+            "reverse": reverse,
+            "limit": limit,
+            "name": name,
+            "name_exact": name_exact,
+            "country": country,
+            "country_exact": country_exact,
+            "countrycode": country_code,
+            "state": state,
+            "state_exact": state_exact,
+            "language": language,
+            "language_exact": language_exact,
+            "tag": tag,
+            "tag_exact": tag_exact,
+            "bitrate_min": bitrate_min,
+            "bitrate_max": bitrate_max,
+        }
         stations_data = await self._request(
             uri,
-            params={
-                "hidebroken": hide_broken,
-                "offset": offset,
-                "order": order.value,
-                "reverse": reverse,
-                "limit": limit,
-                "name": name,
-                "name_exact": name_exact,
-                "country": country,
-                "country_exact": country_exact,
-                "state_exact": state_exact,
-                "language_exact": language_exact,
-                "tag_exact": tag_exact,
-                "bitrate_min": bitrate_min,
-                "bitrate_max": bitrate_max,
-            },
+            # yarl rejects None as a query value.
+            params={key: value for key, value in params.items() if value is not None},
         )
         stations = orjson.loads(stations_data)  # pylint: disable=no-member
         # pylint: disable-next=not-an-iterable
