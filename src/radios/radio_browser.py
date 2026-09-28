@@ -24,6 +24,23 @@ from .exceptions import (
 )
 from .models import Country, Language, Station, Stats, Tag
 
+# The stations/search endpoint has no by* paths, so search() turns each
+# FilterBy value into search query parameters instead.
+SEARCH_FILTERS: dict[FilterBy, tuple[str, dict[str, bool]]] = {
+    FilterBy.NAME: ("name", {"nameExact": False}),
+    FilterBy.NAME_EXACT: ("name", {"nameExact": True}),
+    FilterBy.CODEC_EXACT: ("codec", {}),
+    FilterBy.COUNTRY: ("country", {"countryExact": False}),
+    FilterBy.COUNTRY_EXACT: ("country", {"countryExact": True}),
+    FilterBy.COUNTRY_CODE_EXACT: ("countrycode", {}),
+    FilterBy.STATE: ("state", {"stateExact": False}),
+    FilterBy.STATE_EXACT: ("state", {"stateExact": True}),
+    FilterBy.LANGUAGE: ("language", {"languageExact": False}),
+    FilterBy.LANGUAGE_EXACT: ("language", {"languageExact": True}),
+    FilterBy.TAG: ("tag", {"tagExact": False}),
+    FilterBy.TAG_EXACT: ("tag", {"tagExact": True}),
+}
+
 
 @dataclass
 class RadioBrowser:
@@ -261,7 +278,10 @@ class RadioBrowser:
 
         Args:
         ----
-            filter_by: Filter the results by a specific field.
+            filter_by: Filter the results by a specific field. It overrides
+                the matching search parameters, for example `name` and
+                `name_exact` for `FilterBy.NAME`. `FilterBy.UUID` and
+                `FilterBy.CODEC` are not supported.
             filter_term: Search term to filter the results.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
@@ -282,32 +302,39 @@ class RadioBrowser:
         -------
             A list of Station objects.
 
-        """
-        uri = "stations/search"
-        if filter_by is not None:
-            uri = f"{uri}/{filter_by.value}"
-            if filter_term is not None:
-                uri = f"{uri}/{filter_term}"
+        Raises:
+        ------
+            ValueError: The filter_by value is not supported, or
+                filter_term is missing.
 
-        stations_data = await self._request(
-            uri,
-            params={
-                "hidebroken": hide_broken,
-                "offset": offset,
-                "order": order.value,
-                "reverse": reverse,
-                "limit": limit,
-                "name": name,
-                "name_exact": name_exact,
-                "country": country,
-                "country_exact": country_exact,
-                "state_exact": state_exact,
-                "language_exact": language_exact,
-                "tag_exact": tag_exact,
-                "bitrate_min": bitrate_min,
-                "bitrate_max": bitrate_max,
-            },
-        )
+        """
+        params = {
+            "hidebroken": hide_broken,
+            "offset": offset,
+            "order": order.value,
+            "reverse": reverse,
+            "limit": limit,
+            "name": name,
+            "nameExact": name_exact,
+            "country": country,
+            "countryExact": country_exact,
+            "stateExact": state_exact,
+            "languageExact": language_exact,
+            "tagExact": tag_exact,
+            "bitrateMin": bitrate_min,
+            "bitrateMax": bitrate_max,
+        }
+        if filter_by is not None:
+            if filter_by not in SEARCH_FILTERS:
+                msg = f"search() does not support filter_by {filter_by.name}"
+                raise ValueError(msg)
+            if filter_term is None:
+                msg = "filter_by requires a filter_term"
+                raise ValueError(msg)
+            key, flags = SEARCH_FILTERS[filter_by]
+            params.update({key: filter_term, **flags})
+
+        stations_data = await self._request("stations/search", params=params)
         stations = orjson.loads(stations_data)  # pylint: disable=no-member
         # pylint: disable-next=not-an-iterable
         return [Station.from_dict(station) for station in stations]
