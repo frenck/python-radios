@@ -86,5 +86,5 @@ async def radios() -> AsyncGenerator[RadioBrowser, None]:
     """
     async with aiohttp.ClientSession() as session:
         radio_browser = RadioBrowser(user_agent="PythonRadios/Tests", session=session)
-        radio_browser._host = "example.com"  # noqa: SLF001
+        radio_browser._host = "example.com"
         yield radio_browser
