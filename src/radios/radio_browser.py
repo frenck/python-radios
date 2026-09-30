@@ -24,6 +24,23 @@ from .exceptions import (
 )
 from .models import Country, Language, Station, Stats, Tag
 
+# The stations/search endpoint has no by* paths, so search() turns each
+# FilterBy value into search query parameters instead.
+SEARCH_FILTERS: dict[FilterBy, tuple[str, dict[str, bool]]] = {
+    FilterBy.NAME: ("name", {"nameExact": False}),
+    FilterBy.NAME_EXACT: ("name", {"nameExact": True}),
+    FilterBy.CODEC_EXACT: ("codec", {}),
+    FilterBy.COUNTRY: ("country", {"countryExact": False}),
+    FilterBy.COUNTRY_EXACT: ("country", {"countryExact": True}),
+    FilterBy.COUNTRY_CODE_EXACT: ("countrycode", {}),
+    FilterBy.STATE: ("state", {"stateExact": False}),
+    FilterBy.STATE_EXACT: ("state", {"stateExact": True}),
+    FilterBy.LANGUAGE: ("language", {"languageExact": False}),
+    FilterBy.LANGUAGE_EXACT: ("language", {"languageExact": True}),
+    FilterBy.TAG: ("tag", {"tagExact": False}),
+    FilterBy.TAG_EXACT: ("tag", {"tagExact": True}),
+}
+
 
 @dataclass
 class RadioBrowser:
@@ -249,10 +266,14 @@ class RadioBrowser:
         reverse: bool = False,
         name: str | None = None,
         name_exact: bool = False,
-        country: str | None = "",
+        country: str | None = None,
         country_exact: bool = False,
+        country_code: str | None = None,
+        state: str | None = None,
         state_exact: bool = False,
+        language: str | None = None,
         language_exact: bool = False,
+        tag: str | None = None,
         tag_exact: bool = False,
         bitrate_min: int = 0,
         bitrate_max: int = 1000000,
@@ -261,7 +282,10 @@ class RadioBrowser:
 
         Args:
         ----
-            filter_by: Filter the results by a specific field.
+            filter_by: Filter the results by a specific field. It overrides
+                the matching search parameters, for example `name` and
+                `name_exact` for `FilterBy.NAME`. `FilterBy.UUID` and
+                `FilterBy.CODEC` are not supported.
             filter_term: Search term to filter the results.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
@@ -272,8 +296,12 @@ class RadioBrowser:
             name_exact: Search by exact name.
             country: Search by country.
             country_exact: Search by exact country.
+            country_code: Search by country code.
+            state: Search by state.
             state_exact: Search by exact state.
+            language: Search by language.
             language_exact: Search by exact language.
+            tag: Search by tag.
             tag_exact: Search by exact tag.
             bitrate_min: Search by minimum bitrate.
             bitrate_max: Search by maximum bitrate.
@@ -282,31 +310,48 @@ class RadioBrowser:
         -------
             A list of Station objects.
 
+        Raises:
+        ------
+            ValueError: The filter_by value is not supported, or
+                filter_term is missing.
+
         """
-        uri = "stations/search"
+        params: dict[str, Any] = {
+            "hidebroken": hide_broken,
+            "offset": offset,
+            "order": order.value,
+            "reverse": reverse,
+            "limit": limit,
+            "name": name,
+            "nameExact": name_exact,
+            "country": country,
+            "countryExact": country_exact,
+            "countrycode": country_code,
+            "state": state,
+            "stateExact": state_exact,
+            "language": language,
+            "languageExact": language_exact,
+            "tag": tag,
+            "tagExact": tag_exact,
+            "bitrateMin": bitrate_min,
+            "bitrateMax": bitrate_max,
+        }
+
         if filter_by is not None:
-            uri = f"{uri}/{filter_by.value}"
-            if filter_term is not None:
-                uri = f"{uri}/{filter_term}"
+            if filter_by not in SEARCH_FILTERS:
+                msg = f"search() does not support filter_by {filter_by.name}"
+                raise ValueError(msg)
+            if filter_term is None:
+                msg = "filter_by requires a filter_term"
+                raise ValueError(msg)
+
+            key, flags = SEARCH_FILTERS[filter_by]
+            params.update({key: filter_term, **flags})
 
         stations_data = await self._request(
-            uri,
-            params={
-                "hidebroken": hide_broken,
-                "offset": offset,
-                "order": order.value,
-                "reverse": reverse,
-                "limit": limit,
-                "name": name,
-                "name_exact": name_exact,
-                "country": country,
-                "country_exact": country_exact,
-                "state_exact": state_exact,
-                "language_exact": language_exact,
-                "tag_exact": tag_exact,
-                "bitrate_min": bitrate_min,
-                "bitrate_max": bitrate_max,
-            },
+            "stations/search",
+            # yarl rejects None as a query value, so unset filters are left out.
+            params={key: value for key, value in params.items() if value is not None},
         )
         stations = orjson.loads(stations_data)  # pylint: disable=no-member
         # pylint: disable-next=not-an-iterable

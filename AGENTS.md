@@ -48,6 +48,8 @@ During iteration, running a single tool directly is fine and faster:
 - The library should never leak a raw exception. Transport problems surface as
   `RadioBrowserConnectionError` (or `RadioBrowserConnectionTimeoutError`), and
   anything else as `RadioBrowserError`. Keep that contract when adding code.
+  Invalid arguments, a caller mistake rather than an API failure, raise a plain
+  `ValueError`.
 - Tests never touch the live API. Mock HTTP with `aioresponses` and keep
   realistic API responses as fixtures under `tests/fixtures`.
 - New code needs tests. Every test carries a one-line docstring describing what
