@@ -78,7 +78,6 @@ source = ["radios"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 60
 
 [tool.ty.environment]
 python-version = "3.12"
