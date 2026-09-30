@@ -1,62 +1,76 @@
-[tool.poetry]
-authors = ["Franck Nijhof <opensource@frenck.dev>"]
+[project]
+name = "radios"
+version = "0.0.0"
+description = "Asynchronous Python client for the Radio Browser API."
+authors = [{ name = "Franck Nijhof", email = "opensource@frenck.dev" }]
+maintainers = [{ name = "Franck Nijhof", email = "opensource@frenck.dev" }]
+license = "MIT"
+requires-python = ">=3.12"
+readme = "README.md"
+keywords = [
+  "api",
+  "async",
+  "client",
+  "home-assistant",
+  "internet radio",
+  "radio",
+  "radio browser",
+  "radios",
+  "streaming",
+  "web radio",
+]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Framework :: AsyncIO",
   "Intended Audience :: Developers",
   "Natural Language :: English",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Programming Language :: Python :: 3",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-description = "Asynchronous Python client for the Radio Browser API"
-documentation = "https://github.com/frenck/python-radios"
-homepage = "https://github.com/frenck/python-radios"
-keywords = ["radio browser", "radio", "web radio", "radios", "api", "async", "client"]
-license = "MIT"
-maintainers = ["Franck Nijhof <opensource@frenck.dev>"]
-name = "radios"
-packages = [
-  {include = "radios", from = "src"},
+dynamic = ["dependencies"]
+packages = [{ include = "radios", from = "src" }]
+dependencies = [
+  'aiodns (>=3.0)',
+  'aiohttp (>=3.0.0)',
+  'awesomeversion (>=21.10.1)',
+  'backoff (>=1.9.0)',
+  'cachetools (>=4.0.0)',
+  'mashumaro (>=3.10)',
+  'orjson (>=3.9.8)',
+  'pycountry (>=24.0.0)',
+  'yarl (>=1.6.0)',
 ]
-readme = "README.md"
+
+[tool.poetry]
+requires-poetry = '>=2.0'
+
+[project.urls]
+homepage = "https://github.com/frenck/python-radios"
 repository = "https://github.com/frenck/python-radios"
-version = "0.0.0"
-
-[tool.poetry.dependencies]
-aiodns = ">=3.0"
-aiohttp = ">=3.0.0"
-awesomeversion = ">=21.10.1"
-backoff = ">=1.9.0"
-cachetools = ">=4.0.0"
-mashumaro = ">=3.10"
-orjson = ">=3.9.8"
-pycountry = "^24.0.0"
-python = "^3.11"
-yarl = ">=1.6.0"
-
-[tool.poetry.urls]
+documentation = "https://github.com/frenck/python-radios"
 "Bug Tracker" = "https://github.com/frenck/python-radios/issues"
 Changelog = "https://github.com/frenck/python-radios/releases"
 
 [tool.poetry.group.dev.dependencies]
-aresponses = "3.0.0"
-codespell = "2.4.2"
+aioresponses = "0.7.9"
+codespell = "2.4.3"
 covdefaults = "2.3.0"
-coverage = {version = "7.13.5", extras = ["toml"]}
-mypy = "1.20.1"
-pre-commit = "4.5.1"
+coverage = { version = "7.16.2", extras = ["toml"] }
 pre-commit-hooks = "6.0.0"
-pylint = "4.0.5"
-pytest = "9.0.3"
-pytest-asyncio = "1.3.0"
+prek = "0.5.4"
+pylint = "4.0.9"
+pytest = "9.1.1"
+pytest-asyncio = "1.4.0"
 pytest-cov = "7.1.0"
-ruff = "0.15.11"
-safety = "3.7.0"
-syrupy = "5.1.0"
-types-cachetools = "6.2.0.20260408"
+ruff = "0.16.9"
+syrupy = "6.1.1"
+ty = "0.0.84"
 yamllint = "1.38.0"
+zizmor = "1.30.1"
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
@@ -64,90 +78,55 @@ source = ["radios"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 50
+fail_under = 60
 
-[tool.mypy]
-# Specify the target platform details in config, so your developers are
-# free to run mypy on Windows, Linux, or macOS and get consistent
-# results.
-platform = "linux"
-python_version = "3.11"
-
-# show error messages from unrelated files
-follow_imports = "normal"
-
-# suppress errors about unsatisfied imports
-ignore_missing_imports = true
-
-# be strict
-check_untyped_defs = true
-disallow_any_generics = true
-disallow_incomplete_defs = true
-disallow_subclassing_any = true
-disallow_untyped_calls = true
-disallow_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-no_implicit_reexport = true
-strict_optional = true
-warn_incomplete_stub = true
-warn_no_return = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_unused_configs = true
-warn_unused_ignores = true
+[tool.ty.environment]
+python-version = "3.12"
 
 [tool.pylint.MASTER]
-ignore= [
-  "tests"
-]
+ignore = ["tests"]
 
 [tool.pylint.BASIC]
-good-names = [
-    "_",
-    "ex",
-    "fp",
-    "i",
-    "id",
-    "j",
-    "k",
-    "on",
-    "Run",
-    "T",
-]
+good-names = ["_", "ex", "fp", "i", "id", "j", "k", "on", "Run", "T"]
 
 [tool.pylint.DESIGN]
-max-attributes = 8
+max-attributes = 15
 
 [tool.pylint."MESSAGES CONTROL"]
-disable= [
-    "duplicate-code",
-    "format",
-    "unsubscriptable-object",
-]
+disable = ["duplicate-code", "format", "unsubscriptable-object"]
 
 [tool.pylint.SIMILARITIES]
 ignore-imports = true
 
 [tool.pylint.FORMAT]
-max-line-length=88
+max-line-length = 88
 
 [tool.pytest.ini_options]
-addopts = "--cov"
 asyncio_mode = "auto"
+addopts = "--strict-markers --strict-config"
+xfail_strict = true
 
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-  "ANN401", # Opinioated warning on disallowing dynamically typed expressions
-  "D203", # Conflicts with other rules
-  "D213", # Conflicts with other rules
-  "D417", # False positives in some occasions
+  "ANN401",  # Opinionated warning on disallowing dynamically typed expressions
+  "TRY301",  # Abstract raise to inner function, not useful for this codebase
+  "D203",    # Conflicts with other rules
+  "D213",    # Conflicts with other rules
+  "D417",    # False positives in some occasions
   "PLR2004", # Just annoying, not really useful
+  "PLR0917", # Existing API signatures and calls intentionally use many args
+  "CPY001",  # Project does not enforce file-level copyright headers
 
   # Conflicts with the Ruff formatter
   "COM812",
   "ISC001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+  "FBT001", # Boolean positional args are idiomatic in parametrized tests
+  "FBT002", # Boolean defaults are idiomatic in parametrized tests
 ]
 
 [tool.ruff.lint.flake8-pytest-style]
@@ -165,6 +144,9 @@ runtime-evaluated-base-classes = [
 [tool.ruff.lint.mccabe]
 max-complexity = 25
 
+[tool.codespell]
+ignore-words-list = "hass"
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0"]
 build-backend = "poetry.core.masonry.api"

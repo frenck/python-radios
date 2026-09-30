@@ -1,9 +1,9 @@
 """Asynchronous Python client for the Radio Browser API."""
 
-from enum import Enum
+from enum import StrEnum
 
 
-class Order(str, Enum):
+class Order(StrEnum):
     """Enum holding the order types."""
 
     BITRATE = "bitrate"
@@ -28,7 +28,7 @@ class Order(str, Enum):
     VOTES = "votes"
 
 
-class FilterBy(str, Enum):
+class FilterBy(StrEnum):
     """Enum holding possible filter by types for radio stations."""
 
     UUID = "byuuid"
