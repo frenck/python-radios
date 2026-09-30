@@ -104,7 +104,7 @@ class RadioBrowser:
             text = await response.text()
             if "application/json" not in content_type:
                 raise RadioBrowserError(response.status, {"message": text})
-        except asyncio.TimeoutError as exception:
+        except TimeoutError as exception:
             self._host = None
             msg = "Timeout occurred while connecting to the Radio Browser API"
             raise RadioBrowserConnectionTimeoutError(msg) from exception

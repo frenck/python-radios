@@ -8,20 +8,19 @@
 
 [![Build Status][build-shield]][build]
 [![Code Coverage][codecov-shield]][codecov]
-[![Quality Gate Status][sonarcloud-shield]][sonarcloud]
+[![OpenSSF Scorecard][scorecard-shield]][scorecard]
 [![Open in Dev Containers][devcontainer-shield]][devcontainer]
 
 [![Sponsor Frenck via GitHub Sponsors][github-sponsors-shield]][github-sponsors]
 
 [![Support Frenck on Patreon][patreon-shield]][patreon]
 
-
 Asynchronous Python client for the Radio Browser API.
 
 ## About
 
-[Radio Browser](https://www.radio-browser.info) community driven effort
-(like WikiPedia) with the aim of collecting as many internet radio and
+[Radio Browser](https://www.radio-browser.info) is a community driven effort
+(like Wikipedia) with the aim of collecting as many internet radio and
 TV stations as possible.
 
 This Python library is an async API client for that, originally developed
@@ -81,28 +80,16 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-## Changelog & Releases
+## Changelog & releases
 
 This repository keeps a change log using [GitHub's releases][releases]
-functionality.
-
-Releases are based on [Semantic Versioning][semver], and use the format
-of `MAJOR.MINOR.PATCH`. In a nutshell, the version will be incremented
-based on the following:
-
-- `MAJOR`: Incompatible or major changes.
-- `MINOR`: Backwards-compatible new features and enhancements.
-- `PATCH`: Backwards-compatible bugfixes and package updates.
+functionality. Releases are based on [Semantic Versioning][semver], and use the
+format of `MAJOR.MINOR.PATCH`.
 
 ## Contributing
 
-This is an active open-source project. We are always open to people who want to
-use the code or contribute to it.
-
-We've set up a separate document for our
-[contribution guidelines](CONTRIBUTING.md).
-
-Thank you for being involved! :heart_eyes:
+Contributions are welcome. See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for
+how to get started and what the review expects.
 
 ## Setting up development environment
 
@@ -112,9 +99,9 @@ development.
 
 You need at least:
 
-- Python 3.9+
+- Python 3.12+
 - [Poetry][poetry-install]
-- NodeJS 14+ (including NPM)
+- NodeJS 24+ (including NPM)
 
 To install all packages, including all development requirements:
 
@@ -123,12 +110,12 @@ npm install
 poetry install
 ```
 
-As this repository uses the [pre-commit][pre-commit] framework, all changes
+As this repository uses the [prek][prek] framework, all changes
 are linted and tested with each commit. You can run all checks and tests
 manually, using the following command:
 
 ```bash
-poetry run pre-commit run --all-files
+poetry run prek run --all-files
 ```
 
 To run just the Python tests:
@@ -144,11 +131,20 @@ The original setup of this repository is by [Franck Nijhof][frenck].
 For a full list of all authors and contributors,
 check [the contributor's page][contributors].
 
+## Disclaimer
+
+This project is an independent, community-driven effort. It is **not
+affiliated with, endorsed by, or supported by** the Radio Browser project. All
+station names, logos, and trademarks are property of their respective owners.
+
+Station data comes from the public [Radio Browser API][radio-browser], which is
+maintained by its community. This library does not host or verify any streams.
+
 ## License
 
 MIT License
 
-Copyright (c) 2022-2024 Franck Nijhof
+Copyright (c) 2022-2026 Franck Nijhof
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -178,19 +174,19 @@ SOFTWARE.
 [frenck]: https://github.com/frenck
 [github-sponsors-shield]: https://frenck.dev/wp-content/uploads/2019/12/github_sponsor.png
 [github-sponsors]: https://github.com/sponsors/frenck
-[keepchangelog]: http://keepachangelog.com/en/1.0.0/
 [license-shield]: https://img.shields.io/github/license/frenck/python-radios.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
 [patreon-shield]: https://frenck.dev/wp-content/uploads/2019/12/patreon.png
 [patreon]: https://www.patreon.com/frenck
 [poetry-install]: https://python-poetry.org/docs/#installation
 [poetry]: https://python-poetry.org
-[pre-commit]: https://pre-commit.com/
+[prek]: https://github.com/j178/prek
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-production%20ready-brightgreen.svg
 [pypi]: https://pypi.org/project/radios/
+[radio-browser]: https://www.radio-browser.info
 [python-versions-shield]: https://img.shields.io/pypi/pyversions/radios
 [releases-shield]: https://img.shields.io/github/release/frenck/python-radios.svg
 [releases]: https://github.com/frenck/python-radios/releases
+[scorecard]: https://scorecard.dev/viewer/?uri=github.com/frenck/python-radios
+[scorecard-shield]: https://api.scorecard.dev/projects/github.com/frenck/python-radios/badge
 [semver]: http://semver.org/spec/v2.0.0.html
-[sonarcloud-shield]: https://sonarcloud.io/api/project_badges/measure?project=frenck_python-radios&metric=alert_status
-[sonarcloud]: https://sonarcloud.io/summary/new_code?id=frenck_python-radios

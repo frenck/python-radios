@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import cast
 
 import pycountry
 from awesomeversion import AwesomeVersion
@@ -106,7 +105,7 @@ class Station(DataClassORJSONMixin):
 
         """
         if resolved_country := pycountry.countries.get(alpha_2=self.country_code):
-            return cast("str", resolved_country.name)
+            return resolved_country.name  # type: ignore[return-value]
         return None
 
 
