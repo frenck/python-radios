@@ -1,0 +1,17 @@
+[
+  {
+    "name": "dutch",
+    "iso_639": "nl",
+    "stationcount": 926
+  },
+  {
+    "name": "english",
+    "iso_639": "en",
+    "stationcount": 13524
+  },
+  {
+    "name": "#english",
+    "iso_639": null,
+    "stationcount": 3
+  }
+]

@@ -52,8 +52,8 @@ During iteration, running a single tool directly is fine and faster:
   `ValueError`.
 - Tests never touch the live API. Mock HTTP with `aioresponses` and keep
   realistic API responses as fixtures under `tests/fixtures`.
-- New code needs tests. Every test carries a one-line docstring describing what
-  it verifies.
+- Coverage is enforced at 100% on the package. New code needs tests. Every test
+  carries a one-line docstring describing what it verifies.
 - Comments explain the why, not the what. Clarity over cleverness, clear names,
   and blank lines between logical steps.
 

@@ -1,0 +1,12 @@
+{
+  "supported_version": 1,
+  "software_version": "0.7.45",
+  "status": "OK",
+  "stations": 59816,
+  "stations_broken": 7022,
+  "tags": 12417,
+  "clicks_last_hour": 13974,
+  "clicks_last_day": 388753,
+  "languages": 682,
+  "countries": 241
+}
