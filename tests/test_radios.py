@@ -434,3 +434,19 @@ async def test_unexpected_response(
 
     assert not isinstance(error.value, RadioBrowserConnectionError)
     assert error.value.__cause__ is not None
+
+
+@pytest.mark.parametrize(
+    "method", ["countries", "languages", "tags", "stations", "search"]
+)
+@pytest.mark.parametrize(
+    "paging", [{"limit": -1}, {"offset": -1}], ids=["limit", "offset"]
+)
+async def test_negative_paging(
+    responses: aioresponses, radios: RadioBrowser, method: str, paging: dict[str, int]
+) -> None:
+    """Test a negative limit or offset is refused before a request is sent."""
+    with pytest.raises(ValueError, match="cannot be negative"):
+        await getattr(radios, method)(**paging)
+
+    assert not responses.requests
