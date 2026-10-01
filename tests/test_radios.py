@@ -335,6 +335,35 @@ async def test_external_session(responses: aioresponses) -> None:
         assert not session.closed
 
 
+async def test_request_after_close(responses: aioresponses) -> None:
+    """Test a client can still be used after closing its own session."""
+    responses.get(f"{API_URL}/test", status=200, payload={}, repeat=True)
+
+    radios = RadioBrowser(user_agent="PythonRadios/Tests")
+    await radios._request("test")
+    first_session = radios.session
+    await radios.close()
+
+    assert await radios._request("test") == "{}"
+    assert first_session is not None
+    assert first_session.closed
+    assert radios.session is not first_session
+
+    await radios.close()
+
+
+async def test_request_leaves_params_untouched(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test sending booleans does not rewrite the caller's params."""
+    responses.get(f"{API_URL}/test?reverse=false", status=200, payload={})
+    params = {"reverse": False}
+
+    await radios._request("test", params=params)
+
+    assert params == {"reverse": False}
+
+
 async def test_close_without_session() -> None:
     """Test closing a client that never made a request does nothing."""
     radios = RadioBrowser(user_agent="PythonRadios/Tests")
