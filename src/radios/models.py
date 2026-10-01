@@ -45,8 +45,11 @@ class CommaSeparatedString(SerializationStrategy):
         """Serialize a list of strings to a comma separated value."""
         return ",".join(value)
 
-    def deserialize(self, value: str) -> list[str]:
+    def deserialize(self, value: str | None) -> list[str]:
         """Deserialize a comma separated value to a list of strings."""
+        # Check results send null instead of an empty string.
+        if not value:
+            return []
         return [item.strip() for item in value.split(",") if item.strip()]
 
 
@@ -139,6 +142,72 @@ class Station(DataClassORJSONMixin):
 
         """
         return country_name(self.country_code)
+
+
+@dataclass
+# pylint: disable=too-many-instance-attributes
+class StationCheck(DataClassORJSONMixin):
+    """Object information for a check of a station by the Radio Browser.
+
+    The Radio Browser servers check every station regularly: is the stream
+    online, and what does it send. Only the fields that are always there are
+    required, the rest depends on what the stream reports.
+    """
+
+    uuid: str = field(metadata=field_options(alias="checkuuid"))
+    station_uuid: str = field(metadata=field_options(alias="stationuuid"))
+    timestamp: datetime = field(metadata=field_options(alias="timestamp_iso8601"))
+    ok: bool
+    source: str
+    codec: str
+    bitrate: int
+    hls: bool
+    url: str = field(metadata=field_options(alias="urlcache"))
+    metainfo_overrides_database: bool
+    timing_ms: int
+    ssl_error: int
+
+    name: str | None = None
+    description: str | None = None
+    tags: list[str] = field(
+        default_factory=list,
+        metadata=field_options(serialization_strategy=CommaSeparatedString()),
+    )
+    language_codes: list[str] = field(
+        default_factory=list,
+        metadata=field_options(
+            alias="languagecodes", serialization_strategy=CommaSeparatedString()
+        ),
+    )
+    country_code: str | None = field(
+        default=None, metadata=field_options(alias="countrycode")
+    )
+    country_subdivision_code: str | None = field(
+        default=None, metadata=field_options(alias="countrysubdivisioncode")
+    )
+    homepage: str | None = None
+    favicon: str | None = None
+    load_balancer: str | None = field(
+        default=None, metadata=field_options(alias="loadbalancer")
+    )
+    server_software: str | None = None
+    sampling: int | None = None
+    public: bool | None = None
+    latitude: float | None = field(
+        default=None, metadata=field_options(alias="geo_lat")
+    )
+    longitude: float | None = field(
+        default=None, metadata=field_options(alias="geo_long")
+    )
+
+
+@dataclass
+class StationClick(DataClassORJSONMixin):
+    """Object information for a click on a station in the Radio Browser."""
+
+    uuid: str = field(metadata=field_options(alias="clickuuid"))
+    station_uuid: str = field(metadata=field_options(alias="stationuuid"))
+    timestamp: datetime = field(metadata=field_options(alias="clicktimestamp_iso8601"))
 
 
 @dataclass

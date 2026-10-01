@@ -180,6 +180,20 @@ tied to one country, like Arabic, has none.
 States are entered by hand along with the stations, so expect anything from a
 province to a full street address.
 
+### Station history
+
+The Radio Browser servers check every station regularly. The check history of
+a station helps to find out why a stream does not play:
+
+```python
+checks = await radios.checks(uuid=station.uuid, seconds=86400)  # last day
+for check in checks:
+    print(check.timestamp, "online" if check.ok else "offline", check.codec)
+```
+
+`clicks()` works the same way, for when stations were played. Both continue
+after an earlier result with `after=` and the UUID of the last check or click.
+
 ### Connection options
 
 ```python

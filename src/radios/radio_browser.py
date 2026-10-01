@@ -33,6 +33,8 @@ from .models import (
     Language,
     State,
     Station,
+    StationCheck,
+    StationClick,
     Stats,
     Tag,
     country_name,
@@ -371,6 +373,133 @@ class RadioBrowser:
         response = await self._request("stats")
         with unexpected_response():
             return Stats.from_json(response)
+
+    async def checks(
+        self,
+        *,
+        uuid: str | None = None,
+        after: str | None = None,
+        seconds: int | None = None,
+        limit: int = 100000,
+    ) -> list[StationCheck]:
+        """Get the results of the checks the Radio Browser does on stations.
+
+        With a station UUID, this is the check history of that station, which
+        helps to find out why a stream does not play. Without one, it is the
+        latest check of every station.
+
+        Args:
+        ----
+            uuid: Only the checks of the station with this UUID.
+            after: Only the checks after the check with this UUID, to continue
+                where an earlier call left off.
+            seconds: Only the checks of the last this many seconds.
+            limit: Limit the number of results.
+
+        Returns:
+        -------
+            A list of StationCheck objects.
+
+        Raises:
+        ------
+            ValueError: The limit or seconds is negative.
+
+        """
+        checks_data = await self._history(
+            "checks",
+            uuid=uuid,
+            after=("lastcheckuuid", after),
+            seconds=seconds,
+            limit=limit,
+        )
+        with unexpected_response():
+            checks = orjson.loads(checks_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [StationCheck.from_dict(check) for check in checks]
+
+    async def clicks(
+        self,
+        *,
+        uuid: str | None = None,
+        after: str | None = None,
+        seconds: int | None = None,
+        limit: int = 100000,
+    ) -> list[StationClick]:
+        """Get the clicks on stations, that is, when they were played.
+
+        Args:
+        ----
+            uuid: Only the clicks on the station with this UUID.
+            after: Only the clicks after the click with this UUID, to continue
+                where an earlier call left off.
+            seconds: Only the clicks of the last this many seconds.
+            limit: Limit the number of results.
+
+        Returns:
+        -------
+            A list of StationClick objects.
+
+        Raises:
+        ------
+            ValueError: The limit or seconds is negative.
+
+        """
+        clicks_data = await self._history(
+            "clicks",
+            uuid=uuid,
+            after=("lastclickuuid", after),
+            seconds=seconds,
+            limit=limit,
+        )
+        with unexpected_response():
+            clicks = orjson.loads(clicks_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [StationClick.from_dict(click) for click in clicks]
+
+    async def _history(
+        self,
+        endpoint: str,
+        *,
+        uuid: str | None,
+        after: tuple[str, str | None],
+        seconds: int | None,
+        limit: int,
+    ) -> str:
+        """Request the check or click history, of one or all stations.
+
+        Args:
+        ----
+            endpoint: The history endpoint, "checks" or "clicks".
+            uuid: Only the history of the station with this UUID.
+            after: The name of the parameter that continues after an earlier
+                result, and the UUID to continue after.
+            seconds: Only the history of the last this many seconds.
+            limit: Limit the number of results.
+
+        Returns:
+        -------
+            The response from the Radio Browser API.
+
+        Raises:
+        ------
+            ValueError: The limit or seconds is negative.
+
+        """
+        if limit < 0 or (seconds is not None and seconds < 0):
+            msg = f"limit and seconds cannot be negative, got {limit=} and {seconds=}"
+            raise ValueError(msg)
+
+        uri = endpoint
+        if uuid:
+            uri = f"{uri}/{quote(uuid, safe='')}"
+
+        after_param, after_uuid = after
+        params = {after_param: after_uuid, "seconds": seconds, "limit": limit}
+        return await self._request(
+            uri,
+            # yarl rejects None as a query value, so unset filters are left out.
+            params={key: value for key, value in params.items() if value is not None},
+        )
 
     async def station_click(self, *, uuid: str) -> str:
         """Register click on a station.

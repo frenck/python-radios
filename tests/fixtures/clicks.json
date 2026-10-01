@@ -1,0 +1,14 @@
+[
+  {
+    "stationuuid": "6c95ccdb-ca0a-4c59-a660-96e56ef2dca9",
+    "clickuuid": "daa84d31-bcf9-11f1-917d-f250a8e74cd1",
+    "clicktimestamp_iso8601": "2026-09-30T18:07:52Z",
+    "clicktimestamp": "2026-09-30 18:07:52"
+  },
+  {
+    "stationuuid": "6c95ccdb-ca0a-4c59-a660-96e56ef2dca9",
+    "clickuuid": "9056e00b-bcfa-11f1-917d-f250a8e74cd1",
+    "clicktimestamp_iso8601": "2026-09-30T18:12:57Z",
+    "clicktimestamp": "2026-09-30 18:12:57"
+  }
+]
