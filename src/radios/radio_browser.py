@@ -5,13 +5,13 @@ from __future__ import annotations
 import asyncio
 import random
 import socket
+from asyncio import sleep
 from dataclasses import dataclass
 from http import HTTPStatus
 from typing import Any, Self
 from urllib.parse import quote
 
 import aiohttp
-import backoff
 import orjson
 import pycountry
 from aiodns import DNSResolver
@@ -27,6 +27,9 @@ from .exceptions import (
     RadioBrowserError,
 )
 from .models import Country, Language, Station, Stats, Tag
+
+# How often a request is tried when the connection to the API fails.
+REQUEST_ATTEMPTS = 5
 
 # The stations/search endpoint has no by* paths, so search() turns each
 # FilterBy value into search query parameters instead.
@@ -93,16 +96,46 @@ class RadioBrowser:
 
         return random.choice(hosts)  # noqa: S311
 
-    @backoff.on_exception(
-        backoff.expo, RadioBrowserConnectionError, max_tries=5, logger=None
-    )
     async def _request(
         self,
         uri: str = "",
         method: str = hdrs.METH_GET,
         params: dict[str, Any] | None = None,
     ) -> str:
-        """Handle a request to the Radio Browser API.
+        """Handle a request to the Radio Browser API, retrying connection errors.
+
+        A failed connection makes the client forget its API server, so each
+        retry may land on a different one. The wait between attempts grows
+        exponentially, with full jitter so clients that failed together do
+        not all retry at the same moment.
+
+        Args:
+        ----
+            uri: Request URI, for example `stats`. Any user provided parts
+                of it must already be URL encoded.
+            method: HTTP method to use for the request, for example "GET".
+            params: Dictionary of data to send to the Radio Browser API.
+
+        Returns:
+        -------
+            The response from the Radio Browser API.
+
+        """
+        for attempt in range(REQUEST_ATTEMPTS - 1):
+            try:
+                return await self._request_once(uri, method, params)
+            except RadioBrowserConnectionError:
+                await sleep(random.uniform(0, 2**attempt))  # noqa: S311
+
+        return await self._request_once(uri, method, params)
+
+    async def _request_once(
+        self,
+        uri: str,
+        method: str,
+        params: dict[str, Any] | None,
+    ) -> str:
+        """Send a single request to the Radio Browser API.
 
         A generic method for sending/handling HTTP requests done against
         the Radio Browser API.
