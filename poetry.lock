@@ -241,18 +241,6 @@ files = [
 dev = ["black (>=25.1)", "isort (>=6.0.1)", "mypy (>=1.16)", "pylint (>=3.3.7)", "pytest (>=8.4.1)", "pytest-codspeed (>=3.2.0)", "pytest-cov (>=6.2.1)", "pytest-snapshot (>=0.9.0)", "pytest-timeout (>=2.4.0)"]
 
 [[package]]
-name = "cachetools"
-version = "7.1.2"
-description = "Extensible memoizing collections and decorators"
-optional = false
-python-versions = ">=3.10"
-groups = ["main"]
-files = [
-    {file = "cachetools-7.1.2-py3-none-any.whl", hash = "sha256:89386be5bece29963e0f22bb7e1aba91c8395c7ad107780e2ce7af3ab315ae40"},
-    {file = "cachetools-7.1.2.tar.gz", hash = "sha256:c1373e3cad0933dfb46bb04d04ef67b5204f8220eb906096dd89a76196053d57"},
-]
-
-[[package]]
 name = "cffi"
 version = "2.0.0"
 description = "Foreign Function Interface for Python calling C code."
@@ -1834,4 +1822,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "0ca26d9c26082d318ebf4dd4a2d8a28e48116f33308d6fdc4dca99f90d768890"
+content-hash = "00740405fd82b547dbe66b1ea3dc6d47863e2873df7a71000c1d443dc85b4ee8"
