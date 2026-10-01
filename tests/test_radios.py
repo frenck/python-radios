@@ -277,6 +277,26 @@ async def test_host_lookup_dns_error(
 
 
 @pytest.mark.usefixtures("retry_sleep")
+async def test_host_lookup_timeout(
+    radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test a DNS lookup that never answers runs into the request timeout."""
+
+    async def unanswered_lookup(*_args: object) -> None:
+        await asyncio.Event().wait()
+
+    dns_resolver.return_value.query_dns.side_effect = unanswered_lookup
+    radios._host = None
+    radios.request_timeout = 0.01
+
+    with pytest.raises(RadioBrowserConnectionTimeoutError):
+        await radios._request("test")
+
+    assert dns_resolver.return_value.query_dns.await_count == 5
+    assert radios._host is None
+
+
+@pytest.mark.usefixtures("retry_sleep")
 async def test_host_lookup_without_servers(
     radios: RadioBrowser, dns_resolver: MagicMock
 ) -> None:
