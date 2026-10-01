@@ -85,8 +85,9 @@ if __name__ == "__main__":
 ### Browsing stations
 
 `stations()` lists stations, optionally filtered by one field with
-`filter_by` and `filter_term`. Every list method takes `order`, `reverse`,
-`limit`, `offset` and `hide_broken`:
+`filter_by` and `filter_term`. All lists of stations, countries, languages,
+tags, codecs and states take `order`, `reverse`, `limit`, `offset` and
+`hide_broken`:
 
 ```python
 from radios import FilterBy, Order
@@ -205,6 +206,10 @@ RadioBrowser(
 
 You may also pass your own `aiohttp.ClientSession` via `session=...` to
 share a connection pool. The client then leaves closing it to you.
+
+Without the async context manager, call `await radios.close()` when you are
+done, to close the session the client created. A closed client can still be
+used: the next request opens a new session.
 
 Radio Browser runs on a pool of community servers. The client picks one at
 random through DNS. When a connection fails, it tries again on a freshly
