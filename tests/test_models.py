@@ -98,6 +98,16 @@ def test_station_without_extended_info() -> None:
     assert station.has_extended_info is False
 
 
+def test_station_without_distance() -> None:
+    """Test a station from a response without a distance still loads."""
+    data = orjson.loads(load_fixture("stations.json"))[0]
+    del data["geo_distance"]
+
+    station = Station.from_dict(data)
+
+    assert station.distance is None
+
+
 def test_station_count_is_an_integer() -> None:
     """Test station counts are integers, like the API sends them."""
     country = Country.from_dict({"code": "NL", "name": "NL", "stationcount": 1545})

@@ -157,7 +157,12 @@ async def test_stations_by_url(responses: aioresponses, radios: RadioBrowser) ->
 
     stations = await radios.stations_by_url(url=stream_url)
 
-    assert stations[0].url == stream_url
+    # Several stations can share a stream, so none of them may be dropped.
+    assert [station.uuid for station in stations] == [
+        STATION_UUID,
+        "d1a54d2e-623e-4970-ab11-35f7b56c5ec3",
+        "f592bcd7-c052-11e9-8502-52543be04c81",
+    ]
     ((_, url),) = responses.requests
     assert url.query == {"url": stream_url}
 

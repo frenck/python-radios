@@ -98,3 +98,44 @@ def test_check_without_optional_fields() -> None:
     assert station_check.language_codes == []
     assert station_check.name is None
     assert station_check.country_code is None
+
+
+def test_check_with_only_required_fields() -> None:
+    """Test a check that only has the fields every check has still loads."""
+    full = orjson.loads(load_fixture("checks.json"))[0]
+    required = (
+        "checkuuid",
+        "stationuuid",
+        "timestamp_iso8601",
+        "ok",
+        "source",
+        "codec",
+        "bitrate",
+        "hls",
+        "urlcache",
+        "metainfo_overrides_database",
+        "timing_ms",
+        "ssl_error",
+    )
+
+    station_check = StationCheck.from_dict({key: full[key] for key in required})
+
+    assert station_check.tags == []
+    assert station_check.language_codes == []
+    assert station_check.name is None
+    assert station_check.country_code is None
+    assert station_check.latitude is None
+    assert station_check.public is None
+
+
+@pytest.mark.parametrize("method", ["checks", "clicks"])
+async def test_history_uuid_is_escaped(
+    responses: aioresponses, radios: RadioBrowser, method: str
+) -> None:
+    """Test a station UUID cannot change the URL it is part of."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/{method}/"), payload=[])
+
+    await getattr(radios, method)(uuid="../stats")
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == f"/json/{method}/..%2Fstats"
