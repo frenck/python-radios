@@ -15,6 +15,29 @@ from mashumaro.types import SerializationStrategy
 from .const import LANGUAGE_FLAGS
 
 
+def country_name(country_code: str) -> str | None:
+    """Return the name of a country by its ISO 3166-1 alpha-2 code.
+
+    Args:
+    ----
+        country_code: Two letter country code, for example `NL`.
+
+    Returns:
+    -------
+        The country name, or None if the code is unknown.
+
+    """
+    # Kosovo has a user-assigned code that is not part of ISO 3166-1, so
+    # pycountry does not know it. https://github.com/frenck/python-radios/issues/19
+    if country_code == "XK":
+        return "Kosovo"
+
+    if country := pycountry.countries.get(alpha_2=country_code):
+        return country.name  # type: ignore[return-value]
+
+    return None
+
+
 class CommaSeparatedString(SerializationStrategy):
     """String serialization strategy to handle comma separated strings."""
 
@@ -106,9 +129,7 @@ class Station(DataClassORJSONMixin):
             Country name or None if no country code is set.
 
         """
-        if resolved_country := pycountry.countries.get(alpha_2=self.country_code):
-            return resolved_country.name  # type: ignore[return-value]
-        return None
+        return country_name(self.country_code)
 
 
 @dataclass
