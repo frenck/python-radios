@@ -83,6 +83,23 @@ async def test_unexpected_content_type(
     assert error.value.args == (200, {"message": "Not JSON"})
 
 
+async def test_undecodable_response(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a body that does not match its encoding raises a Radio Browser error."""
+    responses.get(
+        f"{API_URL}/test",
+        body=b'{"name": "\xff"}',
+        headers={"Content-Type": "application/json; charset=utf-8"},
+    )
+
+    with pytest.raises(RadioBrowserError, match="Unexpected response") as error:
+        await radios._request("test")
+
+    assert not isinstance(error.value, RadioBrowserConnectionError)
+    assert isinstance(error.value.__cause__, UnicodeDecodeError)
+
+
 @pytest.mark.usefixtures("retry_sleep")
 async def test_timeout_while_reading_body(
     responses: aioresponses, radios: RadioBrowser, monkeypatch: pytest.MonkeyPatch
