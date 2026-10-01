@@ -266,6 +266,11 @@ class RadioBrowser:
             self._host = None
             msg = "Timeout occurred while connecting to the Radio Browser API"
             raise RadioBrowserConnectionTimeoutError(msg) from exception
+        except UnicodeDecodeError as exception:
+            # The body does not match the encoding the server claims. That is
+            # a broken response, not a connection problem, so it is not retried.
+            msg = "Unexpected response from the Radio Browser API"
+            raise RadioBrowserError(msg) from exception
         except aiohttp.ClientResponseError as exception:
             # A client error is our mistake, like an unknown station. Asking
             # again, or asking another server, will not change the answer.
