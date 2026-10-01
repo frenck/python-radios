@@ -11,6 +11,13 @@ import aiohttp
 import pytest
 from aioresponses import aioresponses
 from aioresponses import core as aioresponses_core
+from pycares import (
+    QUERY_CLASS_IN,
+    QUERY_TYPE_SRV,
+    DNSRecord,
+    DNSResult,
+    SRVRecordData,
+)
 
 from radios import RadioBrowser
 
@@ -38,6 +45,24 @@ FIXTURES_DIR = Path(__file__).parent / "fixtures"
 def load_fixture(name: str) -> str:
     """Load a fixture file by name."""
     return (FIXTURES_DIR / name).read_text(encoding="utf-8")
+
+
+def srv_result(*targets: str) -> DNSResult:
+    """Build a DNS SRV lookup result pointing at the given hosts."""
+    return DNSResult(
+        answer=[
+            DNSRecord(
+                name="_api._tcp.radio-browser.info",
+                type=QUERY_TYPE_SRV,
+                record_class=QUERY_CLASS_IN,
+                ttl=300,
+                data=SRVRecordData(priority=1, weight=1, port=443, target=target),
+            )
+            for target in targets
+        ],
+        authority=[],
+        additional=[],
+    )
 
 
 @pytest.fixture
@@ -70,9 +95,7 @@ def dns_resolver() -> Generator[MagicMock, None, None]:
     without this, tests would end up resolving the real API servers.
     """
     resolver = MagicMock()
-    resolver.return_value.query = AsyncMock(
-        return_value=[SimpleNamespace(host="example.com")]
-    )
+    resolver.return_value.query_dns = AsyncMock(return_value=srv_result("example.com"))
     with patch("radios.radio_browser.DNSResolver", resolver):
         yield resolver
 

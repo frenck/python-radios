@@ -6,14 +6,18 @@ import asyncio
 import random
 import socket
 from dataclasses import dataclass
+from http import HTTPStatus
 from typing import Any, Self
+from urllib.parse import quote
 
 import aiohttp
 import backoff
 import orjson
 import pycountry
 from aiodns import DNSResolver
+from aiodns.error import DNSError
 from aiohttp import hdrs
+from pycares import SRVRecordData
 from yarl import URL
 
 from .const import FilterBy, Order
@@ -54,6 +58,41 @@ class RadioBrowser:
     _close_session: bool = False
     _host: str | None = None
 
+    async def _resolve_host(self) -> str:
+        """Pick one of the Radio Browser API servers.
+
+        The API does not have a fixed host. Its servers are published as DNS
+        SRV records, and clients are asked to spread their load by picking one
+        at random.
+
+        Returns
+        -------
+            The host name of a Radio Browser API server.
+
+        Raises
+        ------
+            RadioBrowserConnectionError: The API servers could not be looked up.
+
+        """
+        try:
+            result = await DNSResolver().query_dns(
+                "_api._tcp.radio-browser.info", "SRV"
+            )
+        except DNSError as exception:
+            msg = "Error occurred while looking up the Radio Browser API servers"
+            raise RadioBrowserConnectionError(msg) from exception
+
+        hosts = [
+            record.data.target
+            for record in result.answer
+            if isinstance(record.data, SRVRecordData)
+        ]
+        if not hosts:
+            msg = "No Radio Browser API servers found"
+            raise RadioBrowserConnectionError(msg)
+
+        return random.choice(hosts)  # noqa: S311
+
     @backoff.on_exception(
         backoff.expo, RadioBrowserConnectionError, max_tries=5, logger=None
     )
@@ -70,8 +109,9 @@ class RadioBrowser:
 
         Args:
         ----
-            uri: Request URI, for example `stats`.
-            method: HTTP method to use for the request.E.g., "GET" or "POST".
+            uri: Request URI, for example `stats`. Any user provided parts
+                of it must already be URL encoded.
+            method: HTTP method to use for the request, for example "GET".
             params: Dictionary of data to send to the Radio Browser API.
 
         Returns:
@@ -80,8 +120,8 @@ class RadioBrowser:
 
         Raises:
         ------
-            RadioBrowserConnectionError: An error occurred while communication with
-                the Radio Browser API.
+            RadioBrowserConnectionError: An error occurred while communicating
+                with the Radio Browser API.
             RadioBrowserConnectionTimeoutError: A timeout occurred while communicating
                 with the Radio Browser API.
             RadioBrowserError: Received an unexpected response from the
@@ -89,12 +129,11 @@ class RadioBrowser:
 
         """
         if self._host is None:
-            resolver = DNSResolver()
-            result = await resolver.query("_api._tcp.radio-browser.info", "SRV")
-            random.shuffle(result)
-            self._host = result[0].host
+            self._host = await self._resolve_host()
 
-        url = URL.build(scheme="https", host=self._host, path="/json/").join(URL(uri))
+        url = URL.build(
+            scheme="https", host=self._host, path=f"/json/{uri}", encoded=True
+        )
 
         if self.session is None:
             self.session = aiohttp.ClientSession()
@@ -116,15 +155,26 @@ class RadioBrowser:
                     params=params,
                     raise_for_status=True,
                 )
+                text = await response.text()
 
             content_type = response.headers.get("Content-Type", "")
-            text = await response.text()
             if "application/json" not in content_type:
                 raise RadioBrowserError(response.status, {"message": text})
         except TimeoutError as exception:
             self._host = None
             msg = "Timeout occurred while connecting to the Radio Browser API"
             raise RadioBrowserConnectionTimeoutError(msg) from exception
+        except aiohttp.ClientResponseError as exception:
+            # A client error is our mistake, like an unknown station. Asking
+            # again, or asking another server, will not change the answer.
+            if exception.status < HTTPStatus.INTERNAL_SERVER_ERROR:
+                raise RadioBrowserError(
+                    exception.status, {"message": exception.message}
+                ) from exception
+
+            self._host = None
+            msg = "Error occurred while communicating with the Radio Browser API"
+            raise RadioBrowserConnectionError(msg) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
             self._host = None
             msg = "Error occurred while communicating with the Radio Browser API"
@@ -156,7 +206,7 @@ class RadioBrowser:
             uuid: UUID of the station.
 
         """
-        await self._request(f"url/{uuid}")
+        await self._request(f"url/{quote(uuid, safe='')}")
 
     # pylint: disable-next=too-many-arguments
     async def countries(
@@ -180,7 +230,7 @@ class RadioBrowser:
 
         Returns:
         -------
-            A Stats object, with information about the Radio Browser API.
+            A list of Country objects.
 
         """
         countries_data = await self._request(
@@ -203,7 +253,7 @@ class RadioBrowser:
             elif resolved_country := pycountry.countries.get(alpha_2=country["name"]):
                 country["name"] = resolved_country.name
 
-        # Because we enrichted the countries we need to re-order in this case
+        # Because we enriched the countries we need to re-order in this case
         if order == Order.NAME:
             countries.sort(key=lambda country: country["name"])
 
@@ -411,7 +461,9 @@ class RadioBrowser:
         if filter_by is not None:
             uri = f"{uri}/{filter_by.value}"
             if filter_term is not None:
-                uri = f"{uri}/{filter_term}"
+                # Terms like "#original" or "AC/DC" would otherwise change
+                # the URL instead of being part of it.
+                uri = f"{uri}/{quote(filter_term, safe='')}"
 
         stations_data = await self._request(
             uri,

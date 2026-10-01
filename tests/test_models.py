@@ -40,6 +40,15 @@ def test_station_comma_separated_fields() -> None:
     assert classic_vinyl.tags[:3] == ["1930", "1940", "1950"]
 
 
+def test_station_empty_comma_separated_fields() -> None:
+    """Test empty comma separated fields become empty lists."""
+    station, _, rey_fm = _stations()
+
+    assert station.tags == []
+    assert rey_fm.language == []
+    assert rey_fm.language_codes == []
+
+
 def test_station_comma_separated_fields_serialize() -> None:
     """Test comma separated fields are joined again when serialized."""
     _, classic_vinyl, _ = _stations()

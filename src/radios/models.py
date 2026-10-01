@@ -22,7 +22,7 @@ class CommaSeparatedString(SerializationStrategy):
 
     def deserialize(self, value: str) -> list[str]:
         """Deserialize a comma separated value to a list of strings."""
-        return [item.strip() for item in value.split(",")]
+        return [item.strip() for item in value.split(",") if item.strip()]
 
 
 @dataclass
@@ -111,7 +111,7 @@ class Station(DataClassORJSONMixin):
 
 @dataclass
 class Country(DataClassORJSONMixin):
-    """Object information for a Counbtry from the Radio Browser."""
+    """Object information for a Country from the Radio Browser."""
 
     code: str
     name: str
