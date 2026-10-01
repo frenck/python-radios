@@ -6,7 +6,17 @@ from .exceptions import (
     RadioBrowserConnectionTimeoutError,
     RadioBrowserError,
 )
-from .models import Codec, Country, Language, State, Station, Stats, Tag
+from .models import (
+    Codec,
+    Country,
+    Language,
+    State,
+    Station,
+    StationCheck,
+    StationClick,
+    Stats,
+    Tag,
+)
 from .radio_browser import RadioBrowser
 
 __all__ = [
@@ -21,6 +31,8 @@ __all__ = [
     "RadioBrowserError",
     "State",
     "Station",
+    "StationCheck",
+    "StationClick",
     "Stats",
     "Tag",
 ]

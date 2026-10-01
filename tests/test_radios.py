@@ -408,6 +408,8 @@ async def test_close_without_session() -> None:
     "call",
     [
         lambda radios: radios.stats(),
+        lambda radios: radios.checks(),
+        lambda radios: radios.clicks(),
         lambda radios: radios.station_click(uuid="x"),
         lambda radios: radios.vote(uuid="x"),
         lambda radios: radios.countries(),
@@ -423,6 +425,8 @@ async def test_close_without_session() -> None:
     ],
     ids=[
         "stats",
+        "checks",
+        "clicks",
         "station_click",
         "vote",
         "countries",
