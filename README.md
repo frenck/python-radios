@@ -162,8 +162,9 @@ You may also pass your own `aiohttp.ClientSession` via `session=...` to
 share a connection pool. The client then leaves closing it to you.
 
 Radio Browser runs on a pool of community servers. The client picks one at
-random through DNS, and when a connection fails, it retries up to five times
-with an exponential backoff, on a freshly picked server each time.
+random through DNS. When a connection fails, it tries again on a freshly
+picked server, with an exponential backoff in between, for up to five attempts
+in total.
 
 ### Error handling
 
