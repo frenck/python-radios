@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import random
 import socket
+import unicodedata
 from asyncio import sleep
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -54,6 +55,27 @@ def unexpected_response() -> Iterator[None]:
     except (AttributeError, LookupError, TypeError, ValueError) as exception:
         msg = "Unexpected response from the Radio Browser API"
         raise RadioBrowserError(msg) from exception
+
+
+def name_sort_key(name: str) -> str:
+    """Return a key that sorts names the way people expect.
+
+    Sorting on the plain string puts every accented letter after "Z", so
+    "Åland Islands" would come after "Zimbabwe". Comparing the names without
+    their accents, and ignoring case, keeps them where a reader looks.
+
+    Args:
+    ----
+        name: The name to sort.
+
+    Returns:
+    -------
+        The sort key for the name.
+
+    """
+    decomposed = unicodedata.normalize("NFKD", name)
+    unaccented = "".join(char for char in decomposed if not unicodedata.combining(char))
+    return unaccented.casefold()
 
 
 # The stations/search endpoint has no by* paths, so search() turns each
@@ -299,16 +321,15 @@ class RadioBrowser:
             A list of Country objects.
 
         """
-        countries_data = await self._request(
-            "countrycodes",
-            params={
-                "hidebroken": hide_broken,
-                "limit": limit,
-                "offset": offset,
-                "order": order.value,
-                "reverse": reverse,
-            },
-        )
+        # The API only knows country codes, so it sorts "by name" on the code.
+        # To sort by the actual name, the whole list is fetched and sorted
+        # here, and only then paged.
+        sort_by_name = order == Order.NAME
+        params: dict[str, Any] = {"hidebroken": hide_broken, "order": order.value}
+        if not sort_by_name:
+            params.update({"limit": limit, "offset": offset, "reverse": reverse})
+
+        countries_data = await self._request("countrycodes", params=params)
 
         with unexpected_response():
             countries = orjson.loads(countries_data)  # pylint: disable=no-member
@@ -316,9 +337,11 @@ class RadioBrowser:
                 country["code"] = country["name"]
                 country["name"] = country_name(country["code"]) or country["code"]
 
-            # Because we enriched the countries we need to re-order in this case
-            if order == Order.NAME:
-                countries.sort(key=lambda country: country["name"])
+            if sort_by_name:
+                countries.sort(
+                    key=lambda country: name_sort_key(country["name"]), reverse=reverse
+                )
+                countries = countries[offset : offset + limit]
 
             # pylint: disable-next=not-an-iterable
             return [Country.from_dict(country) for country in countries]
