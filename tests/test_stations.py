@@ -115,6 +115,53 @@ async def test_station(
     assert url.query["limit"] == "1"
 
 
+async def test_stations_by_uuid(
+    responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
+) -> None:
+    """Test getting several stations by their UUID in one request."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/stations/byuuid\?"),
+        status=200,
+        body=load_fixture("stations.json"),
+    )
+
+    stations = await radios.stations_by_uuid(
+        uuids=[STATION_UUID, "d1a54d2e-623e-4970-ab11-35f7b56c5ec3"]
+    )
+
+    assert stations == snapshot
+    ((_, url),) = responses.requests
+    assert url.query == {
+        "uuids": f"{STATION_UUID},d1a54d2e-623e-4970-ab11-35f7b56c5ec3"
+    }
+
+
+async def test_stations_by_uuid_without_uuids(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test asking for no stations does not send a request."""
+    assert await radios.stations_by_uuid(uuids=[]) == []
+    assert not responses.requests
+
+
+async def test_stations_by_url(responses: aioresponses, radios: RadioBrowser) -> None:
+    """Test getting the stations behind a stream URL."""
+    stream_url = (
+        "http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3"
+    )
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/stations/byurl\?"),
+        status=200,
+        body=load_fixture("stations.json"),
+    )
+
+    stations = await radios.stations_by_url(url=stream_url)
+
+    assert stations[0].url == stream_url
+    ((_, url),) = responses.requests
+    assert url.query == {"url": stream_url}
+
+
 async def test_station_not_found(responses: aioresponses, radios: RadioBrowser) -> None:
     """Test getting an unknown station returns None."""
     responses.get(

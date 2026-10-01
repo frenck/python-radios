@@ -115,6 +115,28 @@ def validate_paging(limit: int, offset: int) -> None:
         raise ValueError(msg)
 
 
+def stations_from_json(data: str) -> list[Station]:
+    """Parse a list of stations from an API response.
+
+    Args:
+    ----
+        data: The JSON response, a list of stations.
+
+    Returns:
+    -------
+        A list of Station objects.
+
+    Raises:
+    ------
+        RadioBrowserError: The response could not be parsed.
+
+    """
+    with unexpected_response():
+        stations = orjson.loads(data)  # pylint: disable=no-member
+        # pylint: disable-next=not-an-iterable
+        return [Station.from_dict(station) for station in stations]
+
+
 # The stations/search endpoint has no by* paths, so search() turns each
 # FilterBy value into search query parameters instead.
 SEARCH_FILTERS: dict[FilterBy, tuple[str, dict[str, bool]]] = {
@@ -608,10 +630,7 @@ class RadioBrowser:
             # yarl rejects None as a query value, so unset filters are left out.
             params={key: value for key, value in params.items() if value is not None},
         )
-        with unexpected_response():
-            stations = orjson.loads(stations_data)  # pylint: disable=no-member
-            # pylint: disable-next=not-an-iterable
-            return [Station.from_dict(station) for station in stations]
+        return stations_from_json(stations_data)
 
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
@@ -633,6 +652,47 @@ class RadioBrowser:
         if not stations:
             return None
         return stations[0]
+
+    async def stations_by_uuid(self, *, uuids: list[str]) -> list[Station]:
+        """Get several stations by their UUID, in a single request.
+
+        Useful to refresh a list of favorite stations. UUIDs of stations that
+        do not exist (anymore) are left out of the result.
+
+        Args:
+        ----
+            uuids: UUIDs of the stations.
+
+        Returns:
+        -------
+            A list of Station objects.
+
+        """
+        if not uuids:
+            return []
+
+        stations_data = await self._request(
+            "stations/byuuid", params={"uuids": ",".join(uuids)}
+        )
+        return stations_from_json(stations_data)
+
+    async def stations_by_url(self, *, url: str) -> list[Station]:
+        """Get the stations that stream from a URL.
+
+        Useful to find the station behind a saved stream URL. Several
+        stations can share a stream, so this can return more than one.
+
+        Args:
+        ----
+            url: The stream URL, as given or as resolved.
+
+        Returns:
+        -------
+            A list of Station objects.
+
+        """
+        stations_data = await self._request("stations/byurl", params={"url": url})
+        return stations_from_json(stations_data)
 
     # pylint: disable-next=too-many-arguments
     async def stations(  # noqa: PLR0913
@@ -692,10 +752,7 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        with unexpected_response():
-            stations = orjson.loads(stations_data)  # pylint: disable=no-member
-            # pylint: disable-next=not-an-iterable
-            return [Station.from_dict(station) for station in stations]
+        return stations_from_json(stations_data)
 
     # pylint: disable-next=too-many-arguments
     async def tags(

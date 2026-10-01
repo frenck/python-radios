@@ -414,6 +414,8 @@ async def test_close_without_session() -> None:
         lambda radios: radios.tags(),
         lambda radios: radios.stations(),
         lambda radios: radios.station(uuid="x"),
+        lambda radios: radios.stations_by_uuid(uuids=["x"]),
+        lambda radios: radios.stations_by_url(url="x"),
         lambda radios: radios.search(),
     ],
     ids=[
@@ -424,6 +426,8 @@ async def test_close_without_session() -> None:
         "tags",
         "stations",
         "station",
+        "stations_by_uuid",
+        "stations_by_url",
         "search",
     ],
 )

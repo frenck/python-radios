@@ -102,6 +102,19 @@ stations = await radios.stations(
 
 # A single station by its UUID, or None if it does not exist
 station = await radios.station(uuid="d1a54d2e-623e-4970-ab11-35f7b56c5ec3")
+
+# Several stations in one request, like refreshing a list of favorites
+stations = await radios.stations_by_uuid(
+    uuids=[
+        "d1a54d2e-623e-4970-ab11-35f7b56c5ec3",
+        "6c95ccdb-ca0a-4c59-a660-96e56ef2dca9",
+    ]
+)
+
+# The stations behind a stream URL
+stations = await radios.stations_by_url(
+    url="https://icecast.walmradio.com:8443/classic"
+)
 ```
 
 ### Searching
