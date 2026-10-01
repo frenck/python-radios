@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "message": "retrieved station url",
+  "stationuuid": "6c95ccdb-ca0a-4c59-a660-96e56ef2dca9",
+  "name": "538",
+  "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3"
+}

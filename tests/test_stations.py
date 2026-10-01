@@ -127,19 +127,24 @@ async def test_station_click(responses: aioresponses, radios: RadioBrowser) -> N
     """Test registering a click on a station."""
     responses.get(
         f"{API_URL}/url/{STATION_UUID}",
-        payload={"ok": True, "message": "retrieved station url"},
+        status=200,
+        body=load_fixture("station_click.json"),
     )
 
-    await radios.station_click(uuid=STATION_UUID)
+    url = await radios.station_click(uuid=STATION_UUID)
 
-    assert len(responses.requests) == 1
+    assert url == (
+        "http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3"
+    )
 
 
 async def test_station_click_uuid_is_escaped(
     responses: aioresponses, radios: RadioBrowser
 ) -> None:
     """Test a station UUID cannot change the URL it is part of."""
-    responses.get(f"{API_URL}/url/..%2Fstats", payload={})
+    responses.get(
+        f"{API_URL}/url/..%2Fstats", status=200, body=load_fixture("station_click.json")
+    )
 
     await radios.station_click(uuid="../stats")
 
