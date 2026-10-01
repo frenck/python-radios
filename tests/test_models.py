@@ -1,6 +1,7 @@
 """Tests for the Radio Browser API models."""
 
 import orjson
+import pytest
 
 from radios import Country, Language, Station, Tag
 
@@ -84,6 +85,31 @@ def test_language_favicon() -> None:
     language = Language(code="nl", name="Dutch", station_count=926)
 
     assert language.favicon == "https://flagcdn.com/256x192/nl.png"
+
+
+@pytest.mark.parametrize(
+    ("code", "flag"),
+    [
+        ("en", "gb"),
+        ("ja", "jp"),
+        ("sv", "se"),
+        ("sr", "rs"),
+        ("EN", "gb"),
+    ],
+)
+def test_language_favicon_is_a_country_flag(code: str, flag: str) -> None:
+    """Test a language links to its country, not a country sharing its code."""
+    language = Language(code=code, name="Name", station_count=1)
+
+    assert language.favicon == f"https://flagcdn.com/256x192/{flag}.png"
+
+
+def test_language_without_single_country_has_no_favicon() -> None:
+    """Test a language spoken across many countries has no flag."""
+    # "ar" is the country code of Argentina, which is not where Arabic is from.
+    language = Language(code="ar", name="Arabic", station_count=570)
+
+    assert language.favicon is None
 
 
 def test_language_without_code_has_no_favicon() -> None:
