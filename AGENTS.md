@@ -23,7 +23,7 @@ manager exits.
 | `src/radios/`        | The package                                            |
 | `  radio_browser.py` | The `RadioBrowser` client: host lookup, requests       |
 | `  models.py`        | mashumaro dataclasses for stations, countries and more |
-| `  const.py`         | `Order` and `FilterBy` enums                           |
+| `  const.py`         | Enums, supported orders, and language flags            |
 | `  exceptions.py`    | `RadioBrowserError` and its connection subclasses      |
 | `tests/`             | pytest suite; each test has a one-line docstring       |
 | `examples/`          | Runnable example against the live API                  |
@@ -80,16 +80,25 @@ See [AI_POLICY.md](AI_POLICY.md) for the contribution policy around AI tooling.
   set `_host` directly to skip the DNS lookup.
 - Boolean query parameters are sent as lowercase `"true"`/`"false"`, because
   that is what the API expects.
-- The API returns countries as ISO 3166-1 alpha-2 codes. `countries()` resolves
-  them to names with `pycountry` (with a special case for Kosovo, `XK`) and
-  re-sorts afterwards when ordering by name.
+- The API returns countries as ISO 3166-1 alpha-2 codes, and lists a few of
+  them twice, once in lowercase. `countries()` fetches the whole list, merges
+  those, resolves the codes to names with `pycountry` (with a special case for
+  Kosovo, `XK`), and sorts and pages locally.
+- The API uses names of its own for countries in some places, like "The
+  Netherlands" for states. `states()` looks those up from a country code.
+- Not every endpoint can sort by every `Order`. `LIST_ORDERS` and
+  `STATION_ORDERS` in `const.py` hold what each kind accepts, verified against
+  the live API; anything else fails or is silently ignored by the API.
+- Path segments built from caller input (filter terms, UUIDs, names) are
+  escaped with `quote(..., safe="")`, so they cannot change the URL.
 - Several station fields (`tags`, `language`, `languagecodes`) arrive as comma
   separated strings and are split into lists by `CommaSeparatedString`.
 
 ## Where to read next
 
 - `README.md`: install, usage, and the development setup.
-- `examples/example.py`: every public method in one script.
+- `examples/example.py`: the basics in one script, the same example the
+  README opens with. The README documents every public method.
 
 [poetry]: https://python-poetry.org
 [prek]: https://github.com/j178/prek

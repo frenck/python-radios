@@ -393,7 +393,8 @@ class RadioBrowser:
             uuid: Only the checks of the station with this UUID.
             after: Only the checks after the check with this UUID, to continue
                 where an earlier call left off.
-            seconds: Only the checks of the last this many seconds.
+            seconds: Only the checks of the last this many seconds. Zero
+                means no time limit, like leaving it out.
             limit: Limit the number of results.
 
         Returns:
@@ -432,7 +433,8 @@ class RadioBrowser:
             uuid: Only the clicks on the station with this UUID.
             after: Only the clicks after the click with this UUID, to continue
                 where an earlier call left off.
-            seconds: Only the clicks of the last this many seconds.
+            seconds: Only the clicks of the last this many seconds. Zero
+                means no time limit, like leaving it out.
             limit: Limit the number of results.
 
         Returns:
@@ -473,7 +475,8 @@ class RadioBrowser:
             uuid: Only the history of the station with this UUID.
             after: The name of the parameter that continues after an earlier
                 result, and the UUID to continue after.
-            seconds: Only the history of the last this many seconds.
+            seconds: Only the history of the last this many seconds. Zero
+                means no time limit, like leaving it out.
             limit: Limit the number of results.
 
         Returns:
