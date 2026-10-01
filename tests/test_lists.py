@@ -10,6 +10,10 @@ from radios import Order, RadioBrowser
 
 from .conftest import API_URL, load_fixture
 
+# What the API accepts, written out on purpose instead of importing the
+# library's own constant, so a mistake there fails here.
+SUPPORTED_LIST_ORDERS = {Order.NAME, Order.STATION_COUNT}
+
 
 async def test_stats(
     responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
@@ -159,3 +163,29 @@ async def test_tags(
     )
 
     assert await radios.tags() == snapshot
+
+
+@pytest.mark.parametrize("method", ["countries", "languages", "tags"])
+@pytest.mark.parametrize("order", sorted(SUPPORTED_LIST_ORDERS))
+async def test_list_orders(
+    responses: aioresponses, radios: RadioBrowser, method: str, order: Order
+) -> None:
+    """Test lists send the orders the API can sort them by."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/"), payload=[])
+
+    await getattr(radios, method)(order=order)
+
+    ((_, url),) = responses.requests
+    assert url.query["order"] == order.value
+
+
+@pytest.mark.parametrize("method", ["countries", "languages", "tags"])
+@pytest.mark.parametrize("order", sorted(set(Order) - SUPPORTED_LIST_ORDERS))
+async def test_list_orders_unsupported(
+    responses: aioresponses, radios: RadioBrowser, method: str, order: Order
+) -> None:
+    """Test lists refuse orders the API answers with a server error."""
+    with pytest.raises(ValueError, match=f"Order.{order.name}"):
+        await getattr(radios, method)(order=order)
+
+    assert not responses.requests

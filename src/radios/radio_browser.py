@@ -21,7 +21,7 @@ from aiohttp import hdrs
 from pycares import SRVRecordData
 from yarl import URL
 
-from .const import FilterBy, Order
+from .const import LIST_ORDERS, STATION_ORDERS, FilterBy, Order
 from .exceptions import (
     RadioBrowserConnectionError,
     RadioBrowserConnectionTimeoutError,
@@ -76,6 +76,25 @@ def name_sort_key(name: str) -> str:
     decomposed = unicodedata.normalize("NFKD", name)
     unaccented = "".join(char for char in decomposed if not unicodedata.combining(char))
     return unaccented.casefold()
+
+
+def validate_order(order: Order, allowed: frozenset[Order]) -> None:
+    """Make sure the endpoint can sort by the requested order.
+
+    Args:
+    ----
+        order: The requested order.
+        allowed: The orders the endpoint supports.
+
+    Raises:
+    ------
+        ValueError: The endpoint cannot sort by this order.
+
+    """
+    if order not in allowed:
+        supported = ", ".join(sorted(f"Order.{item.name}" for item in allowed))
+        msg = f"Cannot order by Order.{order.name} here, use one of: {supported}"
+        raise ValueError(msg)
 
 
 # The stations/search endpoint has no by* paths, so search() turns each
@@ -320,7 +339,13 @@ class RadioBrowser:
         -------
             A list of Country objects.
 
+        Raises:
+        ------
+            ValueError: The endpoint cannot sort by this order.
+
         """
+        validate_order(order, LIST_ORDERS)
+
         # The API only knows country codes, so it sorts "by name" on the code.
         # To sort by the actual name, the whole list is fetched and sorted
         # here, and only then paged.
@@ -370,7 +395,13 @@ class RadioBrowser:
         -------
             A list of Language objects.
 
+        Raises:
+        ------
+            ValueError: The endpoint cannot sort by this order.
+
         """
+        validate_order(order, LIST_ORDERS)
+
         languages_data = await self._request(
             "languages",
             params={
@@ -473,13 +504,16 @@ class RadioBrowser:
         Raises:
         ------
             ValueError: The filter_by value is not supported, filter_term
-                is missing, or the location for a geo search is incomplete.
+                is missing, the location for a geo search is incomplete, or
+                the endpoint cannot sort by this order.
 
         """
         location_incomplete = (geo_lat is None) != (geo_long is None)
         if location_incomplete or (geo_distance is not None and geo_lat is None):
             msg = "geo_lat and geo_long must be set together, also for geo_distance"
             raise ValueError(msg)
+
+        validate_order(order, STATION_ORDERS)
 
         params: dict[str, Any] = {
             "hidebroken": hide_broken,
@@ -580,7 +614,13 @@ class RadioBrowser:
         -------
             A list of Station objects.
 
+        Raises:
+        ------
+            ValueError: The endpoint cannot sort by this order.
+
         """
+        validate_order(order, STATION_ORDERS)
+
         uri = "stations"
         if filter_by is not None:
             uri = f"{uri}/{filter_by.value}"
@@ -628,7 +668,13 @@ class RadioBrowser:
         -------
             A list of Tags objects.
 
+        Raises:
+        ------
+            ValueError: The endpoint cannot sort by this order.
+
         """
+        validate_order(order, LIST_ORDERS)
+
         tags_data = await self._request(
             "tags",
             params={
