@@ -97,6 +97,24 @@ def validate_order(order: Order, allowed: frozenset[Order]) -> None:
         raise ValueError(msg)
 
 
+def validate_paging(limit: int, offset: int) -> None:
+    """Make sure the paging arguments are not negative.
+
+    Args:
+    ----
+        limit: The requested number of results.
+        offset: The requested number of results to skip.
+
+    Raises:
+    ------
+        ValueError: The limit or offset is negative.
+
+    """
+    if limit < 0 or offset < 0:
+        msg = f"limit and offset cannot be negative, got {limit=} and {offset=}"
+        raise ValueError(msg)
+
+
 # The stations/search endpoint has no by* paths, so search() turns each
 # FilterBy value into search query parameters instead.
 SEARCH_FILTERS: dict[FilterBy, tuple[str, dict[str, bool]]] = {
@@ -349,10 +367,12 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order.
+            ValueError: The endpoint cannot sort by this order, or the limit
+                or offset is negative.
 
         """
         validate_order(order, LIST_ORDERS)
+        validate_paging(limit, offset)
 
         # The API only knows country codes, so it sorts "by name" on the code,
         # and it lists a code in lowercase as a country of its own. The whole
@@ -421,10 +441,12 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order.
+            ValueError: The endpoint cannot sort by this order, or the limit
+                or offset is negative.
 
         """
         validate_order(order, LIST_ORDERS)
+        validate_paging(limit, offset)
 
         languages_data = await self._request(
             "languages",
@@ -528,8 +550,9 @@ class RadioBrowser:
         Raises:
         ------
             ValueError: The filter_by value is not supported, filter_term
-                is missing, the location for a geo search is incomplete, or
-                the endpoint cannot sort by this order.
+                is missing, the location for a geo search is incomplete, the
+                endpoint cannot sort by this order, or the limit or offset is
+                negative.
 
         """
         location_incomplete = (geo_lat is None) != (geo_long is None)
@@ -538,6 +561,7 @@ class RadioBrowser:
             raise ValueError(msg)
 
         validate_order(order, STATION_ORDERS)
+        validate_paging(limit, offset)
 
         params: dict[str, Any] = {
             "hidebroken": hide_broken,
@@ -640,11 +664,12 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, or filter_by
-                is set without a filter_term.
+            ValueError: The endpoint cannot sort by this order, the limit or
+                offset is negative, or filter_by is set without a filter_term.
 
         """
         validate_order(order, STATION_ORDERS)
+        validate_paging(limit, offset)
 
         uri = "stations"
         if filter_by is not None:
@@ -698,10 +723,12 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order.
+            ValueError: The endpoint cannot sort by this order, or the limit
+                or offset is negative.
 
         """
         validate_order(order, LIST_ORDERS)
+        validate_paging(limit, offset)
 
         tags_data = await self._request(
             "tags",
