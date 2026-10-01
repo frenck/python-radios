@@ -10,6 +10,10 @@ from radios import FilterBy, Order, RadioBrowser
 
 from .conftest import API_URL, load_fixture
 
+# What the API accepts, written out on purpose instead of importing the
+# library's own constant, so a mistake there fails here.
+SUPPORTED_STATION_ORDERS = set(Order) - {Order.CODE, Order.STATION_COUNT}
+
 STATION_UUID = "6c95ccdb-ca0a-4c59-a660-96e56ef2dca9"
 
 
@@ -150,3 +154,29 @@ async def test_station_click_uuid_is_escaped(
 
     ((_, url),) = responses.requests
     assert url.raw_path == "/json/url/..%2Fstats"
+
+
+@pytest.mark.parametrize("method", ["stations", "search"])
+@pytest.mark.parametrize("order", sorted(SUPPORTED_STATION_ORDERS))
+async def test_station_orders(
+    responses: aioresponses, radios: RadioBrowser, method: str, order: Order
+) -> None:
+    """Test station lists send the orders the API can sort them by."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/"), payload=[])
+
+    await getattr(radios, method)(order=order)
+
+    ((_, url),) = responses.requests
+    assert url.query["order"] == order.value
+
+
+@pytest.mark.parametrize("method", ["stations", "search"])
+@pytest.mark.parametrize("order", sorted(set(Order) - SUPPORTED_STATION_ORDERS))
+async def test_station_orders_unsupported(
+    responses: aioresponses, radios: RadioBrowser, method: str, order: Order
+) -> None:
+    """Test station lists refuse the orders the API silently ignores."""
+    with pytest.raises(ValueError, match=f"Order.{order.name}"):
+        await getattr(radios, method)(order=order)
+
+    assert not responses.requests

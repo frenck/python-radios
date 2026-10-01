@@ -28,6 +28,15 @@ class Order(StrEnum):
     VOTES = "votes"
 
 
+# The countries, languages and tags lists can only be sorted by name or by
+# station count. The API answers anything else with a server error.
+LIST_ORDERS = frozenset({Order.NAME, Order.STATION_COUNT})
+
+# Stations can be sorted by most of their attributes, but not by these two:
+# the API silently ignores them, so the result would not be sorted at all.
+STATION_ORDERS = frozenset(Order) - {Order.CODE, Order.STATION_COUNT}
+
+
 class FilterBy(StrEnum):
     """Enum holding possible filter by types for radio stations."""
 
