@@ -95,10 +95,10 @@ class Station(DataClassORJSONMixin):
             alias="languagecodes", serialization_strategy=CommaSeparatedString()
         )
     )
-    lastchange_time: datetime | None = field(
+    last_change_time: datetime | None = field(
         metadata=field_options(alias="lastchangetime_iso8601")
     )
-    lastcheckok: bool
+    last_check_ok: bool = field(metadata=field_options(alias="lastcheckok"))
     last_check_ok_time: datetime | None = field(
         metadata=field_options(alias="lastcheckoktime_iso8601")
     )
