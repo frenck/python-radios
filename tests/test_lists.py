@@ -132,6 +132,31 @@ async def test_countries_by_name_ignores_accents(
     ]
 
 
+@pytest.mark.parametrize("method", ["languages", "tags"])
+async def test_list_params(
+    responses: aioresponses, radios: RadioBrowser, method: str
+) -> None:
+    """Test languages and tags send every paging and ordering parameter."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/{method}\?"), payload=[])
+
+    await getattr(radios, method)(
+        hide_broken=True,
+        limit=10,
+        offset=20,
+        order=Order.STATION_COUNT,
+        reverse=True,
+    )
+
+    ((_, url),) = responses.requests
+    assert url.query == {
+        "hidebroken": "true",
+        "limit": "10",
+        "offset": "20",
+        "order": "stationcount",
+        "reverse": "true",
+    }
+
+
 async def test_languages(
     responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
 ) -> None:
