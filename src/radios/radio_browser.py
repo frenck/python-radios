@@ -349,30 +349,46 @@ class RadioBrowser:
         """
         validate_order(order, LIST_ORDERS)
 
-        # The API only knows country codes, so it sorts "by name" on the code.
-        # To sort by the actual name, the whole list is fetched and sorted
-        # here, and only then paged.
-        sort_by_name = order == Order.NAME
-        params: dict[str, Any] = {"hidebroken": hide_broken, "order": order.value}
-        if not sort_by_name:
-            params.update({"limit": limit, "offset": offset, "reverse": reverse})
-
-        countries_data = await self._request("countrycodes", params=params)
+        # The API only knows country codes, so it sorts "by name" on the code,
+        # and it lists a code in lowercase as a country of its own. The whole
+        # list is fetched instead (it is short), cleaned up, and sorted and
+        # paged here.
+        countries_data = await self._request(
+            "countrycodes", params={"hidebroken": hide_broken}
+        )
 
         with unexpected_response():
-            countries = orjson.loads(countries_data)  # pylint: disable=no-member
-            for country in countries:  # pylint: disable=not-an-iterable
-                country["code"] = country["name"]
-                country["name"] = country_name(country["code"]) or country["code"]
-
-            if sort_by_name:
-                countries.sort(
-                    key=lambda country: name_sort_key(country["name"]), reverse=reverse
-                )
-                countries = countries[offset : offset + limit]
-
+            countries: dict[str, dict[str, Any]] = {}
             # pylint: disable-next=not-an-iterable
-            return [Country.from_dict(country) for country in countries]
+            for country in orjson.loads(countries_data):  # pylint: disable=no-member
+                # A few stations carry their code in lowercase, like "de".
+                # Filtering on "DE" already includes those, so they belong to
+                # the same country.
+                code = country["name"].upper()
+                if code in countries:
+                    countries[code]["stationcount"] += country["stationcount"]
+                    continue
+
+                countries[code] = {
+                    "code": code,
+                    "name": country_name(code) or code,
+                    "stationcount": country["stationcount"],
+                }
+
+            # Sorting by name first keeps countries with the same station
+            # count in alphabetical order.
+            ordered = sorted(
+                countries.values(), key=lambda country: name_sort_key(country["name"])
+            )
+            if order == Order.STATION_COUNT:
+                ordered.sort(key=lambda country: country["stationcount"])
+            if reverse:
+                ordered.reverse()
+
+            return [
+                Country.from_dict(country)
+                for country in ordered[offset : offset + limit]
+            ]
 
     # pylint: disable-next=too-many-arguments
     async def languages(

@@ -46,10 +46,23 @@ async def test_countries(
     ]
 
 
-async def test_countries_keep_api_order(
-    responses: aioresponses, radios: RadioBrowser
+@pytest.mark.parametrize(
+    ("reverse", "offset", "limit", "expected"),
+    [
+        (False, 0, 100000, ["XX", "XK", "NL", "DE"]),
+        (True, 0, 100000, ["DE", "NL", "XK", "XX"]),
+        (True, 1, 2, ["NL", "XK"]),
+    ],
+)
+async def test_countries_by_station_count(  # noqa: PLR0913
+    responses: aioresponses,
+    radios: RadioBrowser,
+    reverse: bool,
+    offset: int,
+    limit: int,
+    expected: list[str],
 ) -> None:
-    """Test countries are only re-sorted when ordered by name."""
+    """Test countries are sorted and paged by their station count."""
     responses.get(
         re.compile(rf"^{re.escape(API_URL)}/countrycodes\?"),
         status=200,
@@ -57,19 +70,44 @@ async def test_countries_keep_api_order(
     )
 
     countries = await radios.countries(
-        order=Order.STATION_COUNT, reverse=True, limit=10, offset=20
+        order=Order.STATION_COUNT, reverse=reverse, offset=offset, limit=limit
     )
 
-    assert [country.code for country in countries] == ["XK", "NL", "DE", "XX"]
-    # The API can sort by station count itself, so it also does the paging.
+    assert [country.code for country in countries] == expected
+
+
+async def test_countries_fetch_the_whole_list(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test countries are fetched in full, the client sorts and pages them."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/countrycodes\?"), payload=[])
+
+    await radios.countries(
+        hide_broken=True, order=Order.STATION_COUNT, reverse=True, limit=10, offset=5
+    )
+
     ((_, url),) = responses.requests
-    assert url.query == {
-        "hidebroken": "false",
-        "order": "stationcount",
-        "limit": "10",
-        "offset": "20",
-        "reverse": "true",
-    }
+    assert url.query == {"hidebroken": "true"}
+
+
+async def test_countries_merge_lowercase_codes(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a country listed again under a lowercase code is counted once."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/countrycodes\?"),
+        payload=[
+            {"name": "DE", "stationcount": 6470},
+            {"name": "NL", "stationcount": 1546},
+            {"name": "de", "stationcount": 1},
+        ],
+    )
+
+    countries = await radios.countries()
+
+    assert [
+        (country.code, country.name, country.station_count) for country in countries
+    ] == [("DE", "Germany", 6471), ("NL", "Netherlands", 1546)]
 
 
 @pytest.mark.parametrize(
@@ -101,9 +139,6 @@ async def test_countries_by_name(  # noqa: PLR0913
     countries = await radios.countries(reverse=reverse, offset=offset, limit=limit)
 
     assert [country.name for country in countries] == expected
-    # The API would sort and page on the code, so the whole list is fetched.
-    ((_, url),) = responses.requests
-    assert url.query == {"hidebroken": "false", "order": "name"}
 
 
 async def test_countries_by_name_ignores_accents(
@@ -165,7 +200,7 @@ async def test_tags(
     assert await radios.tags() == snapshot
 
 
-@pytest.mark.parametrize("method", ["countries", "languages", "tags"])
+@pytest.mark.parametrize("method", ["languages", "tags"])
 @pytest.mark.parametrize("order", sorted(SUPPORTED_LIST_ORDERS))
 async def test_list_orders(
     responses: aioresponses, radios: RadioBrowser, method: str, order: Order
