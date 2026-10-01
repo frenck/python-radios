@@ -8,7 +8,7 @@ from aioresponses import aioresponses
 from multidict import MultiDictProxy
 from syrupy.assertion import SnapshotAssertion
 
-from radios import FilterBy, RadioBrowser
+from radios import FilterBy, Order, RadioBrowser
 
 from .conftest import API_URL, load_fixture
 
@@ -37,6 +37,25 @@ async def test_search(
     responses.get(SEARCH_URL, status=200, body=load_fixture("stations.json"))
 
     assert await radios.search(name="538") == snapshot
+
+
+async def test_search_paging(responses: aioresponses, radios: RadioBrowser) -> None:
+    """Test search sends every paging and ordering parameter."""
+    query = await _search(
+        responses,
+        radios,
+        hide_broken=True,
+        limit=10,
+        offset=20,
+        order=Order.VOTES,
+        reverse=True,
+    )
+
+    assert query["hidebroken"] == "true"
+    assert query["limit"] == "10"
+    assert query["offset"] == "20"
+    assert query["order"] == "votes"
+    assert query["reverse"] == "true"
 
 
 async def test_search_query_keys(responses: aioresponses, radios: RadioBrowser) -> None:

@@ -160,15 +160,22 @@ async def test_retry_delays(
         f"{API_URL}/test", exception=aiohttp.ClientConnectionError(), repeat=True
     )
 
+    # A distinct "random" value per attempt shows the wait comes from the
+    # jitter, and not from the bounds alone.
+    jitter = [0.3, 1.1, 2.5, 7.9]
     with (
-        patch("radios.radio_browser.random.uniform", side_effect=max),
+        patch("radios.radio_browser.random.uniform", side_effect=jitter) as uniform,
         pytest.raises(RadioBrowserConnectionError),
     ):
         await radios._request("test")
 
-    # With uniform() patched to return its upper bound, the waits show the
-    # ceiling of each jitter range.
-    assert [call.args[0] for call in retry_sleep.await_args_list] == [1, 2, 4, 8]
+    assert [call.args for call in uniform.call_args_list] == [
+        (0, 1),
+        (0, 2),
+        (0, 4),
+        (0, 8),
+    ]
+    assert [call.args[0] for call in retry_sleep.await_args_list] == jitter
 
 
 async def test_connection_error_recovers(
@@ -254,9 +261,16 @@ async def test_host_lookup_picks_a_server(
     dns_resolver.return_value.query_dns.return_value = result
     radios._host = None
 
-    await radios._request("test")
+    # Pick the last candidate, so always taking the first one would fail.
+    with patch(
+        "radios.radio_browser.random.choice", side_effect=lambda hosts: hosts[-1]
+    ) as choice:
+        await radios._request("test")
 
-    assert radios._host in {"one.example.com", "two.example.com"}
+    choice.assert_called_once_with(["one.example.com", "two.example.com"])
+    assert radios._host == "two.example.com"
+    ((_, url),) = responses.requests
+    assert url.host == "two.example.com"
 
 
 @pytest.mark.usefixtures("retry_sleep")
