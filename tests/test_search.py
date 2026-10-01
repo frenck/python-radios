@@ -82,13 +82,71 @@ async def test_search_filters(responses: aioresponses, radios: RadioBrowser) -> 
     assert query["tag"] == "pop"
 
 
+async def test_search_more_filters(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test search sends the tag list, codec, HTTPS and info filters."""
+    query = await _search(
+        responses,
+        radios,
+        tag_list=["jazz", "blues"],
+        codec="AAC",
+        is_https=True,
+        has_geo_info=False,
+        has_extended_info=True,
+    )
+
+    assert query["tagList"] == "jazz,blues"
+    assert query["codec"] == "AAC"
+    assert query["is_https"] == "true"
+    assert query["has_geo_info"] == "false"
+    assert query["has_extended_info"] == "true"
+
+
+async def test_search_geo(responses: aioresponses, radios: RadioBrowser) -> None:
+    """Test search sends a location and distance to search around."""
+    query = await _search(
+        responses, radios, geo_lat=52.37, geo_long=4.89, geo_distance=5000
+    )
+
+    assert query["geo_lat"] == "52.37"
+    assert query["geo_long"] == "4.89"
+    assert query["geo_distance"] == "5000"
+
+
+@pytest.mark.parametrize(
+    "location", [{"geo_lat": 52.37}, {"geo_long": 4.89}, {"geo_distance": 5000.0}]
+)
+async def test_search_geo_incomplete(location: dict[str, Any]) -> None:
+    """Test search rejects a location that misses its latitude or longitude."""
+    radios = RadioBrowser(user_agent="PythonRadios/Tests")
+
+    with pytest.raises(ValueError, match="geo_lat and geo_long"):
+        await radios.search(**location)
+
+
 async def test_search_omits_unset_filters(
     responses: aioresponses, radios: RadioBrowser
 ) -> None:
     """Test search does not send filters that are not set."""
     query = await _search(responses, radios)
 
-    for key in ("name", "country", "countrycode", "state", "language", "tag"):
+    for key in (
+        "name",
+        "country",
+        "countrycode",
+        "state",
+        "language",
+        "tag",
+        "tagList",
+        "codec",
+        "is_https",
+        "has_geo_info",
+        "has_extended_info",
+        "geo_lat",
+        "geo_long",
+        "geo_distance",
+    ):
         assert key not in query
 
 

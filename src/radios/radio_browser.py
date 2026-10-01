@@ -353,8 +353,16 @@ class RadioBrowser:
         language_exact: bool = False,
         tag: str | None = None,
         tag_exact: bool = False,
+        tag_list: list[str] | None = None,
+        codec: str | None = None,
         bitrate_min: int = 0,
         bitrate_max: int = 1000000,
+        is_https: bool | None = None,
+        has_geo_info: bool | None = None,
+        has_extended_info: bool | None = None,
+        geo_lat: float | None = None,
+        geo_long: float | None = None,
+        geo_distance: float | None = None,
     ) -> list[Station]:
         """Get list of radio stations.
 
@@ -381,8 +389,23 @@ class RadioBrowser:
             language_exact: Search by exact language.
             tag: Search by tag.
             tag_exact: Search by exact tag.
+            tag_list: Only stations that match all of these tags. Like
+                `tag`, this matches part of a tag: "blues" also finds
+                "blues rock".
+            codec: Search by codec, for example "MP3" or "AAC".
             bitrate_min: Search by minimum bitrate.
             bitrate_max: Search by maximum bitrate.
+            is_https: Only stations that stream over HTTPS when True, or
+                only plain HTTP ones when False. Both when not set.
+            has_geo_info: Only stations with a location when True, or only
+                stations without one when False. Both when not set.
+            has_extended_info: Only stations that provide extended
+                information when True, or only ones that do not when False.
+                Both when not set.
+            geo_lat: Latitude to search around, together with geo_long.
+            geo_long: Longitude to search around, together with geo_lat.
+            geo_distance: Only stations within this many meters of geo_lat
+                and geo_long.
 
         Returns:
         -------
@@ -390,10 +413,15 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The filter_by value is not supported, or
-                filter_term is missing.
+            ValueError: The filter_by value is not supported, filter_term
+                is missing, or the location for a geo search is incomplete.
 
         """
+        location_incomplete = (geo_lat is None) != (geo_long is None)
+        if location_incomplete or (geo_distance is not None and geo_lat is None):
+            msg = "geo_lat and geo_long must be set together, also for geo_distance"
+            raise ValueError(msg)
+
         params: dict[str, Any] = {
             "hidebroken": hide_broken,
             "offset": offset,
@@ -411,8 +439,16 @@ class RadioBrowser:
             "languageExact": language_exact,
             "tag": tag,
             "tagExact": tag_exact,
+            "tagList": ",".join(tag_list) if tag_list else None,
+            "codec": codec,
             "bitrateMin": bitrate_min,
             "bitrateMax": bitrate_max,
+            "is_https": is_https,
+            "has_geo_info": has_geo_info,
+            "has_extended_info": has_extended_info,
+            "geo_lat": geo_lat,
+            "geo_long": geo_long,
+            "geo_distance": geo_distance,
         }
 
         if filter_by is not None:
