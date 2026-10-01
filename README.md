@@ -165,7 +165,7 @@ countries = await radios.countries()  # names resolved from ISO country codes
 languages = await radios.languages(hide_broken=True)
 tags = await radios.tags(order=Order.STATION_COUNT, reverse=True, limit=50)
 codecs = await radios.codecs()
-states = await radios.states(country="The Netherlands")
+states = await radios.states(country_code="NL")
 
 for country in countries:
     print(country.name, country.station_count, country.favicon)
@@ -178,8 +178,7 @@ Countries and languages have a `favicon` with a flag. A language that is not
 tied to one country, like Arabic, has none.
 
 States are entered by hand along with the stations, so expect anything from a
-province to a full street address. Their `country` filter takes the full name
-the API uses, like "The Netherlands", not a country code.
+province to a full street address.
 
 ### Connection options
 

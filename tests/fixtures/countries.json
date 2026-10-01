@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Coted Ivoire",
+    "iso_3166_1": "CI",
+    "stationcount": 12
+  },
+  {
+    "name": "Germany",
+    "iso_3166_1": "DE",
+    "stationcount": 6468
+  },
+  {
+    "name": "The Netherlands",
+    "iso_3166_1": "NL",
+    "stationcount": 1546
+  },
+  {
+    "name": "The United States Of America",
+    "iso_3166_1": "US",
+    "stationcount": 8303
+  },
+  {
+    "name": "",
+    "iso_3166_1": "XX",
+    "stationcount": 1
+  }
+]
