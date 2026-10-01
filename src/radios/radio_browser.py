@@ -929,7 +929,7 @@ class RadioBrowser:
     async def states(  # noqa: PLR0913
         self,
         *,
-        country: str | None = None,
+        country_code: str | None = None,
         name: str | None = None,
         hide_broken: bool = False,
         limit: int = 100000,
@@ -941,9 +941,8 @@ class RadioBrowser:
 
         Args:
         ----
-            country: Only the states in this country. This is the full name
-                the API uses, like "The Netherlands" or "Germany", and it is
-                case sensitive. It is not the country code.
+            country_code: Only the states in the country with this ISO 3166-1
+                alpha-2 code, like "NL".
             name: Only the ones whose name contains this, ignoring case.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
@@ -963,6 +962,15 @@ class RadioBrowser:
         """
         validate_order(order, LIST_ORDERS)
         validate_paging(limit, offset)
+
+        # The API filters states on its own name for a country, like "The
+        # Netherlands", which is neither the code nor the name countries()
+        # returns. Look that name up, so callers can use the country code.
+        country = None
+        if country_code:
+            country = await self._api_country_name(country_code)
+            if not country:
+                return []
 
         # The country comes before the name filter in the path. A country
         # without a name filter needs the trailing slash, or the API takes
@@ -987,6 +995,33 @@ class RadioBrowser:
             states = orjson.loads(states_data)  # pylint: disable=no-member
             # pylint: disable-next=not-an-iterable
             return [State.from_dict(state) for state in states]
+
+    async def _api_country_name(self, country_code: str) -> str | None:
+        """Look up the name the API itself uses for a country.
+
+        Args:
+        ----
+            country_code: The ISO 3166-1 alpha-2 code of the country.
+
+        Returns:
+        -------
+            The name of the country in the API, or None for an unknown code.
+            The API lists some codes without a name, like "XX"; those count
+            as unknown too.
+
+        """
+        countries_data = await self._request("countries")
+        with unexpected_response():
+            countries = orjson.loads(countries_data)  # pylint: disable=no-member
+            return next(
+                (
+                    country["name"] or None
+                    # pylint: disable-next=not-an-iterable
+                    for country in countries
+                    if country["iso_3166_1"].upper() == country_code.upper()
+                ),
+                None,
+            )
 
     async def close(self) -> None:
         """Close open client session."""

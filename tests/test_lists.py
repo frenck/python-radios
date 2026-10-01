@@ -334,37 +334,58 @@ async def test_codecs(
 async def test_states(
     responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
 ) -> None:
-    """Test listing the states of a country."""
+    """Test listing the states of a country, by its country code."""
+    responses.get(
+        f"{API_URL}/countries", status=200, body=load_fixture("countries.json")
+    )
     responses.get(
         re.compile(rf"^{re.escape(API_URL)}/states/"),
         status=200,
         body=load_fixture("states.json"),
     )
 
-    assert await radios.states(country="The Netherlands", name="utrecht") == snapshot
+    assert await radios.states(country_code="NL", name="utrecht") == snapshot
 
 
 @pytest.mark.parametrize(
-    ("country", "name", "path"),
+    ("country_code", "name", "path"),
     [
         (None, None, "/json/states"),
         (None, "Utrecht", "/json/states/Utrecht"),
-        ("The Netherlands", None, "/json/states/The%20Netherlands/"),
-        ("The Netherlands", "Utrecht", "/json/states/The%20Netherlands/Utrecht"),
-        ("Côte d'Ivoire", "a/b", "/json/states/C%C3%B4te%20d%27Ivoire/a%2Fb"),
+        ("NL", None, "/json/states/The%20Netherlands/"),
+        ("nl", "Utrecht", "/json/states/The%20Netherlands/Utrecht"),
+        ("CI", "a/b", "/json/states/Coted%20Ivoire/a%2Fb"),
     ],
 )
 async def test_states_path(
     responses: aioresponses,
     radios: RadioBrowser,
-    country: str | None,
+    country_code: str | None,
     name: str | None,
     path: str,
 ) -> None:
-    """Test the country and name end up in the path, in that order."""
+    """Test the API name of the country and the name end up in the path."""
+    responses.get(
+        f"{API_URL}/countries", status=200, body=load_fixture("countries.json")
+    )
     responses.get(re.compile(rf"^{re.escape(API_URL)}/states"), payload=[])
 
-    await radios.states(country=country, name=name)
+    await radios.states(country_code=country_code, name=name)
 
-    ((_, url),) = responses.requests
-    assert url.raw_path == path
+    (states_url,) = [url for _, url in responses.requests if "states" in url.path]
+    assert states_url.raw_path == path
+
+
+@pytest.mark.parametrize("country_code", ["ZZ", "XX"], ids=["missing", "nameless"])
+async def test_states_unknown_country_code(
+    responses: aioresponses, radios: RadioBrowser, country_code: str
+) -> None:
+    """Test an unknown country code has no states, without asking for them."""
+    # The API really lists "XX" in its countries, with an empty name. Taking
+    # that name as a filter would return the states of every country.
+    responses.get(
+        f"{API_URL}/countries", status=200, body=load_fixture("countries.json")
+    )
+
+    assert await radios.states(country_code=country_code) == []
+    assert [url.path for _, url in responses.requests] == ["/json/countries"]
