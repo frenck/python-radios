@@ -2,6 +2,7 @@
 
 import re
 
+import pytest
 from aioresponses import aioresponses
 from syrupy.assertion import SnapshotAssertion
 
@@ -51,11 +52,80 @@ async def test_countries_keep_api_order(
         body=load_fixture("countrycodes.json"),
     )
 
-    countries = await radios.countries(order=Order.STATION_COUNT)
+    countries = await radios.countries(
+        order=Order.STATION_COUNT, reverse=True, limit=10, offset=20
+    )
 
     assert [country.code for country in countries] == ["XK", "NL", "DE", "XX"]
+    # The API can sort by station count itself, so it also does the paging.
     ((_, url),) = responses.requests
-    assert url.query["order"] == "stationcount"
+    assert url.query == {
+        "hidebroken": "false",
+        "order": "stationcount",
+        "limit": "10",
+        "offset": "20",
+        "reverse": "true",
+    }
+
+
+@pytest.mark.parametrize(
+    ("reverse", "offset", "limit", "expected"),
+    [
+        (False, 0, 100000, ["Germany", "Kosovo", "Netherlands", "XX"]),
+        (True, 0, 100000, ["XX", "Netherlands", "Kosovo", "Germany"]),
+        (False, 1, 2, ["Kosovo", "Netherlands"]),
+        (True, 1, 2, ["Netherlands", "Kosovo"]),
+        (False, 3, 10, ["XX"]),
+        (False, 10, 10, []),
+    ],
+)
+async def test_countries_by_name(  # noqa: PLR0913
+    responses: aioresponses,
+    radios: RadioBrowser,
+    reverse: bool,
+    offset: int,
+    limit: int,
+    expected: list[str],
+) -> None:
+    """Test countries are sorted and paged by their name, not their code."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/countrycodes\?"),
+        status=200,
+        body=load_fixture("countrycodes.json"),
+    )
+
+    countries = await radios.countries(reverse=reverse, offset=offset, limit=limit)
+
+    assert [country.name for country in countries] == expected
+    # The API would sort and page on the code, so the whole list is fetched.
+    ((_, url),) = responses.requests
+    assert url.query == {"hidebroken": "false", "order": "name"}
+
+
+async def test_countries_by_name_ignores_accents(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test accented country names sort with their letter, not after Z."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/countrycodes\?"),
+        payload=[
+            {"name": "ZW", "stationcount": 1},
+            {"name": "AX", "stationcount": 1},
+            {"name": "CI", "stationcount": 1},
+            {"name": "CY", "stationcount": 1},
+            {"name": "AF", "stationcount": 1},
+        ],
+    )
+
+    countries = await radios.countries()
+
+    assert [country.name for country in countries] == [
+        "Afghanistan",
+        "Åland Islands",
+        "Côte d'Ivoire",
+        "Cyprus",
+        "Zimbabwe",
+    ]
 
 
 async def test_languages(
