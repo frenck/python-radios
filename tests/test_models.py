@@ -2,7 +2,7 @@
 
 import orjson
 
-from radios import Country, Language, Station
+from radios import Country, Language, Station, Tag
 
 from .conftest import load_fixture
 
@@ -59,22 +59,35 @@ def test_station_comma_separated_fields_serialize() -> None:
     assert serialized["language"] == "english"
 
 
+def test_station_count_is_an_integer() -> None:
+    """Test station counts are integers, like the API sends them."""
+    country = Country.from_dict({"code": "NL", "name": "NL", "stationcount": 1545})
+    language = Language.from_dict(
+        {"iso_639": "nl", "name": "dutch", "stationcount": 926}
+    )
+    tag = Tag.from_dict({"name": "pop", "stationcount": 6337})
+
+    assert country.station_count == 1545
+    assert language.station_count == 926
+    assert tag.station_count == 6337
+
+
 def test_country_favicon() -> None:
     """Test a country links to its flag."""
-    country = Country(code="NL", name="Netherlands", station_count="1545")
+    country = Country(code="NL", name="Netherlands", station_count=1545)
 
     assert country.favicon == "https://flagcdn.com/256x192/nl.png"
 
 
 def test_language_favicon() -> None:
     """Test a language with a code links to a flag."""
-    language = Language(code="nl", name="Dutch", station_count="926")
+    language = Language(code="nl", name="Dutch", station_count=926)
 
     assert language.favicon == "https://flagcdn.com/256x192/nl.png"
 
 
 def test_language_without_code_has_no_favicon() -> None:
     """Test a language without a code has no flag."""
-    language = Language(code=None, name="#English", station_count="3")
+    language = Language(code=None, name="#English", station_count=3)
 
     assert language.favicon is None
