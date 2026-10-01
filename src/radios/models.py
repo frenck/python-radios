@@ -29,7 +29,7 @@ def country_name(country_code: str) -> str | None:
     """
     # Kosovo has a user-assigned code that is not part of ISO 3166-1, so
     # pycountry does not know it. https://github.com/frenck/python-radios/issues/19
-    if country_code == "XK":
+    if country_code.upper() == "XK":
         return "Kosovo"
 
     if country := pycountry.countries.get(alpha_2=country_code):

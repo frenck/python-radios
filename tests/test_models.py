@@ -32,6 +32,18 @@ def test_station_country_kosovo() -> None:
     assert station.country == "Kosovo"
 
 
+def test_station_country_lowercase_code() -> None:
+    """Test a station with its country code in lowercase still has a country."""
+    station, _, _ = _stations()
+    station.country_code = "de"
+
+    assert station.country == "Germany"
+
+    station.country_code = "xk"
+
+    assert station.country == "Kosovo"
+
+
 def test_station_country_unknown_code() -> None:
     """Test a station with an unknown country code has no country."""
     station, _, _ = _stations()
