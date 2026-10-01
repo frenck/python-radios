@@ -118,9 +118,14 @@ stations = await radios.search(
     is_https=True,
 )
 
-# Stations within 25 kilometers of Amsterdam
+# Stations within 25 kilometers of Amsterdam, nearest first
 stations = await radios.search(geo_lat=52.37, geo_long=4.89, geo_distance=25_000)
+for station in sorted(stations, key=lambda station: station.distance or 0):
+    print(f"{station.name} ({station.distance:.0f} meters away)")
 ```
+
+The results of a geo search carry their `distance` to the location, in
+meters. On other results it is `None`.
 
 Invalid combinations, like a `geo_distance` without a location, raise a
 `ValueError`.
