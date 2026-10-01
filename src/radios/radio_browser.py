@@ -27,7 +27,16 @@ from .exceptions import (
     RadioBrowserConnectionTimeoutError,
     RadioBrowserError,
 )
-from .models import Country, Language, Station, Stats, Tag, country_name
+from .models import (
+    Codec,
+    Country,
+    Language,
+    State,
+    Station,
+    Stats,
+    Tag,
+    country_name,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -838,6 +847,119 @@ class RadioBrowser:
             tags = orjson.loads(tags_data)  # pylint: disable=no-member
             # pylint: disable-next=not-an-iterable
             return [Tag.from_dict(tag) for tag in tags]
+
+    # pylint: disable-next=too-many-arguments
+    async def codecs(  # noqa: PLR0913
+        self,
+        *,
+        name: str | None = None,
+        hide_broken: bool = False,
+        limit: int = 100000,
+        offset: int = 0,
+        order: Order = Order.NAME,
+        reverse: bool = False,
+    ) -> list[Codec]:
+        """Get list of codecs the stations stream in.
+
+        Args:
+        ----
+            name: Only the ones whose name contains this, ignoring case.
+            hide_broken: Do not count broken stations.
+            limit: Limit the number of results.
+            offset: Offset the results.
+            order: Order the results.
+            reverse: Reverse the order of the results.
+
+        Returns:
+        -------
+            A list of Codec objects.
+
+        Raises:
+        ------
+            ValueError: The endpoint cannot sort by this order, or the limit
+                or offset is negative.
+
+        """
+        validate_order(order, LIST_ORDERS)
+        validate_paging(limit, offset)
+
+        codecs_data = await self._request(
+            name_filter_uri("codecs", name),
+            params={
+                "hidebroken": hide_broken,
+                "offset": offset,
+                "order": order.value,
+                "reverse": reverse,
+                "limit": limit,
+            },
+        )
+        with unexpected_response():
+            codecs = orjson.loads(codecs_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [Codec.from_dict(codec) for codec in codecs]
+
+    # pylint: disable-next=too-many-arguments
+    async def states(  # noqa: PLR0913
+        self,
+        *,
+        country: str | None = None,
+        name: str | None = None,
+        hide_broken: bool = False,
+        limit: int = 100000,
+        offset: int = 0,
+        order: Order = Order.NAME,
+        reverse: bool = False,
+    ) -> list[State]:
+        """Get list of states, provinces and regions the stations are in.
+
+        Args:
+        ----
+            country: Only the states in this country. This is the full name
+                the API uses, like "The Netherlands" or "Germany", and it is
+                case sensitive. It is not the country code.
+            name: Only the ones whose name contains this, ignoring case.
+            hide_broken: Do not count broken stations.
+            limit: Limit the number of results.
+            offset: Offset the results.
+            order: Order the results.
+            reverse: Reverse the order of the results.
+
+        Returns:
+        -------
+            A list of State objects.
+
+        Raises:
+        ------
+            ValueError: The endpoint cannot sort by this order, or the limit
+                or offset is negative.
+
+        """
+        validate_order(order, LIST_ORDERS)
+        validate_paging(limit, offset)
+
+        # The country comes before the name filter in the path. A country
+        # without a name filter needs the trailing slash, or the API takes
+        # the country for a name filter.
+        uri = "states"
+        if country:
+            uri = f"{uri}/{quote(country, safe='')}/{quote(name or '', safe='')}"
+        elif name:
+            uri = f"{uri}/{quote(name, safe='')}"
+
+        states_data = await self._request(
+            uri,
+            params={
+                "hidebroken": hide_broken,
+                "offset": offset,
+                "order": order.value,
+                "reverse": reverse,
+                "limit": limit,
+            },
+        )
+        with unexpected_response():
+            states = orjson.loads(states_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [State.from_dict(state) for state in states]
 
     async def close(self) -> None:
         """Close open client session."""

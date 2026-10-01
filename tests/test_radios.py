@@ -412,6 +412,8 @@ async def test_close_without_session() -> None:
         lambda radios: radios.countries(),
         lambda radios: radios.languages(),
         lambda radios: radios.tags(),
+        lambda radios: radios.codecs(),
+        lambda radios: radios.states(),
         lambda radios: radios.stations(),
         lambda radios: radios.station(uuid="x"),
         lambda radios: radios.stations_by_uuid(uuids=["x"]),
@@ -424,6 +426,8 @@ async def test_close_without_session() -> None:
         "countries",
         "languages",
         "tags",
+        "codecs",
+        "states",
         "stations",
         "station",
         "stations_by_uuid",
@@ -458,7 +462,8 @@ async def test_unexpected_response(
 
 
 @pytest.mark.parametrize(
-    "method", ["countries", "languages", "tags", "stations", "search"]
+    "method",
+    ["codecs", "countries", "languages", "states", "tags", "stations", "search"],
 )
 @pytest.mark.parametrize(
     "paging", [{"limit": -1}, {"offset": -1}], ids=["limit", "offset"]

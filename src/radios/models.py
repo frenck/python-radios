@@ -190,3 +190,24 @@ class Tag(DataClassORJSONMixin):
 
     name: str
     station_count: int = field(metadata=field_options(alias="stationcount"))
+
+
+@dataclass
+class Codec(DataClassORJSONMixin):
+    """Object information for a Codec from the Radio Browser."""
+
+    name: str
+    station_count: int = field(metadata=field_options(alias="stationcount"))
+
+
+@dataclass
+class State(DataClassORJSONMixin):
+    """Object information for a State from the Radio Browser.
+
+    States are entered by hand along with the stations, so expect anything
+    from a province to a full street address.
+    """
+
+    name: str
+    country: str
+    station_count: int = field(metadata=field_options(alias="stationcount"))

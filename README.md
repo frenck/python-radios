@@ -153,22 +153,28 @@ to stream from:
 url = await radios.station_click(uuid=station.uuid)
 ```
 
-### Countries, languages and tags
+### Countries, languages, tags, codecs and states
 
 ```python
 countries = await radios.countries()  # names resolved from ISO country codes
 languages = await radios.languages(hide_broken=True)
 tags = await radios.tags(order=Order.STATION_COUNT, reverse=True, limit=50)
+codecs = await radios.codecs()
+states = await radios.states(country="The Netherlands")
 
 for country in countries:
     print(country.name, country.station_count, country.favicon)
 ```
 
-All three take a `name` to only get the ones whose name contains it, like
+They all take a `name` to only get the ones whose name contains it, like
 `await radios.tags(name="jazz")`, which is handy for autocompletion.
 
 Countries and languages have a `favicon` with a flag. A language that is not
 tied to one country, like Arabic, has none.
+
+States are entered by hand along with the stations, so expect anything from a
+province to a full street address. Their `country` filter takes the full name
+the API uses, like "The Netherlands", not a country code.
 
 ### Connection options
 
