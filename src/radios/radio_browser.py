@@ -225,7 +225,7 @@ class RadioBrowser:
         response = await self._request("stats")
         return Stats.from_json(response)
 
-    async def station_click(self, *, uuid: str) -> None:
+    async def station_click(self, *, uuid: str) -> str:
         """Register click on a station.
 
         Increase the click count of a station by one. This should be called
@@ -237,8 +237,14 @@ class RadioBrowser:
         ----
             uuid: UUID of the station.
 
+        Returns:
+        -------
+            The stream URL of the station, ready to play.
+
         """
-        await self._request(f"url/{quote(uuid, safe='')}")
+        click_data = await self._request(f"url/{quote(uuid, safe='')}")
+        click = orjson.loads(click_data)  # pylint: disable=no-member
+        return click["url"]
 
     # pylint: disable-next=too-many-arguments
     async def countries(
