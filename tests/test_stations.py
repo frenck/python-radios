@@ -67,13 +67,11 @@ async def test_stations_filter_by(
 async def test_stations_filter_by_without_term(
     responses: aioresponses, radios: RadioBrowser
 ) -> None:
-    """Test filter_by without a term only adds the filter to the path."""
-    responses.get(
-        re.compile(rf"^{re.escape(API_URL)}/stations/bycodec\?"),
-        payload=[],
-    )
+    """Test filter_by without a term is refused, the API has no such path."""
+    with pytest.raises(ValueError, match="filter_by requires a filter_term"):
+        await radios.stations(filter_by=FilterBy.CODEC)
 
-    assert await radios.stations(filter_by=FilterBy.CODEC) == []
+    assert not responses.requests
 
 
 @pytest.mark.parametrize(

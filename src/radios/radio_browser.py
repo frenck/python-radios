@@ -617,18 +617,22 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order.
+            ValueError: The endpoint cannot sort by this order, or filter_by
+                is set without a filter_term.
 
         """
         validate_order(order, STATION_ORDERS)
 
         uri = "stations"
         if filter_by is not None:
-            uri = f"{uri}/{filter_by.value}"
-            if filter_term is not None:
-                # Terms like "#original" or "AC/DC" would otherwise change
-                # the URL instead of being part of it.
-                uri = f"{uri}/{quote(filter_term, safe='')}"
+            # Every by* path needs a term, without one the API answers 404.
+            if filter_term is None:
+                msg = "filter_by requires a filter_term"
+                raise ValueError(msg)
+
+            # Terms like "#original" or "AC/DC" would otherwise change the URL
+            # instead of being part of it.
+            uri = f"{uri}/{filter_by.value}/{quote(filter_term, safe='')}"
 
         stations_data = await self._request(
             uri,
