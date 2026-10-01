@@ -76,6 +76,16 @@ def test_station_comma_separated_fields_serialize() -> None:
     assert serialized["language"] == "english"
 
 
+def test_station_without_extended_info() -> None:
+    """Test a station without the optional extended info flag still loads."""
+    data = orjson.loads(load_fixture("stations.json"))[0]
+    del data["has_extended_info"]
+
+    station = Station.from_dict(data)
+
+    assert station.has_extended_info is False
+
+
 def test_station_count_is_an_integer() -> None:
     """Test station counts are integers, like the API sends them."""
     country = Country.from_dict({"code": "NL", "name": "NL", "stationcount": 1545})
