@@ -1,4 +1,20 @@
 # serializer version: 1
+# name: test_codecs
+  list([
+    Codec(
+      name='MP3',
+      station_count=44568,
+    ),
+    Codec(
+      name='AAC+',
+      station_count=9880,
+    ),
+    Codec(
+      name='AAC',
+      station_count=9019,
+    ),
+  ])
+# ---
 # name: test_countries
   list([
     Country(
@@ -39,6 +55,25 @@
       code=None,
       name='#English',
       station_count=3,
+    ),
+  ])
+# ---
+# name: test_states
+  list([
+    State(
+      country='The Netherlands',
+      name='Utrecht',
+      station_count=10,
+    ),
+    State(
+      country='The Netherlands',
+      name='Utrecht, De Houten, Bergveste 2',
+      station_count=1,
+    ),
+    State(
+      country='The Netherlands',
+      name='Utrecht, Midden Holland, Woerden, Rubensstraat 1 ',
+      station_count=1,
     ),
   ])
 # ---

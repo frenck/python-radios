@@ -167,7 +167,7 @@ async def test_countries_by_name_ignores_accents(
     ]
 
 
-@pytest.mark.parametrize("method", ["languages", "tags"])
+@pytest.mark.parametrize("method", ["codecs", "languages", "states", "tags"])
 async def test_list_params(
     responses: aioresponses, radios: RadioBrowser, method: str
 ) -> None:
@@ -195,6 +195,7 @@ async def test_list_params(
 @pytest.mark.parametrize(
     ("method", "name", "path"),
     [
+        ("codecs", "AAC", "/json/codecs/aac"),
         ("languages", "Dutch", "/json/languages/dutch"),
         ("tags", "R&B", "/json/tags/r%26b"),
         ("tags", "80s/90s", "/json/tags/80s%2F90s"),
@@ -212,7 +213,7 @@ async def test_list_name_filter(
     assert url.raw_path == path
 
 
-@pytest.mark.parametrize("method", ["languages", "tags"])
+@pytest.mark.parametrize("method", ["codecs", "languages", "states", "tags"])
 async def test_list_without_name_filter(
     responses: aioresponses, radios: RadioBrowser, method: str
 ) -> None:
@@ -289,7 +290,7 @@ async def test_tags(
     assert await radios.tags() == snapshot
 
 
-@pytest.mark.parametrize("method", ["languages", "tags"])
+@pytest.mark.parametrize("method", ["codecs", "languages", "states", "tags"])
 @pytest.mark.parametrize("order", sorted(SUPPORTED_LIST_ORDERS))
 async def test_list_orders(
     responses: aioresponses, radios: RadioBrowser, method: str, order: Order
@@ -303,7 +304,9 @@ async def test_list_orders(
     assert url.query["order"] == order.value
 
 
-@pytest.mark.parametrize("method", ["countries", "languages", "tags"])
+@pytest.mark.parametrize(
+    "method", ["codecs", "countries", "languages", "states", "tags"]
+)
 @pytest.mark.parametrize("order", sorted(set(Order) - SUPPORTED_LIST_ORDERS))
 async def test_list_orders_unsupported(
     responses: aioresponses, radios: RadioBrowser, method: str, order: Order
@@ -313,3 +316,55 @@ async def test_list_orders_unsupported(
         await getattr(radios, method)(order=order)
 
     assert not responses.requests
+
+
+async def test_codecs(
+    responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
+) -> None:
+    """Test listing the codecs stations stream in."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/codecs\?"),
+        status=200,
+        body=load_fixture("codecs.json"),
+    )
+
+    assert await radios.codecs(order=Order.STATION_COUNT, reverse=True) == snapshot
+
+
+async def test_states(
+    responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
+) -> None:
+    """Test listing the states of a country."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/states/"),
+        status=200,
+        body=load_fixture("states.json"),
+    )
+
+    assert await radios.states(country="The Netherlands", name="utrecht") == snapshot
+
+
+@pytest.mark.parametrize(
+    ("country", "name", "path"),
+    [
+        (None, None, "/json/states"),
+        (None, "Utrecht", "/json/states/Utrecht"),
+        ("The Netherlands", None, "/json/states/The%20Netherlands/"),
+        ("The Netherlands", "Utrecht", "/json/states/The%20Netherlands/Utrecht"),
+        ("Côte d'Ivoire", "a/b", "/json/states/C%C3%B4te%20d%27Ivoire/a%2Fb"),
+    ],
+)
+async def test_states_path(
+    responses: aioresponses,
+    radios: RadioBrowser,
+    country: str | None,
+    name: str | None,
+    path: str,
+) -> None:
+    """Test the country and name end up in the path, in that order."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/states"), payload=[])
+
+    await radios.states(country=country, name=name)
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == path
