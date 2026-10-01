@@ -84,7 +84,6 @@ class Station(DataClassORJSONMixin):
     favicon: str
     latitude: float | None = field(metadata=field_options(alias="geo_lat"))
     longitude: float | None = field(metadata=field_options(alias="geo_long"))
-    has_extended_info: bool
     hls: bool
     homepage: str
     iso_3166_2: str | None
@@ -119,6 +118,10 @@ class Station(DataClassORJSONMixin):
     url_resolved: str
     url: str
     votes: int
+
+    # The API documents this one as optional, so it gets a default. Fields
+    # with a default have to come after the ones without, hence it lives here.
+    has_extended_info: bool = False
 
     @property
     def country(self) -> str | None:
