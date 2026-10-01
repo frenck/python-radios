@@ -231,10 +231,12 @@ class RadioBrowser:
             self.session = aiohttp.ClientSession()
             self._close_session = True
 
+        # Build a new dict, so the caller's own params are left untouched.
         if params:
-            for key, value in params.items():
-                if isinstance(value, bool):
-                    params[key] = str(value).lower()
+            params = {
+                key: str(value).lower() if isinstance(value, bool) else value
+                for key, value in params.items()
+            }
         try:
             async with asyncio.timeout(self.request_timeout):
                 # Looking up the server is part of the request, so a DNS
@@ -695,6 +697,11 @@ class RadioBrowser:
         """Close open client session."""
         if self.session and self._close_session:
             await self.session.close()
+
+            # Forget the closed session, so the client can be used again: the
+            # next request opens a fresh session, instead of failing on this one.
+            self.session = None
+            self._close_session = False
 
     async def __aenter__(self) -> Self:
         """Async enter.
