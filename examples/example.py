@@ -1,4 +1,3 @@
-# pylint: disable=W0621
 """Asynchronous Python client for the Radio Browser API."""
 
 import asyncio
@@ -9,35 +8,33 @@ from radios import FilterBy, Order, RadioBrowser
 async def main() -> None:
     """Show example on how to query the Radio Browser API."""
     async with RadioBrowser(user_agent="MyAwesomeApp/1.0.0") as radios:
-        # Print top 10 stations
+        # The 10 most popular stations in the Netherlands
         stations = await radios.stations(
-            limit=10, order=Order.CLICK_COUNT, reverse=True
-        )
-        for station in stations:
-            print(f"{station.name} ({station.click_count})")
-
-        # Get a specific station
-        print(await radios.station(uuid="9608b51d-0601-11e8-ae97-52543be04c81"))
-
-        # Print top 10 stations in a country
-        stations = await radios.stations(
-            limit=10,
-            order=Order.CLICK_COUNT,
-            reverse=True,
             filter_by=FilterBy.COUNTRY_CODE_EXACT,
             filter_term="NL",
+            order=Order.CLICK_COUNT,
+            reverse=True,
+            limit=10,
         )
         for station in stations:
-            print(f"{station.name} ({station.click_count})")
+            print(f"{station.name} ({station.click_count} clicks)")
 
-        # Register a station "click"
-        await radios.station_click(uuid="9608b51d-0601-11e8-ae97-52543be04c81")
+        # The best voted jazz stations that stream at 128 kbps or more
+        stations = await radios.search(
+            tag="jazz",
+            bitrate_min=128,
+            hide_broken=True,
+            order=Order.VOTES,
+            reverse=True,
+            limit=10,
+        )
+        for station in stations:
+            print(f"{station.name} ({station.codec}, {station.bitrate} kbps)")
 
-        # Tags, countries and codes.
-        print(await radios.tags(limit=10, order=Order.STATION_COUNT, reverse=True))
-        print(await radios.countries(limit=10, order=Order.NAME))
-        print(await radios.languages(limit=10, order=Order.NAME))
-        print(await radios.search(name="538", limit=10, order=Order.NAME))
+        # Start playing a station: count the click, and get its stream URL
+        if stations:
+            url = await radios.station_click(uuid=stations[0].uuid)
+            print(f"Now playing {stations[0].name}: {url}")
 
 
 if __name__ == "__main__":
