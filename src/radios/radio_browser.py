@@ -137,6 +137,28 @@ def stations_from_json(data: str) -> list[Station]:
         return [Station.from_dict(station) for station in stations]
 
 
+def name_filter_uri(uri: str, name: str | None) -> str:
+    """Add a name filter to the URI of a list endpoint.
+
+    The API matches part of a name, but case sensitive, on names it stores
+    in lowercase. Searching for "Dutch" would find nothing, so the filter is
+    lowercased first.
+
+    Args:
+    ----
+        uri: The URI of the list endpoint, for example `tags`.
+        name: Part of the name to filter on, if any.
+
+    Returns:
+    -------
+        The URI, with the filter added when there is one.
+
+    """
+    if not name:
+        return uri
+    return f"{uri}/{quote(name.lower(), safe='')}"
+
+
 # The stations/search endpoint has no by* paths, so search() turns each
 # FilterBy value into search query parameters instead.
 SEARCH_FILTERS: dict[FilterBy, tuple[str, dict[str, bool]]] = {
@@ -364,9 +386,10 @@ class RadioBrowser:
             return click["url"]
 
     # pylint: disable-next=too-many-arguments
-    async def countries(
+    async def countries(  # noqa: PLR0913
         self,
         *,
+        name: str | None = None,
         hide_broken: bool = False,
         limit: int = 100000,
         offset: int = 0,
@@ -377,6 +400,7 @@ class RadioBrowser:
 
         Args:
         ----
+            name: Only the ones whose name contains this, ignoring case.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
@@ -422,6 +446,15 @@ class RadioBrowser:
                     "stationcount": country["stationcount"],
                 }
 
+            # The API can only filter on the code, so filter on the name here,
+            # ignoring case and accents the same way the sorting below does.
+            if name:
+                countries = {
+                    code: country
+                    for code, country in countries.items()
+                    if name_sort_key(name) in name_sort_key(country["name"])
+                }
+
             # Sorting by name first keeps countries with the same station
             # count in alphabetical order.
             ordered = sorted(
@@ -438,9 +471,10 @@ class RadioBrowser:
             ]
 
     # pylint: disable-next=too-many-arguments
-    async def languages(
+    async def languages(  # noqa: PLR0913
         self,
         *,
+        name: str | None = None,
         hide_broken: bool = False,
         limit: int = 100000,
         offset: int = 0,
@@ -451,6 +485,7 @@ class RadioBrowser:
 
         Args:
         ----
+            name: Only the ones whose name contains this, ignoring case.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
@@ -471,7 +506,7 @@ class RadioBrowser:
         validate_paging(limit, offset)
 
         languages_data = await self._request(
-            "languages",
+            name_filter_uri("languages", name),
             params={
                 "hidebroken": hide_broken,
                 "offset": offset,
@@ -755,9 +790,10 @@ class RadioBrowser:
         return stations_from_json(stations_data)
 
     # pylint: disable-next=too-many-arguments
-    async def tags(
+    async def tags(  # noqa: PLR0913
         self,
         *,
+        name: str | None = None,
         hide_broken: bool = False,
         limit: int = 100000,
         offset: int = 0,
@@ -768,6 +804,7 @@ class RadioBrowser:
 
         Args:
         ----
+            name: Only the ones whose name contains this, ignoring case.
             hide_broken: Do not count broken stations.
             limit: Limit the number of results.
             offset: Offset the results.
@@ -788,7 +825,7 @@ class RadioBrowser:
         validate_paging(limit, offset)
 
         tags_data = await self._request(
-            "tags",
+            name_filter_uri("tags", name),
             params={
                 "hidebroken": hide_broken,
                 "offset": offset,

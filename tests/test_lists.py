@@ -192,6 +192,70 @@ async def test_list_params(
     }
 
 
+@pytest.mark.parametrize(
+    ("method", "name", "path"),
+    [
+        ("languages", "Dutch", "/json/languages/dutch"),
+        ("tags", "R&B", "/json/tags/r%26b"),
+        ("tags", "80s/90s", "/json/tags/80s%2F90s"),
+    ],
+)
+async def test_list_name_filter(
+    responses: aioresponses, radios: RadioBrowser, method: str, name: str, path: str
+) -> None:
+    """Test languages and tags are filtered by the API, on the lowercase name."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/{method}/"), payload=[])
+
+    await getattr(radios, method)(name=name)
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == path
+
+
+@pytest.mark.parametrize("method", ["languages", "tags"])
+async def test_list_without_name_filter(
+    responses: aioresponses, radios: RadioBrowser, method: str
+) -> None:
+    """Test languages and tags are not filtered when no name is given."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/{method}\?"), payload=[])
+
+    await getattr(radios, method)(name="")
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == f"/json/{method}"
+
+
+@pytest.mark.parametrize(
+    ("name", "expected"),
+    [
+        ("land", ["Åland Islands", "Netherlands"]),
+        ("ALAND", ["Åland Islands"]),
+        ("kosovo", ["Kosovo"]),
+        ("nowhere", []),
+    ],
+)
+async def test_countries_name_filter(
+    responses: aioresponses, radios: RadioBrowser, name: str, expected: list[str]
+) -> None:
+    """Test countries are filtered on their name, ignoring case and accents."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/countrycodes\?"),
+        payload=[
+            {"name": "NL", "stationcount": 1},
+            {"name": "AX", "stationcount": 1},
+            {"name": "XK", "stationcount": 1},
+            {"name": "DE", "stationcount": 1},
+        ],
+    )
+
+    countries = await radios.countries(name=name)
+
+    assert [country.name for country in countries] == expected
+    # The API only knows codes, so the filter is not sent along.
+    ((_, url),) = responses.requests
+    assert url.raw_path == "/json/countrycodes"
+
+
 async def test_languages(
     responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
 ) -> None:

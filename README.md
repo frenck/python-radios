@@ -164,6 +164,9 @@ for country in countries:
     print(country.name, country.station_count, country.favicon)
 ```
 
+All three take a `name` to only get the ones whose name contains it, like
+`await radios.tags(name="jazz")`, which is handy for autocompletion.
+
 Countries and languages have a `favicon` with a flag. A language that is not
 tied to one country, like Arabic, has none.
 
