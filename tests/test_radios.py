@@ -1,12 +1,16 @@
 """Tests for the request handling of the Radio Browser API client."""
 
 # pylint: disable=protected-access
+import asyncio
+import re
 from collections.abc import Generator
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import aiohttp
 import pytest
+from aiodns.error import DNSError
 from aioresponses import aioresponses
+from pycares import QUERY_CLASS_IN, QUERY_TYPE_CNAME, CNAMERecordData, DNSRecord
 
 from radios import (
     RadioBrowser,
@@ -15,12 +19,14 @@ from radios import (
     RadioBrowserError,
 )
 
-from .conftest import API_URL
+from .conftest import API_URL, srv_result
 
 
 @pytest.fixture
 def backoff_sleep() -> Generator[AsyncMock, None, None]:
     """Skip the real waits between retries, and count them instead."""
+    # backoff calls asyncio.sleep through the asyncio module, so this patches
+    # asyncio.sleep everywhere while it is active.
     with patch("backoff._async.asyncio.sleep", new=AsyncMock()) as sleep:
         yield sleep
 
@@ -77,6 +83,27 @@ async def test_unexpected_content_type(
         await radios._request("test")
 
     assert error.value.args == (200, {"message": "Not JSON"})
+
+
+async def test_timeout_while_reading_body(
+    responses: aioresponses, radios: RadioBrowser, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Test a response body that never arrives runs into the request timeout."""
+    responses.get(f"{API_URL}/test", status=200, payload={}, repeat=True)
+
+    async def stalled_text(*_args: object, **_kwargs: object) -> str:
+        # Wait on an event nobody sets, since asyncio.sleep is patched below.
+        await asyncio.Event().wait()
+        return "{}"  # pragma: no cover
+
+    monkeypatch.setattr(aiohttp.ClientResponse, "text", stalled_text)
+    radios.request_timeout = 0.01
+
+    with (
+        patch("backoff._async.asyncio.sleep", new=AsyncMock()),
+        pytest.raises(RadioBrowserConnectionTimeoutError),
+    ):
+        await radios._request("test")
 
 
 @pytest.mark.usefixtures("backoff_sleep")
@@ -144,9 +171,40 @@ async def test_connection_error_recovers(
 
     # The failure forgets the host, so the retry looks it up again.
     assert backoff_sleep.await_count == 1
-    dns_resolver.return_value.query.assert_awaited_once_with(
+    dns_resolver.return_value.query_dns.assert_awaited_once_with(
         "_api._tcp.radio-browser.info", "SRV"
     )
+
+
+async def test_client_error_is_not_retried(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a 4xx response raises right away, without retrying or a new host."""
+    responses.get(f"{API_URL}/test", status=404, repeat=True)
+
+    with pytest.raises(RadioBrowserError) as error:
+        await radios._request("test")
+
+    assert not isinstance(error.value, RadioBrowserConnectionError)
+    assert error.value.args[0] == 404
+    ((request_calls),) = responses.requests.values()
+    assert len(request_calls) == 1
+    assert radios._host == "example.com"
+
+
+async def test_server_error_is_retried(
+    responses: aioresponses, radios: RadioBrowser, backoff_sleep: AsyncMock
+) -> None:
+    """Test a 5xx response is retried, since another server may do better."""
+    responses.get(f"{API_URL}/test", status=503, repeat=True)
+
+    with pytest.raises(RadioBrowserConnectionError):
+        await radios._request("test")
+
+    ((request_calls),) = responses.requests.values()
+    assert len(request_calls) == 5
+    assert backoff_sleep.await_count == 4
+    assert radios._host is None
 
 
 async def test_host_lookup(responses: aioresponses, dns_resolver: MagicMock) -> None:
@@ -158,9 +216,62 @@ async def test_host_lookup(responses: aioresponses, dns_resolver: MagicMock) -> 
         await radios._request("test")
 
     assert radios._host == "example.com"
-    dns_resolver.return_value.query.assert_awaited_once_with(
+    dns_resolver.return_value.query_dns.assert_awaited_once_with(
         "_api._tcp.radio-browser.info", "SRV"
     )
+
+
+async def test_host_lookup_picks_a_server(
+    responses: aioresponses, radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test the API host is one of the SRV targets, ignoring other records."""
+    responses.get(re.compile(r"^https://[a-z]+\.example\.com/json/test$"), payload={})
+
+    result = srv_result("one.example.com", "two.example.com")
+    result.answer.append(
+        DNSRecord(
+            name="_api._tcp.radio-browser.info",
+            type=QUERY_TYPE_CNAME,
+            record_class=QUERY_CLASS_IN,
+            ttl=300,
+            data=CNAMERecordData(cname="three.example.com"),
+        )
+    )
+    dns_resolver.return_value.query_dns.return_value = result
+    radios._host = None
+
+    await radios._request("test")
+
+    assert radios._host in {"one.example.com", "two.example.com"}
+
+
+@pytest.mark.usefixtures("backoff_sleep")
+async def test_host_lookup_dns_error(
+    radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test a failing DNS lookup raises a connection error, after retrying."""
+    dns_resolver.return_value.query_dns.side_effect = DNSError(
+        11, "Could not contact DNS servers"
+    )
+    radios._host = None
+
+    with pytest.raises(RadioBrowserConnectionError) as error:
+        await radios._request("test")
+
+    assert isinstance(error.value.__cause__, DNSError)
+    assert dns_resolver.return_value.query_dns.await_count == 5
+
+
+@pytest.mark.usefixtures("backoff_sleep")
+async def test_host_lookup_without_servers(
+    radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test a DNS lookup without any SRV records raises a connection error."""
+    dns_resolver.return_value.query_dns.return_value = srv_result()
+    radios._host = None
+
+    with pytest.raises(RadioBrowserConnectionError, match="No Radio Browser API"):
+        await radios._request("test")
 
 
 async def test_internal_session(responses: aioresponses) -> None:

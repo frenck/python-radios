@@ -30,7 +30,6 @@
     ssl_error=0,
     state='',
     tags=list([
-      '',
     ]),
     url='http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3',
     url_resolved='http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3',
@@ -70,7 +69,6 @@
       ssl_error=0,
       state='',
       tags=list([
-        '',
       ]),
       url='http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3',
       url_resolved='http://playerservices.streamtheworld.com/api/livestream-redirect/TLPSTR09.mp3',
@@ -149,10 +147,8 @@
       homepage='https://www.reyfm.de/',
       iso_3166_2='',
       language=list([
-        '',
       ]),
       language_codes=list([
-        '',
       ]),
       last_check_ok_time=datetime.datetime(2026, 9, 26, 0, 1, 32, tzinfo=datetime.timezone.utc),
       last_check_time=datetime.datetime(2026, 9, 26, 0, 1, 32, tzinfo=datetime.timezone.utc),

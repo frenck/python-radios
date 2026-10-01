@@ -2,6 +2,7 @@
 
 import re
 
+import pytest
 from aioresponses import aioresponses
 from syrupy.assertion import SnapshotAssertion
 
@@ -71,6 +72,30 @@ async def test_stations_filter_by_without_term(
     assert await radios.stations(filter_by=FilterBy.CODEC) == []
 
 
+@pytest.mark.parametrize(
+    ("filter_term", "path"),
+    [
+        ("#original", "/json/stations/bytagexact/%23original"),
+        ("AC/DC", "/json/stations/bytagexact/AC%2FDC"),
+        ("r&b", "/json/stations/bytagexact/r%26b"),
+        ("80s 90s", "/json/stations/bytagexact/80s%2090s"),
+    ],
+)
+async def test_stations_filter_term_is_escaped(
+    responses: aioresponses, radios: RadioBrowser, filter_term: str, path: str
+) -> None:
+    """Test a filter term cannot change the URL it is part of."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/stations/bytagexact/"), payload=[]
+    )
+
+    await radios.stations(filter_by=FilterBy.TAG_EXACT, filter_term=filter_term)
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == path
+    assert url.query["limit"] == "100000"
+
+
 async def test_station(
     responses: aioresponses, radios: RadioBrowser, snapshot: SnapshotAssertion
 ) -> None:
@@ -108,3 +133,15 @@ async def test_station_click(responses: aioresponses, radios: RadioBrowser) -> N
     await radios.station_click(uuid=STATION_UUID)
 
     assert len(responses.requests) == 1
+
+
+async def test_station_click_uuid_is_escaped(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a station UUID cannot change the URL it is part of."""
+    responses.get(f"{API_URL}/url/..%2Fstats", payload={})
+
+    await radios.station_click(uuid="../stats")
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == "/json/url/..%2Fstats"
