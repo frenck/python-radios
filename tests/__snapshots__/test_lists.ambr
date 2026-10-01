@@ -4,22 +4,22 @@
     Country(
       code='DE',
       name='Germany',
-      station_count='6469',
+      station_count=6469,
     ),
     Country(
       code='XK',
       name='Kosovo',
-      station_count='18',
+      station_count=18,
     ),
     Country(
       code='NL',
       name='Netherlands',
-      station_count='1545',
+      station_count=1545,
     ),
     Country(
       code='XX',
       name='XX',
-      station_count='1',
+      station_count=1,
     ),
   ])
 # ---
@@ -28,17 +28,17 @@
     Language(
       code='nl',
       name='Dutch',
-      station_count='926',
+      station_count=926,
     ),
     Language(
       code='en',
       name='English',
-      station_count='13524',
+      station_count=13524,
     ),
     Language(
       code=None,
       name='#English',
-      station_count='3',
+      station_count=3,
     ),
   ])
 # ---
@@ -60,15 +60,15 @@
   list([
     Tag(
       name='pop',
-      station_count='6337',
+      station_count=6337,
     ),
     Tag(
       name='music',
-      station_count='5309',
+      station_count=5309,
     ),
     Tag(
       name='rock',
-      station_count='3290',
+      station_count=3290,
     ),
   ])
 # ---

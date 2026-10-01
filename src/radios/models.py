@@ -115,7 +115,7 @@ class Country(DataClassORJSONMixin):
 
     code: str
     name: str
-    station_count: str = field(metadata=field_options(alias="stationcount"))
+    station_count: int = field(metadata=field_options(alias="stationcount"))
 
     @property
     def favicon(self) -> str:
@@ -135,7 +135,7 @@ class Language(DataClassORJSONMixin):
 
     code: str | None = field(metadata=field_options(alias="iso_639"))
     name: str
-    station_count: str = field(metadata=field_options(alias="stationcount"))
+    station_count: int = field(metadata=field_options(alias="stationcount"))
 
     @property
     def favicon(self) -> str | None:
@@ -156,4 +156,4 @@ class Tag(DataClassORJSONMixin):
     """Object information for a Tag from the Radio Browser."""
 
     name: str
-    station_count: str = field(metadata=field_options(alias="stationcount"))
+    station_count: int = field(metadata=field_options(alias="stationcount"))
