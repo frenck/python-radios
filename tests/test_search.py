@@ -133,6 +133,20 @@ async def test_search_geo(responses: aioresponses, radios: RadioBrowser) -> None
     assert query["geo_distance"] == "5000"
 
 
+async def test_search_geo_distance(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test the results of a geo search carry their distance to the location."""
+    stations = load_fixture("stations.json").replace(
+        '"geo_distance": null', '"geo_distance": 1198.77', 1
+    )
+    responses.get(SEARCH_URL, status=200, body=stations)
+
+    results = await radios.search(geo_lat=52.37, geo_long=4.89, geo_distance=5000)
+
+    assert [station.distance for station in results] == [1198.77, None, None]
+
+
 @pytest.mark.parametrize(
     "location", [{"geo_lat": 52.37}, {"geo_long": 4.89}, {"geo_distance": 5000.0}]
 )

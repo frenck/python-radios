@@ -119,9 +119,15 @@ class Station(DataClassORJSONMixin):
     url: str
     votes: int
 
-    # The API documents this one as optional, so it gets a default. Fields
-    # with a default have to come after the ones without, hence it lives here.
+    # The API leaves these out of some responses, so they get a default.
+    # Fields with a default have to come after the ones without, hence they
+    # live here.
     has_extended_info: bool = False
+    # Distance in meters from the location of a geo search, only set on the
+    # results of one.
+    distance: float | None = field(
+        default=None, metadata=field_options(alias="geo_distance")
+    )
 
     @property
     def country(self) -> str | None:
