@@ -23,6 +23,22 @@ def test_station_country() -> None:
     assert classic_vinyl.country == "United States"
 
 
+def test_station_country_kosovo() -> None:
+    """Test a station in Kosovo resolves its country, which pycountry lacks."""
+    station, _, _ = _stations()
+    station.country_code = "XK"
+
+    assert station.country == "Kosovo"
+
+
+def test_station_country_unknown_code() -> None:
+    """Test a station with an unknown country code has no country."""
+    station, _, _ = _stations()
+    station.country_code = "XX"
+
+    assert station.country is None
+
+
 def test_station_without_country() -> None:
     """Test a station without a country code has no country."""
     station, _, _ = _stations()

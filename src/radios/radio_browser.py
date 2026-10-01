@@ -13,7 +13,6 @@ from urllib.parse import quote
 
 import aiohttp
 import orjson
-import pycountry
 from aiodns import DNSResolver
 from aiodns.error import DNSError
 from aiohttp import hdrs
@@ -26,7 +25,7 @@ from .exceptions import (
     RadioBrowserConnectionTimeoutError,
     RadioBrowserError,
 )
-from .models import Country, Language, Station, Stats, Tag
+from .models import Country, Language, Station, Stats, Tag, country_name
 
 # How often a request is tried when the connection to the API fails.
 REQUEST_ATTEMPTS = 5
@@ -280,11 +279,7 @@ class RadioBrowser:
         countries = orjson.loads(countries_data)  # pylint: disable=no-member
         for country in countries:  # pylint: disable=not-an-iterable
             country["code"] = country["name"]
-            # https://github.com/frenck/python-radios/issues/19
-            if country["name"] == "XK":
-                country["name"] = "Kosovo"
-            elif resolved_country := pycountry.countries.get(alpha_2=country["name"]):
-                country["name"] = resolved_country.name
+            country["name"] = country_name(country["code"]) or country["code"]
 
         # Because we enriched the countries we need to re-order in this case
         if order == Order.NAME:
