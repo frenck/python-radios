@@ -6,9 +6,10 @@ import asyncio
 import random
 import socket
 from asyncio import sleep
+from contextlib import contextmanager
 from dataclasses import dataclass
 from http import HTTPStatus
-from typing import Any, Self
+from typing import TYPE_CHECKING, Any, Self
 from urllib.parse import quote
 
 import aiohttp
@@ -27,8 +28,33 @@ from .exceptions import (
 )
 from .models import Country, Language, Station, Stats, Tag, country_name
 
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
 # How often a request is tried when the connection to the API fails.
 REQUEST_ATTEMPTS = 5
+
+
+@contextmanager
+def unexpected_response() -> Iterator[None]:
+    """Turn a response that cannot be parsed into a RadioBrowserError.
+
+    The API answered, but with JSON that is broken or does not look like what
+    it documents: a missing field, a wrong type, an object where a list
+    belongs. That is a problem with the response, not with the caller, so it
+    should surface like any other API error instead of as a raw parser error.
+
+    Raises
+    ------
+        RadioBrowserError: The response could not be parsed.
+
+    """
+    try:
+        yield
+    except (AttributeError, LookupError, TypeError, ValueError) as exception:
+        msg = "Unexpected response from the Radio Browser API"
+        raise RadioBrowserError(msg) from exception
+
 
 # The stations/search endpoint has no by* paths, so search() turns each
 # FilterBy value into search query parameters instead.
@@ -223,7 +249,8 @@ class RadioBrowser:
 
         """
         response = await self._request("stats")
-        return Stats.from_json(response)
+        with unexpected_response():
+            return Stats.from_json(response)
 
     async def station_click(self, *, uuid: str) -> str:
         """Register click on a station.
@@ -243,8 +270,9 @@ class RadioBrowser:
 
         """
         click_data = await self._request(f"url/{quote(uuid, safe='')}")
-        click = orjson.loads(click_data)  # pylint: disable=no-member
-        return click["url"]
+        with unexpected_response():
+            click = orjson.loads(click_data)  # pylint: disable=no-member
+            return click["url"]
 
     # pylint: disable-next=too-many-arguments
     async def countries(
@@ -282,17 +310,18 @@ class RadioBrowser:
             },
         )
 
-        countries = orjson.loads(countries_data)  # pylint: disable=no-member
-        for country in countries:  # pylint: disable=not-an-iterable
-            country["code"] = country["name"]
-            country["name"] = country_name(country["code"]) or country["code"]
+        with unexpected_response():
+            countries = orjson.loads(countries_data)  # pylint: disable=no-member
+            for country in countries:  # pylint: disable=not-an-iterable
+                country["code"] = country["name"]
+                country["name"] = country_name(country["code"]) or country["code"]
 
-        # Because we enriched the countries we need to re-order in this case
-        if order == Order.NAME:
-            countries.sort(key=lambda country: country["name"])
+            # Because we enriched the countries we need to re-order in this case
+            if order == Order.NAME:
+                countries.sort(key=lambda country: country["name"])
 
-        # pylint: disable-next=not-an-iterable
-        return [Country.from_dict(country) for country in countries]
+            # pylint: disable-next=not-an-iterable
+            return [Country.from_dict(country) for country in countries]
 
     # pylint: disable-next=too-many-arguments
     async def languages(
@@ -330,12 +359,13 @@ class RadioBrowser:
             },
         )
 
-        languages = orjson.loads(languages_data)  # pylint: disable=no-member
-        for language in languages:  # pylint: disable=not-an-iterable
-            language["name"] = language["name"].title()
+        with unexpected_response():
+            languages = orjson.loads(languages_data)  # pylint: disable=no-member
+            for language in languages:  # pylint: disable=not-an-iterable
+                language["name"] = language["name"].title()
 
-        # pylint: disable-next=not-an-iterable
-        return [Language.from_dict(language) for language in languages]
+            # pylint: disable-next=not-an-iterable
+            return [Language.from_dict(language) for language in languages]
 
     # pylint: disable-next=too-many-arguments, too-many-locals
     async def search(  # noqa: PLR0913
@@ -473,9 +503,10 @@ class RadioBrowser:
             # yarl rejects None as a query value, so unset filters are left out.
             params={key: value for key, value in params.items() if value is not None},
         )
-        stations = orjson.loads(stations_data)  # pylint: disable=no-member
-        # pylint: disable-next=not-an-iterable
-        return [Station.from_dict(station) for station in stations]
+        with unexpected_response():
+            stations = orjson.loads(stations_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [Station.from_dict(station) for station in stations]
 
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
@@ -545,9 +576,10 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        stations = orjson.loads(stations_data)  # pylint: disable=no-member
-        # pylint: disable-next=not-an-iterable
-        return [Station.from_dict(station) for station in stations]
+        with unexpected_response():
+            stations = orjson.loads(stations_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [Station.from_dict(station) for station in stations]
 
     # pylint: disable-next=too-many-arguments
     async def tags(
@@ -584,9 +616,10 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        tags = orjson.loads(tags_data)  # pylint: disable=no-member
-        # pylint: disable-next=not-an-iterable
-        return [Tag.from_dict(tag) for tag in tags]
+        with unexpected_response():
+            tags = orjson.loads(tags_data)  # pylint: disable=no-member
+            # pylint: disable-next=not-an-iterable
+            return [Tag.from_dict(tag) for tag in tags]
 
     async def close(self) -> None:
         """Close open client session."""

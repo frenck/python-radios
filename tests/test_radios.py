@@ -3,7 +3,7 @@
 # pylint: disable=protected-access
 import asyncio
 import re
-from collections.abc import Generator
+from collections.abc import Awaitable, Callable, Generator
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import aiohttp
@@ -322,3 +322,52 @@ async def test_close_without_session() -> None:
     await radios.close()
 
     assert radios.session is None
+
+
+@pytest.mark.parametrize(
+    "call",
+    [
+        lambda radios: radios.stats(),
+        lambda radios: radios.station_click(uuid="x"),
+        lambda radios: radios.countries(),
+        lambda radios: radios.languages(),
+        lambda radios: radios.tags(),
+        lambda radios: radios.stations(),
+        lambda radios: radios.station(uuid="x"),
+        lambda radios: radios.search(),
+    ],
+    ids=[
+        "stats",
+        "station_click",
+        "countries",
+        "languages",
+        "tags",
+        "stations",
+        "station",
+        "search",
+    ],
+)
+@pytest.mark.parametrize(
+    "body",
+    ["{", "null", '{"unexpected": 1}', "[{}]", '[{"name": null}]', "[1]"],
+    ids=["broken", "null", "object", "empty item", "null name", "number"],
+)
+async def test_unexpected_response(
+    responses: aioresponses,
+    radios: RadioBrowser,
+    call: Callable[[RadioBrowser], Awaitable[object]],
+    body: str,
+) -> None:
+    """Test a response that cannot be parsed raises a Radio Browser error."""
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/"),
+        body=body,
+        content_type="application/json",
+        repeat=True,
+    )
+
+    with pytest.raises(RadioBrowserError, match="Unexpected response") as error:
+        await call(radios)
+
+    assert not isinstance(error.value, RadioBrowserConnectionError)
+    assert error.value.__cause__ is not None
