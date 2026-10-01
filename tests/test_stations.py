@@ -6,7 +6,7 @@ import pytest
 from aioresponses import aioresponses
 from syrupy.assertion import SnapshotAssertion
 
-from radios import FilterBy, Order, RadioBrowser
+from radios import FilterBy, Order, RadioBrowser, RadioBrowserError
 
 from .conftest import API_URL, load_fixture
 
@@ -225,3 +225,42 @@ async def test_station_orders_unsupported(
         await getattr(radios, method)(order=order)
 
     assert not responses.requests
+
+
+@pytest.mark.parametrize("ok", [True, "true"])
+async def test_vote(responses: aioresponses, radios: RadioBrowser, ok: object) -> None:
+    """Test voting for a station."""
+    responses.get(
+        f"{API_URL}/vote/{STATION_UUID}",
+        payload={"ok": ok, "message": "voted for station successfully"},
+    )
+
+    await radios.vote(uuid=STATION_UUID)
+
+    assert len(responses.requests) == 1
+
+
+@pytest.mark.parametrize("ok", [False, "false"])
+async def test_vote_not_accepted(
+    responses: aioresponses, radios: RadioBrowser, ok: object
+) -> None:
+    """Test a vote the API does not accept raises an error with its message."""
+    responses.get(
+        f"{API_URL}/vote/{STATION_UUID}",
+        payload={"ok": ok, "message": "you are voting for the same station too often"},
+    )
+
+    with pytest.raises(RadioBrowserError, match="voting for the same station too"):
+        await radios.vote(uuid=STATION_UUID)
+
+
+async def test_vote_uuid_is_escaped(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a station UUID cannot change the URL it is part of."""
+    responses.get(f"{API_URL}/vote/..%2Fstats", payload={"ok": True})
+
+    await radios.vote(uuid="../stats")
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == "/json/vote/..%2Fstats"

@@ -394,6 +394,33 @@ class RadioBrowser:
             click = orjson.loads(click_data)  # pylint: disable=no-member
             return click["url"]
 
+    async def vote(self, *, uuid: str) -> None:
+        """Vote for a station.
+
+        Votes are what makes a station rank higher. The API only counts one
+        vote per station from the same IP address every 10 minutes.
+
+        Args:
+        ----
+            uuid: UUID of the station.
+
+        Raises:
+        ------
+            RadioBrowserError: The API did not accept the vote, for example
+                because it came in too soon after the previous one.
+
+        """
+        vote_data = await self._request(f"vote/{quote(uuid, safe='')}")
+        with unexpected_response():
+            vote = orjson.loads(vote_data)  # pylint: disable=no-member
+            # The documentation shows "ok" both as a boolean and as a string.
+            accepted = vote["ok"] in (True, "true")
+            message = vote.get("message", "")
+
+        if not accepted:
+            msg = f"The Radio Browser API did not accept the vote: {message}"
+            raise RadioBrowserError(msg)
+
     # pylint: disable-next=too-many-arguments
     async def countries(  # noqa: PLR0913
         self,

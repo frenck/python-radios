@@ -153,6 +153,11 @@ to stream from:
 url = await radios.station_click(uuid=station.uuid)
 ```
 
+If the user likes what they hear, `await radios.vote(uuid=station.uuid)`
+votes for the station. The API counts one vote per station from the same IP
+address every 10 minutes. When it does not accept a vote, `vote()` raises a
+`RadioBrowserError`.
+
 ### Countries, languages, tags, codecs and states
 
 ```python
