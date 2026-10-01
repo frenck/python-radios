@@ -227,13 +227,6 @@ class RadioBrowser:
                 Radio Browser API.
 
         """
-        if self._host is None:
-            self._host = await self._resolve_host()
-
-        url = URL.build(
-            scheme="https", host=self._host, path=f"/json/{uri}", encoded=True
-        )
-
         if self.session is None:
             self.session = aiohttp.ClientSession()
             self._close_session = True
@@ -244,6 +237,14 @@ class RadioBrowser:
                     params[key] = str(value).lower()
         try:
             async with asyncio.timeout(self.request_timeout):
+                # Looking up the server is part of the request, so a DNS
+                # server that does not answer runs into the same timeout.
+                if self._host is None:
+                    self._host = await self._resolve_host()
+
+                url = URL.build(
+                    scheme="https", host=self._host, path=f"/json/{uri}", encoded=True
+                )
                 response = await self.session.request(
                     method,
                     url,
