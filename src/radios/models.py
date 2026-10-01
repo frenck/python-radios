@@ -12,6 +12,8 @@ from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 from mashumaro.types import SerializationStrategy
 
+from .const import LANGUAGE_FLAGS
+
 
 class CommaSeparatedString(SerializationStrategy):
     """String serialization strategy to handle comma separated strings."""
@@ -143,11 +145,12 @@ class Language(DataClassORJSONMixin):
 
         Returns
         -------
-            URL to the favicon.
+            URL to the flag of the country the language belongs to, or None
+            if there is no single country for it.
 
         """
-        if self.code:
-            return f"https://flagcdn.com/256x192/{self.code.lower()}.png"
+        if self.code and (flag := LANGUAGE_FLAGS.get(self.code.lower())):
+            return f"https://flagcdn.com/256x192/{flag}.png"
         return None
 
 

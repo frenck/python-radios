@@ -45,3 +45,63 @@ class FilterBy(StrEnum):
     LANGUAGE_EXACT = "bylanguageexact"
     TAG = "bytag"
     TAG_EXACT = "bytagexact"
+
+
+# The flag that represents a language, as an ISO 3166-1 alpha-2 country code,
+# keyed by ISO 639-1 language code. A language code is not a country code:
+# "ar" (Arabic) is Argentina and "sv" (Swedish) is El Salvador. Languages
+# without one obvious country, like Arabic or Catalan, are left out on
+# purpose; no flag beats the wrong one.
+LANGUAGE_FLAGS = {
+    "az": "az",
+    "bg": "bg",
+    "bn": "bd",
+    "bs": "ba",
+    "cs": "cz",
+    "da": "dk",
+    "de": "de",
+    "el": "gr",
+    "en": "gb",
+    "es": "es",
+    "et": "ee",
+    "fa": "ir",
+    "fi": "fi",
+    "fr": "fr",
+    "ga": "ie",
+    "he": "il",
+    "hi": "in",
+    "hr": "hr",
+    "hu": "hu",
+    "hy": "am",
+    "id": "id",
+    "is": "is",
+    "it": "it",
+    "ja": "jp",
+    "ka": "ge",
+    "kk": "kz",
+    "ko": "kr",
+    "lt": "lt",
+    "lv": "lv",
+    "mk": "mk",
+    "ms": "my",
+    "nb": "no",
+    "ne": "np",
+    "nl": "nl",
+    "no": "no",
+    "pl": "pl",
+    "pt": "pt",
+    "ro": "ro",
+    "ru": "ru",
+    "sk": "sk",
+    "sl": "si",
+    "sq": "al",
+    "sr": "rs",
+    "sv": "se",
+    "th": "th",
+    "tl": "ph",
+    "tr": "tr",
+    "uk": "ua",
+    "ur": "pk",
+    "vi": "vn",
+    "zh": "cn",
+}
