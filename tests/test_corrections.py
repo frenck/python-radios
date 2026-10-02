@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 import orjson
+import pycountry
 import pytest
 from aioresponses import aioresponses
 from probatio import Invalid
@@ -47,6 +48,64 @@ def test_shipped_file_is_valid(path: Path) -> None:
     # The folder is the country, the file is named after a broadcaster or topic.
     assert re.fullmatch(r"[a-z]{2}", path.parent.name)
     assert re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*\.json", path.name)
+
+
+def unknown_codes(correction: dict[str, Any]) -> list[str]:
+    """Return the codes of a correction that do not exist."""
+    unknown = []
+    country = correction.get("countrycode")
+    if country and pycountry.countries.get(alpha_2=country) is None:
+        unknown.append(country)
+
+    # A region is only real within its own country.
+    region = correction.get("iso_3166_2")
+    known_region = region and pycountry.subdivisions.get(code=region)
+    if region and (
+        not known_region or (country and known_region.country_code != country)
+    ):
+        unknown.append(region)
+
+    languages = correction.get("languagecodes", "").lower().split(",")
+    unknown.extend(
+        language
+        for language in map(str.strip, languages)
+        if language
+        and not pycountry.languages.get(alpha_2=language)
+        and not pycountry.languages.get(alpha_3=language)
+    )
+
+    return unknown
+
+
+@pytest.mark.parametrize(
+    "path",
+    SHIPPED_FILES,
+    ids=[path.parent.name + "/" + path.name for path in SHIPPED_FILES],
+)
+def test_shipped_codes_exist(path: Path) -> None:
+    """Test the codes in a shipped correction file are real ISO codes.
+
+    The schema only checks their shape, and some proposals upstream use codes
+    that look right but do not exist, like HU-BP for Budapest (HU-BU).
+    """
+    assert pycountry.countries.get(alpha_2=path.parent.name.upper())
+    for correction in orjson.loads(path.read_bytes())["corrections"]:
+        assert not unknown_codes(correction), correction["stationuuid"]
+
+
+@pytest.mark.parametrize(
+    ("correction", "unknown"),
+    [
+        ({"iso_3166_2": "HU-BU", "languagecodes": "HU,ROM"}, []),
+        ({"iso_3166_2": "HU-BP"}, ["HU-BP"]),
+        ({"countrycode": "XX"}, ["XX"]),
+        ({"countrycode": "NL", "iso_3166_2": "BE-VLG"}, ["BE-VLG"]),
+        ({"languagecodes": "nl,GR"}, ["gr"]),
+    ],
+)
+def test_unknown_codes(correction: dict[str, Any], unknown: list[str]) -> None:
+    """Test codes that do not exist are found, and real ones are not."""
+    assert unknown_codes(correction) == unknown
 
 
 def test_shipped_stations_are_corrected_once() -> None:
