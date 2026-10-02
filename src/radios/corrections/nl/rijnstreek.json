@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "094124ad-e194-4b62-9091-9e22e7076ab9",
+      "reason": "Duplicate of 679f6e33-78e5-41fb-a75b-088af6466d40 (RTV Rijnstreek), with the same stream URL and fewer votes and clicks, from radio-database merge request 129.",
+      "delete": true
+    }
+  ]
+}

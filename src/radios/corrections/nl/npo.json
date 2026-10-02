@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "0c62b9d7-8de0-4693-9842-6bf9b50229d3",
+      "reason": "Corrects the tags, region, language codes and location, from radio-database merge request 390.",
+      "tags": "pop,alternative",
+      "iso_3166_2": "NL-NH",
+      "languagecodes": "NL",
+      "geo_lat": 52.240468,
+      "geo_long": 5.172158
+    },
+    {
+      "stationuuid": "4ab949e3-67f4-4039-82f1-312d01b45ff4",
+      "reason": "Corrects the tags, region, language codes and location, from radio-database merge request 390.",
+      "tags": "news,sport",
+      "iso_3166_2": "NL-NH",
+      "languagecodes": "NL",
+      "geo_lat": 52.240468,
+      "geo_long": 5.172158
+    },
+    {
+      "stationuuid": "96126e82-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, tags, region and location, from radio-database merge request 390. The old favicon was missing or broken.",
+      "favicon": "https://www.nporadio2.nl/svg/npo_radio2_logo.svg",
+      "tags": "pop",
+      "iso_3166_2": "NL-NH",
+      "geo_lat": 52.240468,
+      "geo_long": 5.172158
+    }
+  ]
+}

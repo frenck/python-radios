@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "922c3369-e615-42d6-9c18-61a14aed8a50",
+      "reason": "Corrects the favicon, from radio-database merge request 384. The old favicon was missing or broken.",
+      "favicon": "https://calypso675.com/wp-content/uploads/2025/10/cropped-radio-calypso-logo-32x32.png"
+    }
+  ]
+}

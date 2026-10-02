@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "960f36b5-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.100p.nl/100p/100-logo.png"
+    }
+  ]
+}

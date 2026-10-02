@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "96432cb3-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.jammfm.nl/wp-content/uploads/2025/02/logo_144.png"
+    }
+  ]
+}
