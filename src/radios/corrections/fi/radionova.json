@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "85166474-fa4a-4063-acd2-4990c1644810",
+      "reason": "Corrects the tags and region, from radio-database merge request 137.",
+      "tags": "pop,rock",
+      "iso_3166_2": "FI-18"
+    },
+    {
+      "stationuuid": "3f123871-dbca-4e37-b97c-6caf70315a1d",
+      "reason": "Duplicate of 85166474-fa4a-4063-acd2-4990c1644810 (Radio Nova), with the same stream URL and fewer votes and clicks, from radio-database merge request 137.",
+      "delete": true
+    }
+  ]
+}

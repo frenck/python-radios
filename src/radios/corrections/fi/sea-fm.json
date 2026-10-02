@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d52c33e2-fb2d-46e6-ad38-8eee3c7b6bd0",
+      "reason": "Corrects the favicon, tags and region, from radio-database merge request 137. The old favicon was missing or broken.",
+      "favicon": "http://livetaajuus.fi/media/logos/sea-fm.png",
+      "tags": "dance,pop,rnb,top40",
+      "iso_3166_2": "FI-14"
+    }
+  ]
+}
