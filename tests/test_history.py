@@ -5,6 +5,7 @@ import re
 import orjson
 import pytest
 from aioresponses import aioresponses
+from probatio import Invalid
 from syrupy.assertion import SnapshotAssertion
 
 from radios import RadioBrowser, StationCheck
@@ -81,7 +82,7 @@ async def test_history_negative_arguments(
     arguments: dict[str, int],
 ) -> None:
     """Test a negative limit or seconds is refused before a request is sent."""
-    with pytest.raises(ValueError, match="cannot be negative"):
+    with pytest.raises(Invalid, match="must be at least 0"):
         await getattr(radios, method)(**arguments)
 
     assert not responses.requests

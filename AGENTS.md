@@ -48,8 +48,11 @@ During iteration, running a single tool directly is fine and faster:
 - The library should never leak a raw exception. Transport problems surface as
   `RadioBrowserConnectionError` (or `RadioBrowserConnectionTimeoutError`), and
   anything else as `RadioBrowserError`. Keep that contract when adding code.
-  Invalid arguments, a caller mistake rather than an API failure, raise a plain
-  `ValueError`.
+  Invalid arguments, a caller mistake rather than an API failure, raise
+  `probatio.Invalid`. Public methods validate their arguments with the
+  `@probatio` decorator and `Annotated` validators (`Count`, `ListOrder` and
+  `StationOrder` in `radio_browser.py`); rules that span several arguments are
+  checked in the body and raise `Invalid` as well.
 - Tests never touch the live API. Mock HTTP with `aioresponses` and keep
   realistic API responses as fixtures under `tests/fixtures`.
 - Coverage is enforced at 100% on the package. New code needs tests. Every test

@@ -6,6 +6,7 @@ from typing import Any
 import pytest
 from aioresponses import aioresponses
 from multidict import MultiDictProxy
+from probatio import Invalid
 from syrupy.assertion import SnapshotAssertion
 
 from radios import FilterBy, Order, RadioBrowser
@@ -130,7 +131,8 @@ async def test_search_geo(responses: aioresponses, radios: RadioBrowser) -> None
 
     assert query["geo_lat"] == "52.37"
     assert query["geo_long"] == "4.89"
-    assert query["geo_distance"] == "5000"
+    # probatio hands the body a float, which the API takes as well.
+    assert query["geo_distance"] == "5000.0"
 
 
 async def test_search_geo_distance(
@@ -154,7 +156,7 @@ async def test_search_geo_incomplete(location: dict[str, Any]) -> None:
     """Test search rejects a location that misses its latitude or longitude."""
     radios = RadioBrowser(user_agent="PythonRadios/Tests")
 
-    with pytest.raises(ValueError, match="geo_lat and geo_long"):
+    with pytest.raises(Invalid, match="geo_lat and geo_long"):
         await radios.search(**location)
 
 
@@ -198,6 +200,27 @@ async def test_search_filter_by_case(
     query = await _search(responses, radios, filter_by=filter_by, filter_term="Jazz")
 
     assert query[key] == value
+
+
+@pytest.mark.parametrize(
+    "location",
+    [
+        {"geo_lat": 91.0, "geo_long": 4.89},
+        {"geo_lat": -90.5, "geo_long": 4.89},
+        {"geo_lat": 52.37, "geo_long": 180.5},
+        {"geo_lat": float("nan"), "geo_long": 4.89},
+        {"geo_lat": 52.37, "geo_long": 4.89, "geo_distance": -5.0},
+    ],
+    ids=["north of 90", "south of -90", "east of 180", "not a number", "negative"],
+)
+async def test_search_geo_out_of_range(
+    responses: aioresponses, radios: RadioBrowser, location: dict[str, Any]
+) -> None:
+    """Test a location that is not a coordinate is refused, the API fails on it."""
+    with pytest.raises(Invalid):
+        await radios.search(**location)
+
+    assert not responses.requests
 
 
 async def test_search_omits_unset_filters(
@@ -280,5 +303,5 @@ async def test_search_filter_by_invalid(
     """Test search rejects filter_by values it cannot send to the API."""
     radios = RadioBrowser(user_agent="PythonRadios/Tests")
 
-    with pytest.raises(ValueError, match="filter_"):
+    with pytest.raises(Invalid, match="filter_"):
         await radios.search(filter_by=filter_by, filter_term=filter_term)

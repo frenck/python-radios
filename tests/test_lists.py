@@ -4,6 +4,7 @@ import re
 
 import pytest
 from aioresponses import aioresponses
+from probatio import Invalid
 from syrupy.assertion import SnapshotAssertion
 
 from radios import Order, RadioBrowser
@@ -312,7 +313,7 @@ async def test_list_orders_unsupported(
     responses: aioresponses, radios: RadioBrowser, method: str, order: Order
 ) -> None:
     """Test lists refuse orders the API answers with a server error."""
-    with pytest.raises(ValueError, match=f"Order.{order.name}"):
+    with pytest.raises(Invalid, match="at 'order'"):
         await getattr(radios, method)(order=order)
 
     assert not responses.requests

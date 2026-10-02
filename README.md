@@ -146,8 +146,9 @@ for station in sorted(stations, key=lambda station: station.distance or 0):
 The results of a geo search carry their `distance` to the location, in
 meters. On other results it is `None`.
 
-Invalid combinations, like a `geo_distance` without a location, raise a
-`ValueError`.
+Invalid arguments, like a latitude of 91 or a `geo_distance` without a
+location, raise a [probatio](https://probatio.frenck.dev) `Invalid` error
+before a request is sent.
 
 ### Playing a station
 
@@ -235,8 +236,10 @@ logging.getLogger("radios").setLevel(logging.DEBUG)
 
 Everything that can go wrong while talking to the API raises a
 `RadioBrowserError`, so a single `except` covers it all. Calling a method with
-invalid arguments raises a plain `ValueError` instead, since that is a bug to
-fix rather than a failure to handle.
+invalid arguments raises a `probatio.Invalid` instead, since that is a bug to
+fix rather than a failure to handle. The arguments of every method are
+validated with [probatio](https://probatio.frenck.dev), and its error says
+which argument is wrong and why, like `value must be at most 90 at 'geo_lat'`.
 
 ```python
 from radios import (

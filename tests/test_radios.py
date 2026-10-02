@@ -12,6 +12,7 @@ import aiohttp
 import pytest
 from aiodns.error import DNSError
 from aioresponses import aioresponses
+from probatio import Invalid
 from pycares import QUERY_CLASS_IN, QUERY_TYPE_CNAME, CNAMERecordData, DNSRecord
 
 from radios import (
@@ -552,7 +553,7 @@ async def test_negative_paging(
     responses: aioresponses, radios: RadioBrowser, method: str, paging: dict[str, int]
 ) -> None:
     """Test a negative limit or offset is refused before a request is sent."""
-    with pytest.raises(ValueError, match="cannot be negative"):
+    with pytest.raises(Invalid, match="must be at least 0"):
         await getattr(radios, method)(**paging)
 
     assert not responses.requests
@@ -629,3 +630,26 @@ async def test_debug_log_of_fallback(  # noqa: PLR0913
         await radios._request("test")
 
     assert reason in caplog.messages
+
+
+@pytest.mark.parametrize(
+    "call",
+    [
+        lambda radios: radios.station(uuid=42),
+        lambda radios: radios.stations_by_uuid(uuids="not a list"),
+        lambda radios: radios.tags(limit="ten"),
+        lambda radios: radios.search(bitrate_min=-1),
+        lambda radios: radios.checks(seconds=-1),
+    ],
+    ids=["uuid", "uuids", "limit", "bitrate", "seconds"],
+)
+async def test_invalid_arguments(
+    responses: aioresponses,
+    radios: RadioBrowser,
+    call: Callable[[RadioBrowser], Awaitable[object]],
+) -> None:
+    """Test arguments of the wrong type or out of range are refused up front."""
+    with pytest.raises(Invalid):
+        await call(radios)
+
+    assert not responses.requests
