@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 import random
 import socket
 import unicodedata
@@ -42,6 +43,8 @@ from .models import (
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
+
+_LOGGER = logging.getLogger(__name__)
 
 # How often a request is tried when the connection to the API fails.
 REQUEST_ATTEMPTS = 5
@@ -253,7 +256,12 @@ class RadioBrowser:
             # can crash the Python process once the event loop shuts down.
             async with DNSResolver() as resolver:
                 result = await resolver.query_dns(SRV_RECORD, "SRV")
-        except DNSError:
+        except DNSError as exception:
+            _LOGGER.debug(
+                "Could not look up the Radio Browser API servers (%r), using %s",
+                exception,
+                FALLBACK_HOST,
+            )
             return [FALLBACK_HOST]
 
         hosts = [
@@ -262,9 +270,11 @@ class RadioBrowser:
             if isinstance(record.data, SRVRecordData)
         ]
         if not hosts:
+            _LOGGER.debug("No Radio Browser API servers found, using %s", FALLBACK_HOST)
             return [FALLBACK_HOST]
 
         random.shuffle(hosts)
+        _LOGGER.debug("Found Radio Browser API servers: %s", ", ".join(hosts))
         return hosts
 
     async def _request(
@@ -295,8 +305,17 @@ class RadioBrowser:
         for attempt in range(REQUEST_ATTEMPTS - 1):
             try:
                 return await self._request_once(uri, method, params)
-            except RadioBrowserConnectionError:
-                await sleep(random.uniform(0, 2**attempt))  # noqa: S311
+            except RadioBrowserConnectionError as exception:
+                delay = random.uniform(0, 2**attempt)  # noqa: S311
+                _LOGGER.debug(
+                    "Request %s failed on attempt %d of %d (%r), retrying in %.1fs",
+                    uri,
+                    attempt + 1,
+                    REQUEST_ATTEMPTS,
+                    exception.__cause__ or exception,
+                    delay,
+                )
+                await sleep(delay)
 
         return await self._request_once(uri, method, params)
 
@@ -352,6 +371,7 @@ class RadioBrowser:
                     if not self._hosts:
                         self._hosts = await self._resolve_hosts()
                     self._host = self._hosts.pop(0)
+                    _LOGGER.debug("Using Radio Browser API server %s", self._host)
 
                 url = URL.build(
                     scheme="https", host=self._host, path=f"/json/{uri}", encoded=True

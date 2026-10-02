@@ -2,6 +2,7 @@
 
 # pylint: disable=protected-access
 import asyncio
+import logging
 import re
 from collections.abc import Awaitable, Callable, Generator
 from typing import Any
@@ -555,3 +556,76 @@ async def test_negative_paging(
         await getattr(radios, method)(**paging)
 
     assert not responses.requests
+
+
+async def test_debug_log_of_servers_and_retries(
+    responses: aioresponses,
+    radios: RadioBrowser,
+    dns_resolver: MagicMock,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    """Test the server choice and every retry show up in the debug log."""
+    responses.get(
+        "https://one.example.com/json/test", exception=aiohttp.ClientConnectionError()
+    )
+    responses.get("https://two.example.com/json/test", payload={}, repeat=True)
+    dns_resolver.return_value.query_dns.return_value = srv_result(
+        "one.example.com", "two.example.com"
+    )
+    radios._host = None
+
+    with (
+        caplog.at_level(logging.DEBUG, logger="radios"),
+        patch("radios.radio_browser.random.shuffle"),
+        patch("radios.radio_browser.sleep", new=AsyncMock()),
+        patch("radios.radio_browser.random.uniform", return_value=0.5),
+    ):
+        await radios._request("test")
+        await radios._request("test")
+
+    assert caplog.messages == [
+        "Found Radio Browser API servers: one.example.com, two.example.com",
+        "Using Radio Browser API server one.example.com",
+        (
+            "Request test failed on attempt 1 of 5 (ClientConnectionError()),"
+            " retrying in 0.5s"
+        ),
+        "Using Radio Browser API server two.example.com",
+    ]
+
+
+@pytest.mark.parametrize(
+    ("lookup", "reason"),
+    [
+        (
+            {"side_effect": DNSError(11, "Could not contact DNS servers")},
+            (
+                "Could not look up the Radio Browser API servers"
+                " (DNSError(11, 'Could not contact DNS servers')), using"
+                " all.api.radio-browser.info"
+            ),
+        ),
+        (
+            {"return_value": srv_result()},
+            "No Radio Browser API servers found, using all.api.radio-browser.info",
+        ),
+    ],
+    ids=["dns error", "no servers"],
+)
+async def test_debug_log_of_fallback(  # noqa: PLR0913
+    responses: aioresponses,
+    radios: RadioBrowser,
+    dns_resolver: MagicMock,
+    caplog: pytest.LogCaptureFixture,
+    lookup: dict[str, Any],
+    reason: str,
+) -> None:
+    """Test falling back to the host name of all servers shows up, with why."""
+    responses.get("https://all.api.radio-browser.info/json/test", payload={})
+    dns_resolver.return_value.query_dns = AsyncMock(**lookup)
+    radios._host = None
+
+    with caplog.at_level(logging.DEBUG, logger="radios"):
+        await radios._request("test")
+
+    assert reason in caplog.messages
