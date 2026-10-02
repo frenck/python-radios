@@ -212,10 +212,11 @@ Without the async context manager, call `await radios.close()` when you are
 done, to close the session the client created. A closed client can still be
 used: the next request opens a new session.
 
-Radio Browser runs on a pool of community servers. The client picks one at
-random through DNS. When a connection fails, it tries again on a freshly
-picked server, with an exponential backoff in between, for up to five attempts
-in total.
+Radio Browser runs on a pool of community servers. The client looks them up
+through DNS and tries them in a random order: when a connection fails, it moves
+on to the next server, with an exponential backoff in between, for up to five
+attempts in total. When the DNS lookup of the servers fails, which some home
+routers do with this kind of record, it uses `all.api.radio-browser.info`.
 
 ### Error handling
 

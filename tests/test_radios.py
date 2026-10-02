@@ -4,6 +4,7 @@
 import asyncio
 import re
 from collections.abc import Awaitable, Callable, Generator
+from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import aiohttp
@@ -278,33 +279,83 @@ async def test_host_lookup_picks_a_server(
     dns_resolver.return_value.query_dns.return_value = result
     radios._host = None
 
-    # Pick the last candidate, so always taking the first one would fail.
+    # Reverse the "random" order, so always taking the first one would fail.
     with patch(
-        "radios.radio_browser.random.choice", side_effect=lambda hosts: hosts[-1]
-    ) as choice:
+        "radios.radio_browser.random.shuffle", side_effect=lambda hosts: hosts.reverse()
+    ) as shuffle:
         await radios._request("test")
 
-    choice.assert_called_once_with(["one.example.com", "two.example.com"])
+    shuffle.assert_called_once()
     assert radios._host == "two.example.com"
+    assert radios._hosts == ["one.example.com"]
     ((_, url),) = responses.requests
     assert url.host == "two.example.com"
 
 
 @pytest.mark.usefixtures("retry_sleep")
-async def test_host_lookup_dns_error(
-    radios: RadioBrowser, dns_resolver: MagicMock
+async def test_failed_server_is_not_tried_again(
+    responses: aioresponses, radios: RadioBrowser, dns_resolver: MagicMock
 ) -> None:
-    """Test a failing DNS lookup raises a connection error, after retrying."""
-    dns_resolver.return_value.query_dns.side_effect = DNSError(
-        11, "Could not contact DNS servers"
+    """Test a retry goes to the next server, instead of the one that failed."""
+    responses.get(
+        "https://one.example.com/json/test", exception=aiohttp.ClientConnectionError()
+    )
+    responses.get("https://two.example.com/json/test", payload={"status": "ok"})
+    dns_resolver.return_value.query_dns.return_value = srv_result(
+        "one.example.com", "two.example.com"
     )
     radios._host = None
 
-    with pytest.raises(RadioBrowserConnectionError) as error:
+    with patch("radios.radio_browser.random.shuffle"):
+        assert await radios._request("test") == '{"status": "ok"}'
+
+    assert radios._host == "two.example.com"
+    dns_resolver.return_value.query_dns.assert_awaited_once()
+
+
+@pytest.mark.usefixtures("retry_sleep")
+async def test_servers_are_looked_up_again_once_all_failed(
+    responses: aioresponses, radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test the servers are looked up again after every one of them failed."""
+    responses.get(
+        re.compile(r"^https://[a-z]+\.example\.com/json/test$"),
+        exception=aiohttp.ClientConnectionError(),
+        repeat=True,
+    )
+    dns_resolver.return_value.query_dns.return_value = srv_result(
+        "one.example.com", "two.example.com"
+    )
+    radios._host = None
+
+    with pytest.raises(RadioBrowserConnectionError):
         await radios._request("test")
 
-    assert isinstance(error.value.__cause__, DNSError)
-    assert dns_resolver.return_value.query_dns.await_count == 5
+    # Five attempts over two servers: one, two, look up, one, two, look up, one.
+    assert dns_resolver.return_value.query_dns.await_count == 3
+
+
+@pytest.mark.parametrize(
+    "lookup",
+    [
+        {"side_effect": DNSError(11, "Could not contact DNS servers")},
+        {"return_value": srv_result()},
+    ],
+    ids=["dns error", "no servers"],
+)
+async def test_host_lookup_falls_back(
+    responses: aioresponses,
+    radios: RadioBrowser,
+    dns_resolver: MagicMock,
+    lookup: dict[str, Any],
+) -> None:
+    """Test a failing SRV lookup falls back to the host name of all servers."""
+    responses.get("https://all.api.radio-browser.info/json/test", payload={"a": 1})
+    dns_resolver.return_value.query_dns = AsyncMock(**lookup)
+    radios._host = None
+
+    assert await radios._request("test") == '{"a": 1}'
+    assert radios._host == "all.api.radio-browser.info"
 
 
 @pytest.mark.usefixtures("retry_sleep")
@@ -325,18 +376,6 @@ async def test_host_lookup_timeout(
 
     assert dns_resolver.return_value.query_dns.await_count == 5
     assert radios._host is None
-
-
-@pytest.mark.usefixtures("retry_sleep")
-async def test_host_lookup_without_servers(
-    radios: RadioBrowser, dns_resolver: MagicMock
-) -> None:
-    """Test a DNS lookup without any SRV records raises a connection error."""
-    dns_resolver.return_value.query_dns.return_value = srv_result()
-    radios._host = None
-
-    with pytest.raises(RadioBrowserConnectionError, match="No Radio Browser API"):
-        await radios._request("test")
 
 
 async def test_internal_session(responses: aioresponses) -> None:

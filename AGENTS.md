@@ -74,10 +74,12 @@ See [AI_POLICY.md](AI_POLICY.md) for the contribution policy around AI tooling.
 
 ## Gotchas
 
-- The API host is not fixed. `_request` looks up `_api._tcp.radio-browser.info`
-  SRV records, picks one at random, and caches it in `_host`. Any connection
-  error clears `_host`, so the retry lands on a freshly resolved server. Tests
-  set `_host` directly to skip the DNS lookup.
+- The API host is not fixed. `_resolve_hosts()` looks up the
+  `_api._tcp.radio-browser.info` SRV records and shuffles them into `_hosts`;
+  the one in use is `_host`. A connection error clears `_host`, so the retry
+  moves on to the next server, and the list is looked up again once it runs
+  out. When the SRV lookup fails, `all.api.radio-browser.info` is used. Tests
+  set `_host` directly to skip the lookup.
 - Boolean query parameters are sent as lowercase `"true"`/`"false"`, because
   that is what the API expects.
 - The API returns countries as ISO 3166-1 alpha-2 codes, and lists a few of
