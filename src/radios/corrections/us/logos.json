@@ -1,0 +1,80 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "54e9be2f-8705-4841-a672-7effedcaf4d4",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://hottejano.com/wp-content/uploads/2026/07/HotTejano-New-Logo-White-1170x425.png"
+    },
+    {
+      "stationuuid": "7ab5fcfc-46ed-40be-9c47-27da8f8ef56c",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://love.radio/wp-content/uploads/2020/10/cropped-LOVE.RADIO-only-love-songs_logo-32x32.png"
+    },
+    {
+      "stationuuid": "f4bfa5d0-a403-11e8-abb8-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://thebig80sstation.com/wp-content/uploads/2018/06/cropped-The-Big-80s-Station-wide-ne-32x32.jpg"
+    },
+    {
+      "stationuuid": "bc522fb9-a9ce-4418-8ace-e766898bdae7",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://100hitz.com/wp-content/uploads/2023/03/100hitz.com-png-08-e1678043645250.png"
+    },
+    {
+      "stationuuid": "ecc10b7d-8765-49a6-a4a9-4d0d01fa1243",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://i.iheart.com/v3/re/assets.brands/66e4a6c8419c74f66ab05352?ops=gravity(%22center%22),contain(0,60)&quality=80"
+    },
+    {
+      "stationuuid": "c43b9915-61cc-4778-a289-309bf6e0310e",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://gotradio.com/wp-content/uploads/2023/04/GotRadio-Station_icon-for-rollover-titles-100x100.jpg"
+    },
+    {
+      "stationuuid": "0a622ad7-f7dd-445e-b72d-32c609969fcd",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://gotradio.com/wp-content/uploads/2023/04/GotRadio-Station_icon-for-rollover-titles-100x100.jpg"
+    },
+    {
+      "stationuuid": "b973dc9a-508d-44bc-afcb-15ca3c6cad80",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://sammeyersclassiccountry.com/wp-content/uploads/2019/04/country.jpg"
+    },
+    {
+      "stationuuid": "653d8c4e-9e75-4edc-8921-c7c5b46e64d2",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.wcny.org/wp-content/uploads/cropped-WCNY_Logo_RGB_Color-32x32.png"
+    },
+    {
+      "stationuuid": "c032608e-70c3-479c-867b-af7becd10ed9",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.atos.org/art/ATOS_logo_horiz-800w.png"
+    },
+    {
+      "stationuuid": "8e509a5b-b47c-11e8-afe1-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://connectbrazil.com/wp-content/uploads/2018/06/CBLogo01.png"
+    },
+    {
+      "stationuuid": "31c14cf0-3ef5-475c-a632-4d9b5bca4d5c",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://wumb.org/wp-content/themes/wumb/images/umass_logo.png"
+    },
+    {
+      "stationuuid": "6f12a4d1-56cf-46c8-aab9-b887d9e5fbd3",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://wumb.org/wp-content/themes/wumb/images/umass_logo.png"
+    },
+    {
+      "stationuuid": "595475c5-e8b5-45b4-98f8-23702915ee7e",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.solopianoradio.com/assets/img/logo/logo-whisperings-spr_larger-2020.gif"
+    },
+    {
+      "stationuuid": "581c5d6b-090b-4fb1-967b-cf367016ec06",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.yourclassical.org/images/logo-yourclassical.png"
+    }
+  ]
+}

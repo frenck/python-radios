@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "ae6928be-e5de-493a-a536-5f6234053f08",
+      "reason": "Corrects the tags, from radio-database merge request 330.",
+      "tags": "greatest hits,hits,pop,top hits,the hit music channel"
+    },
+    {
+      "stationuuid": "1ceda851-fdea-46f7-997e-4f3086c7dea8",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 330.",
+      "tags": "greatest hits,classic hits,80s,90s,wwlw",
+      "iso_3166_2": "US-WV",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "7497bf57-5023-4305-95c2-ce4430ae59c0",
+      "reason": "Corrects the name, homepage, favicon, tags, region and language codes, from radio-database merge request 330. The old favicon was missing or broken.",
+      "name": "100.1 & 102.3 WCLG Rocks!",
+      "homepage": "https://wclg.com",
+      "favicon": "https://wclg.com/wp-content/uploads/2026/01/clg200h-1.png",
+      "tags": "rock,wbtq",
+      "iso_3166_2": "US-WV",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "c10d7605-b702-4a1b-be96-3a0ac580d3a3",
+      "reason": "Corrects the tags and region, from radio-database merge request 330.",
+      "tags": "oldies,true oldies",
+      "iso_3166_2": "US-WV"
+    },
+    {
+      "stationuuid": "f89bcd90-7d4d-4a11-b2af-426782983083",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 330.",
+      "name": "103.3 WKMZ",
+      "tags": "news,talk,sports,clarksburg",
+      "iso_3166_2": "US-WV"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "0f0434f1-8e68-4499-944a-ef31104ccbf4",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge requests 304 and 305 and 306.",
+      "tags": "rock,pop,indie,soundtrack",
+      "iso_3166_2": "US-NJ",
+      "languagecodes": "EN"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "20f1210c-674e-46b5-aeed-1b0c2be7b853",
+      "reason": "Corrects the name, stream URL, homepage, favicon, tags, country and region, from radio-database merge request 143. The old favicon was missing or broken.",
+      "name": "Crooner Radio Frank Sinatra",
+      "url": "https://croonerradio-franksinatra.ice.infomaniak.ch/croonerradio-franksinatra-midfi.mp3",
+      "homepage": "https://www.croonerradio.fr/stations-de-radio/crooner-radio-frank-sinatra-webradio-artiste-musique-discographie-complete/",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-FRANK-SINATRA.jpg",
+      "tags": "frank sinatra",
+      "countrycode": "FR",
+      "iso_3166_2": "FR-IDF"
+    }
+  ]
+}

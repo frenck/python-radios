@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e7c7225b-e797-483b-8535-bcc973e8cde2",
+      "reason": "Corrects the tags and region, from radio-database merge request 185.",
+      "tags": "classical,jazz,detroit",
+      "iso_3166_2": "US-MI"
+    }
+  ]
+}

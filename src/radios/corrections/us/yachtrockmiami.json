@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "fb93956f-a004-4676-a3fb-28c8d9143d60",
+      "reason": "Corrects the homepage, from radio-database merge request 165.",
+      "homepage": "https://www.yachtrockmiami.com/"
+    }
+  ]
+}

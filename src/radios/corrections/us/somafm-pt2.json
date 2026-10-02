@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "960c7c81-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383.",
+      "favicon": "https://somafm.com/logos/120/secretagent120.jpg"
+    },
+    {
+      "stationuuid": "d9b43ea7-3c4d-11e8-b74d-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383.",
+      "favicon": "https://somafm.com/logos/120/secretagent120.jpg"
+    },
+    {
+      "stationuuid": "960d68cf-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383.",
+      "favicon": "https://somafm.com/logos/120/secretagent120.jpg"
+    }
+  ]
+}
