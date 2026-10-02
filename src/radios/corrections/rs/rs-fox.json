@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "251a1923-2c28-4dea-83ef-ec6cf9fa462c",
+      "reason": "Corrects the name, homepage, favicon, tags and region, from radio-database merge request 179. The old favicon was missing or broken.",
+      "name": "Fox Radio 97.9 FM",
+      "homepage": "https://www.foxradio.rs",
+      "favicon": "https://zigistar.com/pics/fox-logo.png",
+      "tags": "news,pop,becej,obecse",
+      "iso_3166_2": "RS-VO"
+    }
+  ]
+}

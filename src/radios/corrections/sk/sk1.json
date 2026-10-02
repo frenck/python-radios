@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9d69cc77-b698-40c0-8036-17cd1f09ca44",
+      "reason": "Corrects the name, tags, region and language codes, from radio-database merge request 155.",
+      "name": "Fun Radio",
+      "tags": "pop",
+      "iso_3166_2": "SK-BL",
+      "languagecodes": "SK"
+    },
+    {
+      "stationuuid": "96121add-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the region, from radio-database merge request 155.",
+      "iso_3166_2": "SK-BL"
+    },
+    {
+      "stationuuid": "f75cc3d3-10eb-40e3-926a-a9030eae3bba",
+      "reason": "Corrects the favicon, tags, region and language codes, from radio-database merge request 155. The old favicon was missing or broken.",
+      "favicon": "https://www.radiomelody.sk/wp-content/themes/melody/assets/logo.svg",
+      "tags": "pop,oldies",
+      "iso_3166_2": "SK-BL",
+      "languagecodes": "SK"
+    }
+  ]
+}

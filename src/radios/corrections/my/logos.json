@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e1d537bc-cf3d-4ddd-838e-cc24de2da2c3",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.fmradiovision.com/img/logo.png"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "205bee2a-b678-43e2-9c55-a47e78c9be48",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://playradio.org/wp-content/themes/playradio/images/playradio/logo-mobile.webp"
+    },
+    {
+      "stationuuid": "3340862a-169e-4dd8-bc81-fa75c20d2e81",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://radiounumanele.ro/wp-content/uploads/2025/05/cropped-cropped-Radio-1-1.jpg"
+    }
+  ]
+}

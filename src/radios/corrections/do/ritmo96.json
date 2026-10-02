@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "bb4c2226-6ccd-4470-b8b3-d6ba0f9ac353",
+      "reason": "Corrects the favicon and region, from radio-database merge request 189. The old favicon was missing or broken.",
+      "favicon": "https://cdn-profiles.tunein.com/s13446/images/logod.png",
+      "iso_3166_2": "DO-01"
+    }
+  ]
+}
