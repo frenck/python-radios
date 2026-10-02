@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c4ea5162-ed42-47cd-8648-382832620f45",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 396.",
+      "delete": true
+    }
+  ]
+}

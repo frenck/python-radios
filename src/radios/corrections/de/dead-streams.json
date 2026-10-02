@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "165ab8e6-4baa-42c6-a6a0-a157b0b98726",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "88d56cad-7a27-4f18-91da-d0bd8efbfca4",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 128.",
+      "delete": true
+    },
+    {
+      "stationuuid": "864efed9-3bbd-4a87-bfe9-b1993dfa2a33",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 128.",
+      "delete": true
+    },
+    {
+      "stationuuid": "6c1facd0-fc3f-40e3-a718-f4aeebd703e7",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 128.",
+      "delete": true
+    },
+    {
+      "stationuuid": "80d6df20-50ce-4d6a-9374-861d1b0abea1",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "dcf94677-eb5b-4fae-8e3c-b75ef7d33171",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "a6f744a2-126c-470b-9025-78a29908b611",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "fa8fe18b-a7a9-4886-bc0a-2bc38efa2d84",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "a13976b6-38c1-40ab-bc0b-2524c2d637d2",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "1113ea1a-190e-4fce-b5de-595686b5b556",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 128.",
+      "delete": true
+    }
+  ]
+}
