@@ -112,7 +112,7 @@ class Station(DataClassORJSONMixin):
         metadata=field_options(alias="lastlocalchecktime_iso8601")
     )
     name: str
-    ssl_error: int
+    ssl_error: int | None
     state: str
     uuid: str = field(metadata=field_options(alias="stationuuid"))
     tags: list[str] = field(
@@ -156,7 +156,9 @@ class StationCheck(DataClassORJSONMixin):
 
     uuid: str = field(metadata=field_options(alias="checkuuid"))
     station_uuid: str = field(metadata=field_options(alias="stationuuid"))
-    timestamp: datetime = field(metadata=field_options(alias="timestamp_iso8601"))
+    timestamp: datetime | None = field(
+        metadata=field_options(alias="timestamp_iso8601")
+    )
     ok: bool
     source: str
     codec: str
@@ -164,8 +166,8 @@ class StationCheck(DataClassORJSONMixin):
     hls: bool
     url: str = field(metadata=field_options(alias="urlcache"))
     metainfo_overrides_database: bool
-    timing_ms: int
-    ssl_error: int
+    timing_ms: int | None
+    ssl_error: int | None
 
     name: str | None = None
     description: str | None = None

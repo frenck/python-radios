@@ -108,6 +108,15 @@ def test_station_without_distance() -> None:
     assert station.distance is None
 
 
+def test_station_with_null_ssl_error() -> None:
+    """Test a station loads when the API sends null for its SSL error."""
+    # The API declares this field as optional, so it can be null.
+    data = orjson.loads(load_fixture("stations.json"))[0]
+    data["ssl_error"] = None
+
+    assert Station.from_dict(data).ssl_error is None
+
+
 def test_station_count_is_an_integer() -> None:
     """Test station counts are integers, like the API sends them."""
     country = Country.from_dict({"code": "NL", "name": "NL", "stationcount": 1545})
