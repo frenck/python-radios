@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9a7eb296-f4a2-435a-9715-f5fe40137f9f",
+      "reason": "Corrects the name and language codes, from radio-database merge request 223.",
+      "name": "MC2 Disco Inferno",
+      "languagecodes": "IT"
+    }
+  ]
+}

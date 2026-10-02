@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1fdc8bd2-a8a9-11e8-a907-52543be04c81",
+      "reason": "Corrects the favicon, region and language codes, from radio-database merge request 205. The old favicon was missing or broken.",
+      "favicon": "https://1000hits80s.eu/favicon.ico",
+      "iso_3166_2": "ES-MD",
+      "languagecodes": "ES,EN"
+    }
+  ]
+}

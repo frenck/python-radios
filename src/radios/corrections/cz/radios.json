@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c7571cbe-b514-11e9-acb2-52543be04c81",
+      "reason": "Corrects the stream URL and tags, from radio-database merge request 396. The old stream no longer plays.",
+      "url": "http://icecast5.play.cz/rockzone.mp3",
+      "tags": "rock,metal"
+    }
+  ]
+}

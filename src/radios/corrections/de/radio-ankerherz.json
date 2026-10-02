@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9ba35a46-fbfd-4a42-8ae9-fefd7d094e0f",
+      "reason": "Corrects the name and favicon, from radio-database merge request 224. The old favicon was missing or broken.",
+      "name": "Radio Ankerherz",
+      "favicon": "https://www.ankerherz.de/cdn/shop/files/Group_139218.png?v=1725605921&width=591"
+    }
+  ]
+}

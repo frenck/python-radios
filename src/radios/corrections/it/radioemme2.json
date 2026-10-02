@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "792e6f20-e36d-4f92-b936-12ecdb45de69",
+      "reason": "Corrects the stream URL, homepage, favicon and tags, from radio-database merge request 238.",
+      "url": "https://nr8.newradio.it:19602/stream",
+      "homepage": "https://www.radioemme2.it/",
+      "favicon": "https://www.radioemme2.it/wp-content/uploads/2020/09/logo-quadrato.png",
+      "tags": "pop,italian pop,dance,70s,80s,90s"
+    }
+  ]
+}

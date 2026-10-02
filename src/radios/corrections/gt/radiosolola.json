@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e086003c-be27-4196-ab39-22839bbf5384",
+      "reason": "Corrects the favicon and region, from radio-database merge request 200.",
+      "favicon": "https://www.radiosolola.com.gt/images/logo%20rs%20full%20efectos%20png.png",
+      "iso_3166_2": "GT-07"
+    }
+  ]
+}

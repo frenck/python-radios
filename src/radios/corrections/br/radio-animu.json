@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "69b073b3-bb02-495d-afff-52eb48e8c386",
+      "reason": "Corrects the stream URL and region, from radio-database merge requests 221 and 222. The old stream no longer plays.",
+      "url": "https://stream.animu.moe/64",
+      "iso_3166_2": "BR-SE"
+    }
+  ]
+}

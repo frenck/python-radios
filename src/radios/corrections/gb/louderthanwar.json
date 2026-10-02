@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "43410501-8008-46a9-aaa2-f0372c023e64",
+      "reason": "Corrects the language codes, from radio-database merge request 208.",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "14516140-aa4b-4462-997e-bb6a36ae7780",
+      "reason": "Duplicate of 43410501-8008-46a9-aaa2-f0372c023e64 (Louder Than War), with the same stream URL and fewer votes and clicks, from radio-database merge request 208.",
+      "delete": true
+    }
+  ]
+}

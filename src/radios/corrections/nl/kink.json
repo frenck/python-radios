@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "3046ced9-d322-4098-a8cd-e3c38f60cccb",
+      "reason": "Corrects the name, from radio-database merge request 132.",
+      "name": "KINK 80's"
+    }
+  ]
+}

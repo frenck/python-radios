@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "3f2c9689-bfb2-479c-9ecf-b0e80a360d6f",
+      "reason": "Corrects the name, stream URL, favicon, region and language codes, from radio-database merge requests 237 and 240. The old stream no longer plays; the old favicon was missing or broken.",
+      "name": "Aghani Aghani | HQ",
+      "url": "https://streaming.nrjaudio.fm/ou6pfgxp336f",
+      "favicon": "https://aghaniaghani.com/favicon.png",
+      "iso_3166_2": "LB-BA",
+      "languagecodes": "AR,EN"
+    },
+    {
+      "stationuuid": "9791346f-022e-46e5-827f-aac11285ddf7",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge requests 237 and 240. The old favicon was missing or broken.",
+      "name": "Jabal Lebnan | HQ",
+      "favicon": "https://jaballebnan.com/assets/images/favicon.png",
+      "tags": "arabic,pop,oldies,news,politics",
+      "iso_3166_2": "LB-BA",
+      "languagecodes": "AR"
+    }
+  ]
+}

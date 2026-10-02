@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "796dcd6d-95c2-485e-b838-ead17d293cfd",
+      "reason": "Duplicate of 71ec0b84-73e7-4c0d-bd50-17ce49d601e4 (Hive FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 346.",
+      "delete": true
+    }
+  ]
+}

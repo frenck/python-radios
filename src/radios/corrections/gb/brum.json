@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "b5fabd12-29ba-4811-96e0-a41e3d220be0",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 220.",
+      "name": "Brum Radio",
+      "tags": "independent,alternative,arts,culture,birmingham",
+      "iso_3166_2": "GB-BIR"
+    }
+  ]
+}

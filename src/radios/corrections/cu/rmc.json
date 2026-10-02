@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "71059ace-8f77-482a-973d-202e99881295",
+      "reason": "Corrects the favicon, tags, region and language codes, from radio-database merge request 329. The old favicon was missing or broken.",
+      "favicon": "https://static2.mytuner.mobi/media/tvos_radios/281/radio-maria-de-la-caridad.a68835c2.png",
+      "tags": "catholic radio,christian-gospel,cuban,roman catholic church",
+      "iso_3166_2": "CU-14",
+      "languagecodes": "es"
+    }
+  ]
+}

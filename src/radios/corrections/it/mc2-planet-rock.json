@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "99f24dd2-551e-4d78-91da-4277c0cb8320",
+      "reason": "Corrects the name, from radio-database merge request 227.",
+      "name": "MC2 Planet Rock"
+    }
+  ]
+}
