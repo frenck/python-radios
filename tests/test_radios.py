@@ -372,44 +372,23 @@ async def test_host_lookup_closes_the_resolver(
     dns_resolver.return_value.__aexit__.assert_awaited_once()
 
 
-@pytest.mark.usefixtures("retry_sleep")
-async def test_host_lookup_cut_short_closes_the_resolver(
-    radios: RadioBrowser, dns_resolver: MagicMock
+async def test_host_lookup_that_never_answers_falls_back(
+    responses: aioresponses, radios: RadioBrowser, dns_resolver: MagicMock
 ) -> None:
-    """Test the DNS resolver is closed when the timeout cuts a lookup short."""
+    """Test a lookup a router silently drops still reaches the fallback host."""
 
     async def unanswered_lookup(*_args: object) -> None:
         await asyncio.Event().wait()
 
+    responses.get("https://all.api.radio-browser.info/json/test", payload={"a": 1})
     dns_resolver.return_value.query_dns.side_effect = unanswered_lookup
     radios._host = None
-    radios.request_timeout = 0.01
+    radios.request_timeout = 0.2
 
-    with pytest.raises(RadioBrowserConnectionTimeoutError):
-        await radios._request("test")
-
-    # One lookup per attempt, and every one of them closed its resolver.
-    assert dns_resolver.return_value.__aexit__.await_count == 5
-
-
-@pytest.mark.usefixtures("retry_sleep")
-async def test_host_lookup_timeout(
-    radios: RadioBrowser, dns_resolver: MagicMock
-) -> None:
-    """Test a DNS lookup that never answers runs into the request timeout."""
-
-    async def unanswered_lookup(*_args: object) -> None:
-        await asyncio.Event().wait()
-
-    dns_resolver.return_value.query_dns.side_effect = unanswered_lookup
-    radios._host = None
-    radios.request_timeout = 0.01
-
-    with pytest.raises(RadioBrowserConnectionTimeoutError):
-        await radios._request("test")
-
-    assert dns_resolver.return_value.query_dns.await_count == 5
-    assert radios._host is None
+    assert await radios._request("test") == '{"a": 1}'
+    assert radios._host == "all.api.radio-browser.info"
+    # The lookup was cut short, and its resolver closed all the same.
+    dns_resolver.return_value.__aexit__.assert_awaited_once()
 
 
 async def test_internal_session(responses: aioresponses) -> None:
