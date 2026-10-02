@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "6ae71157-9d35-4337-a82f-2fe08db18d6b",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 129.",
+      "name": "Cadena SER Las Palmas",
+      "tags": "cultural news,live,local news,news,talk,sports news",
+      "iso_3166_2": "ES-GC"
+    }
+  ]
+}
