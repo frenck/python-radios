@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "aceba6e9-2ab8-4244-a724-4c3d498a208b",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 363.",
+      "delete": true
+    },
+    {
+      "stationuuid": "411fcdcb-6cae-4365-be2c-22086445bb03",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 363.",
+      "delete": true
+    },
+    {
+      "stationuuid": "711f57a9-9539-4b49-b7f8-ce0c3423380b",
+      "reason": "Dead: by the checks of Radio Browser itself, its stream has not played since 2026-01-15, and it does not play now either. Proposed for deletion in radio-database merge request 314.",
+      "delete": true
+    }
+  ]
+}
