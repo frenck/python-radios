@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d366167f-96ef-4c99-9214-b9a3ab4276f5",
+      "reason": "Homepage, logo, tags and region as given by the owner of the station, in radiobrowser-api-rust issue 257.",
+      "homepage": "https://chillradio.rf.gd",
+      "favicon": "https://s6.imgcdn.dev/YO8S68.png",
+      "tags": "deep house,tropical,adult contemporary,hits",
+      "state": "Tirana",
+      "iso_3166_2": "AL-11"
+    }
+  ]
+}
