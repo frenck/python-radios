@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "6696ce2b-b4b3-4ec3-9824-2a9a8b783360",
+      "reason": "Corrects the name, homepage, tags, region and language codes, from radio-database merge request 115.",
+      "name": "WRPI Troy, 91.5 FM - The Upstate Underground",
+      "homepage": "https://wrpi.org",
+      "tags": "alternative",
+      "iso_3166_2": "US-NY",
+      "languagecodes": "EN"
+    }
+  ]
+}

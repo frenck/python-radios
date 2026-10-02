@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d817adf7-63e1-48bc-9778-c6c4ed27c8a8",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 367.",
+      "tags": "experimental,ambient,electronic,drone,noise,instrumental",
+      "iso_3166_2": "US-CA",
+      "languagecodes": "EN"
+    }
+  ]
+}

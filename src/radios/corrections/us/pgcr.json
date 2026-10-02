@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "bd57f2f3-688d-4ace-b86e-eed42db178a1",
+      "reason": "Corrects the favicon, region and language codes, from radio-database merge request 175. The old favicon was missing or broken.",
+      "favicon": "https://pgcr.net/wp-content/uploads/2024/11/PGCR_Record_Logo_Transparent.png",
+      "iso_3166_2": "US-PA",
+      "languagecodes": "en"
+    }
+  ]
+}

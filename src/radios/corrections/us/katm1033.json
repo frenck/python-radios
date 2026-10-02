@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "62c25d4e-86ae-4e86-a7d8-f47bd3453ffd",
+      "reason": "Corrects the favicon, tags, region and language codes, from radio-database merge request 353. The old favicon was missing or broken.",
+      "favicon": "https://media-cdn.socastsrm.com/uploads/station/3056/squareIcon.png?r=93857",
+      "tags": "country",
+      "iso_3166_2": "US-CA",
+      "languagecodes": "EN"
+    }
+  ]
+}

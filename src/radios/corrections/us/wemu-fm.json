@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "96257122-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the stream URL and favicon, from radio-database merge request 372. The old favicon was missing or broken.",
+      "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/WEMUFM.mp3",
+      "favicon": "https://npr.brightspotcdn.com/dims4/default/5786cfc/2147483647/strip/true/crop/600x150+0+0/resize/534x134!/format/webp/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Fbf%2F94%2F2d4591534ce38a6cef0c6a8a3ade%2Fpttp-header-600x150.jpg"
+    },
+    {
+      "stationuuid": "9d22c569-2679-4401-b70f-e9d1f3fe12cf",
+      "reason": "Duplicate of 96257122-0601-11e8-ae97-52543be04c81 (WEMU 89.1 Ypsilanti, MI), with the same stream URL and fewer votes and clicks, from radio-database merge request 372.",
+      "delete": true
+    }
+  ]
+}
