@@ -1,0 +1,50 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "94a29e86-e7f0-4b1a-9b7d-a4db7df6cfc4",
+      "reason": "Vandalized from the day it was added: instead of 1000 Hits 90s, its stream URL plays the notification sound of a chat widget, repeated 100 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "87d15b8e-5ad3-4150-bcc3-611b7add55d1",
+      "reason": "Vandalized from the day it was added: instead of 1234567890, its stream URL plays the notification sound of a chat widget, repeated 100 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "c20c8dbe-f93b-469d-bbfd-4f5fc889d82f",
+      "reason": "Vandalized from the day it was added: instead of Radi Caprice - Afrobeat, its stream URL plays a national anthem from nationalanthems.info, repeated 145 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "20396ef5-f4ba-4df8-a631-9bdec7e85451",
+      "reason": "Vandalized from the day it was added: instead of Radio Caprice - Chicago Blues, its stream URL plays a national anthem from nationalanthems.info, repeated 151 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "99c8588b-7c76-4db1-bd11-12d35c4e67af",
+      "reason": "Vandalized from the day it was added: instead of Radio Caprice - Classical Guitar, its stream URL plays a national anthem from nationalanthems.info, repeated 137 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "bc21a80e-a04c-431e-b601-a5fda358e3f8",
+      "reason": "Vandalized from the day it was added: instead of Radio Caprice - Club Dance, its stream URL plays a national anthem from nationalanthems.info, repeated 154 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "bd568faa-169e-4aab-a99f-7c2f0762a312",
+      "reason": "Vandalized from the day it was added: instead of Radio Caprice - Drum n Bass, its stream URL plays a national anthem from nationalanthems.info, repeated 142 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "ed348816-c563-4f99-b33a-10b9f0b25bf4",
+      "reason": "Vandalized from the day it was added: instead of Radio Caprice - Flamenco, its stream URL plays a national anthem from nationalanthems.info, repeated 204 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "bc196301-d530-4d0e-ad37-687037f6d8b4",
+      "reason": "Vandalized from the day it was added: instead of Radio Caprice - Hip Hop, its stream URL plays a national anthem from nationalanthems.info, repeated 141 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e4b7faa5-e810-4cde-8bb4-828fffd06e3e",
+      "reason": "Vandalized from the day it was added: instead of NAGASWARA Pop, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "f8c19849-701f-479c-b973-4452f6610c1d",
+      "reason": "Vandalized from the day it was added: instead of NAGASWARA RADIOTEMEN, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "14414e71-de96-4594-ab64-c190a13db231",
+      "reason": "Vandalized from the day it was added: instead of NAGASWARA World, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "909669b1-92fb-4fbc-aa2a-261f9deb5124",
+      "reason": "Vandalized from the day it was added: instead of NAGASWARA World, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    }
+  ]
+}
