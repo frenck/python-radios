@@ -192,6 +192,32 @@ async def test_station_click(responses: aioresponses, radios: RadioBrowser) -> N
     )
 
 
+@pytest.mark.parametrize("ok", [False, "false"])
+async def test_station_click_not_registered(
+    responses: aioresponses, radios: RadioBrowser, ok: object
+) -> None:
+    """Test a click the API does not register raises an error with its message."""
+    responses.get(
+        f"{API_URL}/url/{STATION_UUID}",
+        payload={"ok": ok, "message": "station not found"},
+    )
+
+    with pytest.raises(RadioBrowserError, match="did not register the click"):
+        await radios.station_click(uuid=STATION_UUID)
+
+
+async def test_station_click_ok_as_string(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a click with "ok" as the string the documentation shows is fine."""
+    responses.get(
+        f"{API_URL}/url/{STATION_UUID}",
+        payload={"ok": "true", "message": "retrieved station url", "url": "x"},
+    )
+
+    assert await radios.station_click(uuid=STATION_UUID) == "x"
+
+
 async def test_station_click_uuid_is_escaped(
     responses: aioresponses, radios: RadioBrowser
 ) -> None:
