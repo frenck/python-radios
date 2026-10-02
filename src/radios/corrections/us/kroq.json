@@ -1,0 +1,18 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "798a7839-17db-4b25-9c17-4f36fc625fbc",
+      "reason": "Corrects the name, tags, region and language codes, from radio-database merge request 129.",
+      "name": "KROQ 106.7",
+      "tags": "alternative rock",
+      "iso_3166_2": "US-CA",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "8676c706-ada0-4eab-b050-987e087c7bb2",
+      "reason": "Duplicate of 798a7839-17db-4b25-9c17-4f36fc625fbc (Kroq 106.7), with the same stream URL and fewer votes and clicks, from radio-database merge request 129.",
+      "delete": true
+    }
+  ]
+}

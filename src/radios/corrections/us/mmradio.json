@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "3b54b428-2f90-4554-bd87-28a8c27191f8",
+      "reason": "Corrects the homepage, favicon, region and language codes, from radio-database merge request 173. The old favicon was missing or broken.",
+      "homepage": "https://mmradio.net/",
+      "favicon": "https://mmradio.net/images/mmRadio.png",
+      "iso_3166_2": "US-IL",
+      "languagecodes": "EN"
+    }
+  ]
+}

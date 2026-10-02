@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "95ca8e11-7366-4cc1-a663-e9aa6289d54d",
+      "reason": "Corrects the name, favicon, region and language codes, from radio-database merge request 174. The old favicon was missing or broken.",
+      "name": "Talk 650 KSTE | Where Sacramento Comes To Talk",
+      "favicon": "https://i.iheart.com/v3/catalog/live/229?cacheable=true&ops=ratio%281%2C1%29%2Cscale%28164%2C0%29%2Cgravity%28%22center%22%29%2Cformat%28%22webp%22%29%2Cquality%2875%29%2Cfit%28112%2C112%29",
+      "iso_3166_2": "US-CA",
+      "languagecodes": "EN"
+    }
+  ]
+}

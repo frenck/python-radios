@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "962e174f-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon and region, from radio-database merge request 185. The old favicon was missing or broken.",
+      "favicon": "https://media-cdn.socastsrm.com/wordpress/wp-content/blogs.dir/3371/files/2024/10/WQKL-FM-Sitelogo-2023-10-13.png",
+      "iso_3166_2": "US-MI"
+    },
+    {
+      "stationuuid": "962e113d-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon and region, from radio-database merge request 185. The old favicon was missing or broken.",
+      "favicon": "https://media-cdn.socastsrm.com/wordpress/wp-content/blogs.dir/3371/files/2024/10/WQKL-FM-Sitelogo-2023-10-13.png",
+      "iso_3166_2": "US-MI"
+    }
+  ]
+}

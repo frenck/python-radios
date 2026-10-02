@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "a8475610-a043-45a3-9a2c-4474bd9471a9",
+      "reason": "Corrects the name, stream URL, favicon, tags and region, from radio-database merge request 382. The old stream no longer plays.",
+      "name": "WABE 90.1",
+      "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/WABEFM_HD1_SC",
+      "favicon": "https://upload.wikimedia.org/wikipedia/commons/d/d4/WABE_Logo_%282022-%29.webp",
+      "tags": "public radio,npr,news,talk,local news,public",
+      "iso_3166_2": "US-GA"
+    }
+  ]
+}
