@@ -1,0 +1,80 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d00a8843-b483-4de5-94bc-31bda20e732a",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Rádió 1",
+      "favicon": "https://radio1.hu/template/radio1/assets/img/favicon/apple-touch-icon.png",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-BU",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "06fce421-7149-4ea8-83d8-afacc0d7418b",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 106.",
+      "name": "Rádió 1 Békéscsaba",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-BE"
+    },
+    {
+      "stationuuid": "963729c7-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the tags and region, from radio-database merge request 106.",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-HB"
+    },
+    {
+      "stationuuid": "a45a1600-8fae-4449-b23d-9dc552a7adbd",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 106.",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-HE",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "960c2848-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Rádió 1 Gong",
+      "homepage": "https://radio1gong.hu/",
+      "favicon": "https://radio1.hu/template/radio1/assets/img/favicon/apple-touch-icon.png",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-BK"
+    },
+    {
+      "stationuuid": "385aa06d-fc62-4dfc-ad84-11057ad8d6e0",
+      "reason": "Corrects the name, tags, region and language codes, from radio-database merge request 106.",
+      "name": "Rádió 1 Gyöngyös",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-HE",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "ab11f775-dadf-4614-8b61-f9ea3654d65d",
+      "reason": "Corrects the homepage, favicon, tags, region and language codes, from radio-database merge request 106. The old favicon was missing or broken.",
+      "homepage": "https://radio1.hu/",
+      "favicon": "https://radio1.hu/template/radio1/assets/img/favicon/apple-touch-icon.png",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-BZ",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "17eb9d54-4a14-4c67-b037-b5f059f3bb11",
+      "reason": "Corrects the name, favicon, region and language codes, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Rádió 1 Paks",
+      "favicon": "https://radio1.hu/template/radio1/assets/img/favicon/apple-touch-icon.png",
+      "iso_3166_2": "HU-TO",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "184511ad-da57-4786-bac1-ae5dbeb3c2db",
+      "reason": "Corrects the homepage, tags and region, from radio-database merge request 106.",
+      "homepage": "https://radio1szeged.hu/",
+      "tags": "dance,hits,pop,top 40",
+      "iso_3166_2": "HU-CS"
+    },
+    {
+      "stationuuid": "bdb5260a-ae46-46d5-ac76-0df0df788d92",
+      "reason": "Duplicate of a45a1600-8fae-4449-b23d-9dc552a7adbd (Rádió 1 Eger), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    }
+  ]
+}
