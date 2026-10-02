@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "6da066a5-eddf-4640-8bfb-25070c52858d",
+      "reason": "Corrects the name, homepage, tags and region, from radio-database merge request 191.",
+      "name": "TMC São Paulo",
+      "homepage": "https://tmc.com.br/",
+      "tags": "news,talk,sports,soccer",
+      "iso_3166_2": "BR-SP"
+    }
+  ]
+}
