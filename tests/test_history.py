@@ -139,3 +139,19 @@ async def test_history_uuid_is_escaped(
 
     ((_, url),) = responses.requests
     assert url.raw_path == f"/json/{method}/..%2Fstats"
+
+
+@pytest.mark.parametrize(
+    ("field", "attribute"),
+    [
+        ("timestamp_iso8601", "timestamp"),
+        ("timing_ms", "timing_ms"),
+        ("ssl_error", "ssl_error"),
+    ],
+)
+def test_check_with_null_fields(field: str, attribute: str) -> None:
+    """Test a check loads when the API sends null for a field it may leave empty."""
+    check = orjson.loads(load_fixture("checks.json"))[0]
+    check[field] = None
+
+    assert getattr(StationCheck.from_dict(check), attribute) is None
