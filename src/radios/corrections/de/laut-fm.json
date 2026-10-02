@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "b2393590-bcfa-4d38-8f33-f6edf186f787",
+      "reason": "Its stream URL is padded with 7791 characters of junk, see radiobrowser-api-rust issue 154. The stream itself works.",
+      "url": "https://zonefm.stream.laut.fm/zonefm"
+    },
+    {
+      "stationuuid": "4e279b29-15f2-41b5-ab70-4cf41ee40b30",
+      "reason": "Its stream URL is padded with 7791 characters of junk, see radiobrowser-api-rust issue 154. The stream itself works.",
+      "url": "https://zwei.stream.laut.fm/zwei"
+    },
+    {
+      "stationuuid": "ee701b0c-023b-41e1-aff4-9ea58ce6b4ed",
+      "reason": "Its stream URL is padded with 7791 characters of junk, see radiobrowser-api-rust issue 154. The stream itself works, and like the homepage, it is Zonehouse, not Zwei.",
+      "url": "https://zonehouse.stream.laut.fm/zonehouse",
+      "name": "Laut FM - Zonehouse"
+    },
+    {
+      "stationuuid": "39a3181f-263d-4ee5-8808-107e4b52b3f9",
+      "reason": "Its stream URL is padded with 7791 characters of junk, see radiobrowser-api-rust issue 154. The stream itself works.",
+      "url": "https://zwo.stream.laut.fm/zwo"
+    }
+  ]
+}

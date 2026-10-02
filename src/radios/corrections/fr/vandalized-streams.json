@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "147107aa-3657-4cd3-a9d7-8f111475d6bd",
+      "reason": "Vandalized from the day it was added: instead of 100% POP - NEW WAVE, its stream URL plays a national anthem from nationalanthems.info, repeated 173 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "ee4b898a-af96-4363-b2e1-a157d5c547f4",
+      "reason": "Vandalized from the day it was added: instead of 100% POP - NEW WAVE, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "f483860a-901b-4ad1-b1eb-a2bc058e935f",
+      "reason": "Vandalized from the day it was added: instead of 100% POP - NEW WAVE, its stream URL plays a national anthem from nationalanthems.info, repeated 173 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "3630ef0a-4cab-480d-8ee4-d09a85edad5b",
+      "reason": "Vandalized from the day it was added: instead of 100% POP - NEW WAVE, its stream URL plays a national anthem from nationalanthems.info, repeated 173 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "ef68b99c-3abb-4b42-8f1c-85ebf61fd8e0",
+      "reason": "Vandalized from the day it was added: instead of 100% Radio, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "d74136e8-23e4-4397-90a4-6355005b3d73",
+      "reason": "Vandalized from the day it was added: instead of 100% Radio 80, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "a1694c2c-8b09-4398-a6a0-56111ef7f731",
+      "reason": "Vandalized from the day it was added: instead of 1000 Hits 90s, its stream URL plays a national anthem from nationalanthems.info, repeated 173 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "e1924ea9-6bcf-4b78-92a7-a883c9eedb09",
+      "reason": "Vandalized from the day it was added: instead of 1000 Hits 90s, its stream URL plays a national anthem from nationalanthems.info, repeated 173 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "35209e3f-1f6b-44d8-bfa1-91a2c34748d0",
+      "reason": "Vandalized from the day it was added: instead of 1000 Hits 90s, its stream URL plays a national anthem from nationalanthems.info, repeated 173 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    },
+    {
+      "stationuuid": "c76aeacf-74a7-44bc-80b0-2043a8fe90f4",
+      "reason": "Vandalized from the day it was added: instead of 1000 Hits 90s, its stream URL plays another station (Jamendo Lounge), repeated 89 times. See radiobrowser-api-rust issue 154.",
+      "delete": true
+    }
+  ]
+}
