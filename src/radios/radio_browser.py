@@ -8,7 +8,7 @@ import socket
 import unicodedata
 from asyncio import sleep
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from http import HTTPStatus
 from typing import TYPE_CHECKING, Any, Self
 from urllib.parse import quote
@@ -45,6 +45,12 @@ if TYPE_CHECKING:
 
 # How often a request is tried when the connection to the API fails.
 REQUEST_ATTEMPTS = 5
+
+# The API servers are published as DNS SRV records. Some home routers and DNS
+# filters do not handle those well, so when that lookup fails, this host name
+# is used instead. Its plain A and AAAA records point to all API servers.
+SRV_RECORD = "_api._tcp.radio-browser.info"
+FALLBACK_HOST = "all.api.radio-browser.info"
 
 
 @contextmanager
@@ -199,30 +205,26 @@ class RadioBrowser:
 
     _close_session: bool = False
     _host: str | None = None
+    # The servers not tried yet, in the random order they will be tried in.
+    _hosts: list[str] = field(default_factory=list)
 
-    async def _resolve_host(self) -> str:
-        """Pick one of the Radio Browser API servers.
+    async def _resolve_hosts(self) -> list[str]:
+        """Look up the Radio Browser API servers, in a random order.
 
         The API does not have a fixed host. Its servers are published as DNS
-        SRV records, and clients are asked to spread their load by picking one
-        at random.
+        SRV records, and clients are asked to pick one at random and, when a
+        request fails, to try the next one.
 
         Returns
         -------
-            The host name of a Radio Browser API server.
-
-        Raises
-        ------
-            RadioBrowserConnectionError: The API servers could not be looked up.
+            The host names of the Radio Browser API servers, shuffled. When
+            the servers cannot be looked up, the fallback host name.
 
         """
         try:
-            result = await DNSResolver().query_dns(
-                "_api._tcp.radio-browser.info", "SRV"
-            )
-        except DNSError as exception:
-            msg = "Error occurred while looking up the Radio Browser API servers"
-            raise RadioBrowserConnectionError(msg) from exception
+            result = await DNSResolver().query_dns(SRV_RECORD, "SRV")
+        except DNSError:
+            return [FALLBACK_HOST]
 
         hosts = [
             record.data.target
@@ -230,10 +232,10 @@ class RadioBrowser:
             if isinstance(record.data, SRVRecordData)
         ]
         if not hosts:
-            msg = "No Radio Browser API servers found"
-            raise RadioBrowserConnectionError(msg)
+            return [FALLBACK_HOST]
 
-        return random.choice(hosts)  # noqa: S311
+        random.shuffle(hosts)
+        return hosts
 
     async def _request(
         self,
@@ -315,7 +317,11 @@ class RadioBrowser:
                 # Looking up the server is part of the request, so a DNS
                 # server that does not answer runs into the same timeout.
                 if self._host is None:
-                    self._host = await self._resolve_host()
+                    # Move on to the next server, and look them up again only
+                    # once every one of them has been tried.
+                    if not self._hosts:
+                        self._hosts = await self._resolve_hosts()
+                    self._host = self._hosts.pop(0)
 
                 url = URL.build(
                     scheme="https", host=self._host, path=f"/json/{uri}", encoded=True
