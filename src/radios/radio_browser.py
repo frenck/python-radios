@@ -222,12 +222,18 @@ class RadioBrowser:
 
         """
         try:
-            # Close the resolver also when the lookup is cut short, like by the
-            # request timeout. A lookup left pending in an unclosed resolver
-            # can crash the Python process once the event loop shuts down.
-            async with DNSResolver() as resolver:
+            # Some routers silently drop SRV queries instead of refusing them.
+            # Give the lookup half of the request timeout, so a lookup that
+            # never answers still leaves time to fall back to the other host
+            # name. The resolver is closed also when the lookup is cut short:
+            # a lookup left pending in an unclosed resolver can crash the
+            # Python process once the event loop shuts down.
+            async with (
+                asyncio.timeout(self.request_timeout / 2),
+                DNSResolver() as resolver,
+            ):
                 result = await resolver.query_dns(SRV_RECORD, "SRV")
-        except DNSError as exception:
+        except (DNSError, TimeoutError) as exception:
             _LOGGER.debug(
                 "Could not look up the Radio Browser API servers (%r), using %s",
                 exception,
