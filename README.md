@@ -218,6 +218,15 @@ on to the next server, with an exponential backoff in between, for up to five
 attempts in total. When the DNS lookup of the servers fails, which some home
 routers do with this kind of record, it uses `all.api.radio-browser.info`.
 
+To see which server the client uses, and why it retries, turn on debug
+logging for `radios`:
+
+```python
+import logging
+
+logging.getLogger("radios").setLevel(logging.DEBUG)
+```
+
 ### Error handling
 
 Everything that can go wrong while talking to the API raises a
