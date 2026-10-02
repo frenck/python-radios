@@ -653,3 +653,50 @@ async def test_invalid_arguments(
         await call(radios)
 
     assert not responses.requests
+
+
+@pytest.mark.parametrize(
+    ("current", "failed", "expected"),
+    [
+        ("two.example.com", "one.example.com", "two.example.com"),
+        ("two.example.com", "two.example.com", None),
+        ("two.example.com", None, "two.example.com"),
+    ],
+    ids=["other server", "own server", "failed during lookup"],
+)
+def test_forget_host(
+    radios: RadioBrowser, current: str, failed: str | None, expected: str | None
+) -> None:
+    """Test a failed request only forgets the server it used itself."""
+    # A concurrent request may have moved on to a healthy server already.
+    radios._host = current
+
+    radios._forget_host(failed)
+
+    assert radios._host == expected
+
+
+async def test_close_during_lookup(
+    responses: aioresponses, dns_resolver: MagicMock
+) -> None:
+    """Test closing the client while a request looks up the server ends it."""
+    lookup_started = asyncio.Event()
+    lookup_done = asyncio.Event()
+
+    async def slow_lookup(*_args: object) -> object:
+        lookup_started.set()
+        await lookup_done.wait()
+        return srv_result("example.com")
+
+    dns_resolver.return_value.query_dns.side_effect = slow_lookup
+    radios = RadioBrowser(user_agent="PythonRadios/Tests")
+
+    request = asyncio.create_task(radios._request("test"))
+    await lookup_started.wait()
+    await radios.close()
+    lookup_done.set()
+
+    with pytest.raises(RadioBrowserError, match="closed during the request"):
+        await request
+
+    assert not responses.requests

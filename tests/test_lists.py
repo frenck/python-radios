@@ -1,6 +1,8 @@
 """Tests for the stats, countries, languages and tags endpoints."""
 
+import asyncio
 import re
+from typing import Any
 
 import pytest
 from aioresponses import aioresponses
@@ -409,3 +411,36 @@ async def test_states_look_up_country_names_once(
 
     paths = [url.path for _, url in responses.requests]
     assert paths.count("/json/countries") == 1
+
+
+async def test_states_concurrent_first_calls_look_up_once(
+    responses: aioresponses, radios: RadioBrowser, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Test concurrent first calls share one lookup of the API country names."""
+    responses.get(
+        f"{API_URL}/countries", status=200, body=load_fixture("countries.json")
+    )
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/states/"), payload=[], repeat=True
+    )
+
+    # A real request waits on the network, which is where concurrent calls
+    # interleave. The mocked one would not wait at all.
+    request = radios._request
+
+    async def request_that_waits(*args: Any, **kwargs: Any) -> str:
+        await asyncio.sleep(0)
+        return await request(*args, **kwargs)
+
+    monkeypatch.setattr(radios, "_request", request_that_waits)
+
+    await asyncio.gather(
+        *(radios.states(country_code=code) for code in ("NL", "DE", "US", "NL", "CI"))
+    )
+
+    (countries_calls,) = [
+        calls
+        for (_, url), calls in responses.requests.items()
+        if url.path == "/json/countries"
+    ]
+    assert len(countries_calls) == 1

@@ -207,6 +207,7 @@ class RadioBrowser:
     # The names the API uses for countries, by country code. They hardly ever
     # change, so they are looked up once per client.
     _api_country_names: dict[str, str] | None = None
+    _api_country_names_lock: asyncio.Lock = field(default_factory=asyncio.Lock)
 
     async def _resolve_hosts(self) -> list[str]:
         """Look up the Radio Browser API servers, in a random order.
@@ -290,6 +291,22 @@ class RadioBrowser:
 
         return await self._request_once(uri, method, params)
 
+    def _forget_host(self, host: str | None) -> None:
+        """Stop using a server after a request to it failed.
+
+        Requests run concurrently, so by the time one fails, another may have
+        moved on to the next server already and be doing fine there. Only
+        forget the server this request was actually using. A request that
+        failed before it picked a server has none to forget.
+
+        Args:
+        ----
+            host: The server the failed request used, if it got that far.
+
+        """
+        if host is not None and self._host == host:
+            self._host = None
+
     async def _request_once(
         self,
         uri: str,
@@ -325,6 +342,9 @@ class RadioBrowser:
         if self.session is None:
             self.session = aiohttp.ClientSession()
             self._close_session = True
+        # Hold on to the session, close() may let go of it while this request
+        # waits for the server lookup.
+        session = self.session
 
         # Build a new dict, so the caller's own params are left untouched.
         if params:
@@ -332,6 +352,7 @@ class RadioBrowser:
                 key: str(value).lower() if isinstance(value, bool) else value
                 for key, value in params.items()
             }
+        host: str | None = None
         try:
             async with asyncio.timeout(self.request_timeout):
                 # Looking up the server is part of the request, so a DNS
@@ -343,11 +364,16 @@ class RadioBrowser:
                         self._hosts = await self._resolve_hosts()
                     self._host = self._hosts.pop(0)
                     _LOGGER.debug("Using Radio Browser API server %s", self._host)
+                host = self._host
+
+                if session.closed:
+                    msg = "The Radio Browser client was closed during the request"
+                    raise RadioBrowserError(msg)
 
                 url = URL.build(
-                    scheme="https", host=self._host, path=f"/json/{uri}", encoded=True
+                    scheme="https", host=host, path=f"/json/{uri}", encoded=True
                 )
-                response = await self.session.request(
+                response = await session.request(
                     method,
                     url,
                     headers={
@@ -363,7 +389,7 @@ class RadioBrowser:
             if "application/json" not in content_type:
                 raise RadioBrowserError(response.status, {"message": text})
         except TimeoutError as exception:
-            self._host = None
+            self._forget_host(host)
             msg = "Timeout occurred while connecting to the Radio Browser API"
             raise RadioBrowserConnectionTimeoutError(msg) from exception
         except UnicodeDecodeError as exception:
@@ -379,11 +405,11 @@ class RadioBrowser:
                     exception.status, {"message": exception.message}
                 ) from exception
 
-            self._host = None
+            self._forget_host(host)
             msg = "Error occurred while communicating with the Radio Browser API"
             raise RadioBrowserConnectionError(msg) from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
-            self._host = None
+            self._forget_host(host)
             msg = "Error occurred while communicating with the Radio Browser API"
             raise RadioBrowserConnectionError(msg) from exception
 
@@ -1173,15 +1199,18 @@ class RadioBrowser:
             as unknown too.
 
         """
-        if self._api_country_names is None:
-            countries_data = await self._request("countries")
-            with unexpected_response():
-                countries = orjson.loads(countries_data)  # pylint: disable=no-member
-                self._api_country_names = {
-                    country["iso_3166_1"].upper(): country["name"]
-                    # pylint: disable-next=not-an-iterable
-                    for country in countries
-                }
+        # Concurrent first calls wait for one lookup, instead of each doing
+        # their own.
+        async with self._api_country_names_lock:
+            if self._api_country_names is None:
+                countries_data = await self._request("countries")
+                with unexpected_response():
+                    countries = orjson.loads(countries_data)  # pylint: disable=no-member
+                    self._api_country_names = {
+                        country["iso_3166_1"].upper(): country["name"]
+                        # pylint: disable-next=not-an-iterable
+                        for country in countries
+                    }
 
         return self._api_country_names.get(country_code.upper()) or None
 
