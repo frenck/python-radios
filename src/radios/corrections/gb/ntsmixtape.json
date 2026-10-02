@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d5468df4-e6d0-11e9-a96c-52543be04c81",
+      "reason": "Corrects the name, from radio-database merge request 177.",
+      "name": "Slow Focus - Infinite Mixtapes | NTS"
+    },
+    {
+      "stationuuid": "c6b63961-7b70-4d29-8af3-fe3dbbc4255c",
+      "reason": "Duplicate of d5468df4-e6d0-11e9-a96c-52543be04c81 (Slow Focus | NTS), with the same stream URL and fewer votes and clicks, from radio-database merge request 177.",
+      "delete": true
+    }
+  ]
+}
