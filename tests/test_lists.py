@@ -409,8 +409,17 @@ async def test_states_look_up_country_names_once(
     await radios.states(country_code="DE")
     await radios.states(country_code="ZZ")
 
-    paths = [url.path for _, url in responses.requests]
-    assert paths.count("/json/countries") == 1
+    # One lookup in total, and the cached names are still the right ones.
+    countries_calls = sum(
+        len(calls)
+        for (_, url), calls in responses.requests.items()
+        if url.path == "/json/countries"
+    )
+    assert countries_calls == 1
+    assert {url.raw_path for _, url in responses.requests if "states" in url.path} == {
+        "/json/states/The%20Netherlands/",
+        "/json/states/Germany/",
+    }
 
 
 async def test_states_concurrent_first_calls_look_up_once(

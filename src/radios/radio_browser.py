@@ -816,11 +816,12 @@ class RadioBrowser:
                 it. A station with more than one language still matches when
                 one of them is this language.
             tag: Search by tag, ignoring case.
-            tag_exact: Match the tag exactly instead of part of it. A station
-                with more tags still matches when one of them is this tag.
+            tag_exact: Match the tag exactly instead of part of it, for `tag`
+                and every tag in `tag_list`. A station with more tags still
+                matches when one of them is this tag.
             tag_list: Only stations that match all of these tags, ignoring
-                case. Like `tag`, this matches part of a tag: "blues" also
-                finds "blues rock".
+                case. Like `tag`, this matches part of a tag ("blues" also
+                finds "blues rock"), unless `tag_exact` is set.
             codec: Search by codec, for example "MP3" or "AAC".
             bitrate_min: Search by minimum bitrate.
             bitrate_max: Search by maximum bitrate.
@@ -951,11 +952,14 @@ class RadioBrowser:
         """Get the stations that stream from a URL.
 
         Useful to find the station behind a saved stream URL. Several
-        stations can share a stream, so this can return more than one.
+        stations can share a stream, so this can return more than one. The
+        API only matches the URL a station was registered with, not the one
+        it resolves to after redirects or playlists.
 
         Args:
         ----
-            url: The stream URL, as given or as resolved.
+            url: The stream URL the station was registered with, its `url`.
+                The URL it resolves to, `url_resolved`, does not match.
 
         Returns:
         -------

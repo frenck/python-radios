@@ -294,14 +294,24 @@ async def test_host_lookup_picks_a_server(
     assert url.host == "two.example.com"
 
 
+@pytest.mark.parametrize(
+    "failure",
+    [
+        {"exception": aiohttp.ClientConnectionError()},
+        {"exception": TimeoutError()},
+        {"status": 503},
+    ],
+    ids=["connection error", "timeout", "server error"],
+)
 @pytest.mark.usefixtures("retry_sleep")
 async def test_failed_server_is_not_tried_again(
-    responses: aioresponses, radios: RadioBrowser, dns_resolver: MagicMock
+    responses: aioresponses,
+    radios: RadioBrowser,
+    dns_resolver: MagicMock,
+    failure: dict[str, Any],
 ) -> None:
     """Test a retry goes to the next server, instead of the one that failed."""
-    responses.get(
-        "https://one.example.com/json/test", exception=aiohttp.ClientConnectionError()
-    )
+    responses.get("https://one.example.com/json/test", **failure)
     responses.get("https://two.example.com/json/test", payload={"status": "ok"})
     dns_resolver.return_value.query_dns.return_value = srv_result(
         "one.example.com", "two.example.com"
@@ -312,6 +322,10 @@ async def test_failed_server_is_not_tried_again(
         assert await radios._request("test") == '{"status": "ok"}'
 
     assert radios._host == "two.example.com"
+    assert [url.host for _, url in responses.requests] == [
+        "one.example.com",
+        "two.example.com",
+    ]
     dns_resolver.return_value.query_dns.assert_awaited_once()
 
 
