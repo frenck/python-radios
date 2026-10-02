@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "961af18a-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the stream URL and region, from radio-database merge request 331. The old stream no longer plays.",
+      "url": "https://s6.citrus3.com/stream/radioequinoxe",
+      "iso_3166_2": "FR-66"
+    }
+  ]
+}

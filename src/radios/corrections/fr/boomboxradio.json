@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "532b4eb8-ffca-4c83-b632-48c5333654ac",
+      "reason": "Corrects the stream URL, homepage, favicon, tags, region and language codes, from radio-database merge request 327. The old stream no longer plays.",
+      "url": "http://hosting.radiomedia.fr:1100/boombox",
+      "homepage": "https://boomboxradio.fr/",
+      "favicon": "https://media.boomboxradio.fr/logo-boombox.png",
+      "tags": "80s,90s,pop,funk,disco",
+      "iso_3166_2": "FR-30",
+      "languagecodes": "fr,en"
+    },
+    {
+      "stationuuid": "5a572bd8-8341-4a56-b52d-3cfe87b9d2c9",
+      "reason": "Duplicate of 532b4eb8-ffca-4c83-b632-48c5333654ac (Boombox Radio), with the same stream URL and fewer votes and clicks, from radio-database merge request 327.",
+      "delete": true
+    }
+  ]
+}
