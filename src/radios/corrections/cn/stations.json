@@ -1,0 +1,73 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "3d4d7515-eed3-4f9b-a0cc-3a5e5b165b12",
+      "reason": "Corrects the name, stream URL, favicon and country, from radio-database merge request 366. The old stream no longer plays; the old favicon was missing or broken.",
+      "name": "Cinemix",
+      "url": "https://kathy.torontocast.com:1825/stream",
+      "favicon": "https://www.cinemix.us/templates/rt_replicant/images/logoCX.png",
+      "countrycode": "FR"
+    },
+    {
+      "stationuuid": "f88ea47f-d059-4bcb-b413-e35bcb6ca164",
+      "reason": "Corrects the name, stream URL and tags, from radio-database merge request 366. The old stream no longer plays.",
+      "name": "衡阳综合广播",
+      "url": "https://lhttp.qtfm.cn/live/15318386/64k.mp3",
+      "tags": "traffic,news,music"
+    },
+    {
+      "stationuuid": "eef9b4ce-b3db-4af6-a4e3-621860c845fa",
+      "reason": "Corrects the homepage, from radio-database merge request 366.",
+      "homepage": "https://www.ncmc.nbtv.cn/gbds/"
+    },
+    {
+      "stationuuid": "8ad93a05-a594-4a66-836b-c7644be3659f",
+      "reason": "Corrects the homepage and tags, from radio-database merge request 366.",
+      "homepage": "https://www.ncmc.nbtv.cn/gbds/",
+      "tags": "music"
+    },
+    {
+      "stationuuid": "7035e69e-ee4f-4383-ae11-32de0a447dd6",
+      "reason": "Corrects the homepage, from radio-database merge request 366.",
+      "homepage": "https://www.ncmc.nbtv.cn/gbds/"
+    },
+    {
+      "stationuuid": "d4c86e2f-5454-4c0c-9261-4ce1be4cbbd9",
+      "reason": "Corrects the name and tags, from radio-database merge request 366.",
+      "name": "文山综合广播（听见文山）",
+      "tags": "news,music"
+    },
+    {
+      "stationuuid": "a70e03d2-fd6c-11e9-bbf2-52543be04c81",
+      "reason": "Corrects the name, from radio-database merge request 366.",
+      "name": "黑龙江高校广播"
+    },
+    {
+      "stationuuid": "2b013028-fd6d-11e9-bbf2-52543be04c81",
+      "reason": "Corrects the name, from radio-database merge request 366.",
+      "name": "黑龙江农业广播"
+    },
+    {
+      "stationuuid": "b07ecaf1-fd6d-11e9-bbf2-52543be04c81",
+      "reason": "Corrects the name and tags, from radio-database merge request 366.",
+      "name": "黑龙江音乐广播",
+      "tags": "lifestyle"
+    },
+    {
+      "stationuuid": "dda70e1c-e440-41ce-8106-e3c633440527",
+      "reason": "Corrects the homepage, from radio-database merge request 366.",
+      "homepage": "http://www.qtv.com.cn/"
+    },
+    {
+      "stationuuid": "5babe7d9-a3ff-46c5-b1cd-2502f6661fcb",
+      "reason": "Corrects the homepage, from radio-database merge request 366.",
+      "homepage": "https://www.hami.gov.cn/"
+    },
+    {
+      "stationuuid": "97ad9954-0000-44cb-854f-497278e7a7ca",
+      "reason": "Corrects the homepage, from radio-database merge request 366.",
+      "homepage": "https://www.hami.gov.cn/"
+    }
+  ]
+}

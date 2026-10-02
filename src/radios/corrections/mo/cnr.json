@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "0754f053-39db-4831-b5a7-79f6c63053b8",
+      "reason": "Corrects the country and language codes, from radio-database merge request 366.",
+      "countrycode": "CN",
+      "languagecodes": "zh"
+    }
+  ]
+}

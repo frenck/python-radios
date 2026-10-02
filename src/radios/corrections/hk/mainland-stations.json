@@ -1,0 +1,103 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "da5d55db-a24f-4914-90dc-89ab26120df7",
+      "reason": "Corrects the name and country, from radio-database merge request 366.",
+      "name": "深圳音乐广播",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "aa91470c-89dc-48ba-b155-f6455fc2fa74",
+      "reason": "Corrects the name, tags, country and language codes, from radio-database merge request 366.",
+      "name": "中山环保旅游之声",
+      "tags": "music",
+      "countrycode": "CN",
+      "languagecodes": "zh"
+    },
+    {
+      "stationuuid": "7b939313-e0fd-4570-bba6-bd0f832edb96",
+      "reason": "Corrects the name and country, from radio-database merge request 366.",
+      "name": "深圳交通广播",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "a41c628e-3961-43d2-9aec-91521d00788b",
+      "reason": "Corrects the name, favicon and country, from radio-database merge request 366. The old favicon was missing or broken.",
+      "name": "央广中国之声",
+      "favicon": "https://www.cnr.cn/2021/images/logo0623.png",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "7e98e1e9-f29c-4444-b3cc-f981b2778a13",
+      "reason": "Corrects the name and country, from radio-database merge request 366.",
+      "name": "珠海环保经济广播",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "f34d33ab-a932-4e24-b6c5-938c2599cb25",
+      "reason": "Corrects the name, tags and country, from radio-database merge request 366.",
+      "name": "深圳新闻广播",
+      "tags": "news",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "cdfcd71c-f3d7-4ae6-baae-a4831e8e06db",
+      "reason": "Corrects the name and country, from radio-database merge request 366.",
+      "name": "大连新闻综合广播",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "bc6d7454-bc64-42e4-83e7-9ad79de1bd22",
+      "reason": "Corrects the name, tags and country, from radio-database merge request 366.",
+      "name": "央广经济之声",
+      "tags": "news",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "a34df3ef-f1ed-4250-bddb-d306627fa1da",
+      "reason": "Corrects the name, tags and country, from radio-database merge request 366.",
+      "name": "珠海综合广播",
+      "tags": "news",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "bea0fae3-8ed2-4e56-bbc4-6ad68d2c6aea",
+      "reason": "Corrects the name, tags and country, from radio-database merge request 366.",
+      "name": "大连体育广播",
+      "tags": "sports,news",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "9b15c524-f261-497d-8ea8-3a35bc2f8709",
+      "reason": "Corrects the name and country, from radio-database merge request 366.",
+      "name": "大连都市之声",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "9073a5eb-5a43-45a3-9c18-33bb5b4dab9c",
+      "reason": "Corrects the name, tags and country, from radio-database merge request 366.",
+      "name": "珠海资讯广播",
+      "tags": "news",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "8c56edc7-6e44-4143-aeb5-51fe9a00dfe4",
+      "reason": "Corrects the country, from radio-database merge request 366.",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "35fc7e68-2b4a-4d2e-a2b5-1dc73a711170",
+      "reason": "Corrects the name, tags and country, from radio-database merge request 366.",
+      "name": "深圳生活广播",
+      "tags": "life,news",
+      "countrycode": "CN"
+    },
+    {
+      "stationuuid": "5fea3ae3-eb18-4760-b622-1ca36e646887",
+      "reason": "Corrects the name and country, from radio-database merge request 366.",
+      "name": "大连少儿广播",
+      "countrycode": "CN"
+    }
+  ]
+}
