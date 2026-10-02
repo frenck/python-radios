@@ -9,7 +9,7 @@ from aioresponses import aioresponses
 from probatio import Invalid
 from syrupy.assertion import SnapshotAssertion
 
-from radios import Order, RadioBrowser
+from radios import Order, RadioBrowser, RadioBrowserError
 
 from .conftest import API_URL, load_fixture
 
@@ -444,3 +444,20 @@ async def test_states_concurrent_first_calls_look_up_once(
         if url.path == "/json/countries"
     ]
     assert len(countries_calls) == 1
+
+
+async def test_states_do_not_cache_broken_country_names(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test a country list with a name that is not a string is not cached."""
+    responses.get(f"{API_URL}/countries", payload=[{"iso_3166_1": "NL", "name": 123}])
+    responses.get(
+        f"{API_URL}/countries", status=200, body=load_fixture("countries.json")
+    )
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/states/"), payload=[])
+
+    with pytest.raises(RadioBrowserError, match="Unexpected response"):
+        await radios.states(country_code="NL")
+
+    # The broken list was not kept, so the next call asks again, and works.
+    assert await radios.states(country_code="NL") == []

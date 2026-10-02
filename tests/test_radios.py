@@ -497,8 +497,26 @@ async def test_close_without_session() -> None:
 )
 @pytest.mark.parametrize(
     "body",
-    ["{", "null", '{"unexpected": 1}', "[{}]", '[{"name": null}]', "[1]"],
-    ids=["broken", "null", "object", "empty item", "null name", "number"],
+    [
+        "{",
+        "null",
+        '{"unexpected": 1}',
+        "{}",
+        '""',
+        "[{}]",
+        '[{"name": null}]',
+        "[1]",
+    ],
+    ids=[
+        "broken",
+        "null",
+        "object",
+        "empty object",
+        "empty string",
+        "empty item",
+        "null name",
+        "number",
+    ],
 )
 async def test_unexpected_response(
     responses: aioresponses,

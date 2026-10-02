@@ -106,6 +106,33 @@ def name_sort_key(name: str) -> str:
     return unaccented.casefold()
 
 
+def list_from_json(data: str) -> list[Any]:
+    """Parse an API response that should be a list.
+
+    An object or a string where a list belongs would otherwise pass as an
+    empty list, hiding a broken response. Call this inside
+    unexpected_response(), which turns the error into a RadioBrowserError.
+
+    Args:
+    ----
+        data: The JSON response.
+
+    Returns:
+    -------
+        The parsed list.
+
+    Raises:
+    ------
+        TypeError: The response is not a list.
+
+    """
+    items = orjson.loads(data)  # pylint: disable=no-member
+    if not isinstance(items, list):
+        msg = f"Expected a list, got {type(items).__name__}"
+        raise TypeError(msg)
+    return items
+
+
 def stations_from_json(data: str) -> list[Station]:
     """Parse a list of stations from an API response.
 
@@ -123,7 +150,7 @@ def stations_from_json(data: str) -> list[Station]:
 
     """
     with unexpected_response():
-        stations = orjson.loads(data)  # pylint: disable=no-member
+        stations = list_from_json(data)
         # pylint: disable-next=not-an-iterable
         return [Station.from_dict(station) for station in stations]
 
@@ -474,7 +501,7 @@ class RadioBrowser:
             limit=limit,
         )
         with unexpected_response():
-            checks = orjson.loads(checks_data)  # pylint: disable=no-member
+            checks = list_from_json(checks_data)
             # pylint: disable-next=not-an-iterable
             return [StationCheck.from_dict(check) for check in checks]
 
@@ -515,7 +542,7 @@ class RadioBrowser:
             limit=limit,
         )
         with unexpected_response():
-            clicks = orjson.loads(clicks_data)  # pylint: disable=no-member
+            clicks = list_from_json(clicks_data)
             # pylint: disable-next=not-an-iterable
             return [StationClick.from_dict(click) for click in clicks]
 
@@ -665,7 +692,7 @@ class RadioBrowser:
         with unexpected_response():
             countries: dict[str, dict[str, Any]] = {}
             # pylint: disable-next=not-an-iterable
-            for country in orjson.loads(countries_data):  # pylint: disable=no-member
+            for country in list_from_json(countries_data):
                 # A few stations carry their code in lowercase, like "de".
                 # Filtering on "DE" already includes those, so they belong to
                 # the same country.
@@ -749,7 +776,7 @@ class RadioBrowser:
         )
 
         with unexpected_response():
-            languages = orjson.loads(languages_data)  # pylint: disable=no-member
+            languages = list_from_json(languages_data)
             for language in languages:  # pylint: disable=not-an-iterable
                 language["name"] = language["name"].title()
 
@@ -1070,7 +1097,7 @@ class RadioBrowser:
             },
         )
         with unexpected_response():
-            tags = orjson.loads(tags_data)  # pylint: disable=no-member
+            tags = list_from_json(tags_data)
             # pylint: disable-next=not-an-iterable
             return [Tag.from_dict(tag) for tag in tags]
 
@@ -1118,7 +1145,7 @@ class RadioBrowser:
             },
         )
         with unexpected_response():
-            codecs = orjson.loads(codecs_data)  # pylint: disable=no-member
+            codecs = list_from_json(codecs_data)
             # pylint: disable-next=not-an-iterable
             return [Codec.from_dict(codec) for codec in codecs]
 
@@ -1187,7 +1214,7 @@ class RadioBrowser:
             },
         )
         with unexpected_response():
-            states = orjson.loads(states_data)  # pylint: disable=no-member
+            states = list_from_json(states_data)
             # pylint: disable-next=not-an-iterable
             return [State.from_dict(state) for state in states]
 
@@ -1211,12 +1238,18 @@ class RadioBrowser:
             if self._api_country_names is None:
                 countries_data = await self._request("countries")
                 with unexpected_response():
-                    countries = orjson.loads(countries_data)  # pylint: disable=no-member
-                    self._api_country_names = {
+                    countries = list_from_json(countries_data)
+                    names = {
                         country["iso_3166_1"].upper(): country["name"]
                         # pylint: disable-next=not-an-iterable
                         for country in countries
                     }
+                    # These are cached for as long as the client lives, so a
+                    # broken one would break every later call too.
+                    if not all(isinstance(name, str) for name in names.values()):
+                        msg = "Expected the name of every country to be a string"
+                        raise TypeError(msg)
+                    self._api_country_names = names
 
         return self._api_country_names.get(country_code.upper()) or None
 
