@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "00dc2e9a-578c-430b-bdc2-244b71444dfc",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 318.",
+      "name": "Qmusic",
+      "tags": "pop",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "6b2d6960-c77c-41ac-9ea7-6ff236ee9bf8",
+      "reason": "Corrects the name and region, from radio-database merge request 318.",
+      "name": "Q-Foute Radio",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "53317636-6b4d-4a76-91e1-d983022aba18",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 318.",
+      "name": "Q-Maximum Hits",
+      "tags": "pop,hits",
+      "iso_3166_2": "BE-VLG"
+    }
+  ]
+}

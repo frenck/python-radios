@@ -1,0 +1,56 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e205d3a1-442a-4771-b2b2-7d4b037689ea",
+      "reason": "Corrects the name, homepage, favicon, tags, region and language codes, from radio-database merge request 318. The old favicon was missing or broken.",
+      "name": "JOE",
+      "homepage": "https://www.joe.be/",
+      "favicon": "https://assets.radioplayer.org/056/0565051/1400/1400/lon2e8j4.jpeg",
+      "tags": "70s,80s,90s,hits",
+      "iso_3166_2": "BE-VLG",
+      "languagecodes": "NL"
+    },
+    {
+      "stationuuid": "529b71b3-ac05-426c-bd8c-6ae981713900",
+      "reason": "Corrects the region, from radio-database merge request 318.",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "109338aa-a5fb-4c1b-a0cc-78961a55324c",
+      "reason": "Corrects the name, stream URL, homepage, favicon, region and language codes, from radio-database merge request 318. The old favicon was missing or broken.",
+      "name": "JOE Easy",
+      "url": "https://streams.radio.dpgmedia.cloud/redirect/joe_easy/aac",
+      "homepage": "https://www.joe.be/",
+      "favicon": "https://assets.radioplayer.org/056/0565065/1400/1400/lon26d3x.jpeg",
+      "iso_3166_2": "BE-VLG",
+      "languagecodes": "NL"
+    },
+    {
+      "stationuuid": "1fcdd3c4-5215-4cb2-b5b4-3c0aa3e606d8",
+      "reason": "Corrects the name, favicon, region and language codes, from radio-database merge request 318. The old favicon was missing or broken.",
+      "name": "JOE Gold",
+      "favicon": "https://cdn-profiles.tunein.com/s308755/images/logod.jpg",
+      "iso_3166_2": "BE-VLG",
+      "languagecodes": "NL"
+    },
+    {
+      "stationuuid": "cdf1baaf-ed22-41c5-8c9e-90b4133fda8f",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 318.",
+      "name": "JOE 80s & 90s",
+      "tags": "80s,90s,hits",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "8e34646d-479e-451c-9bee-c3bb3cffad4f",
+      "reason": "Corrects the name, stream URL, homepage, favicon, tags, region and language codes, from radio-database merge request 318. The old favicon was missing or broken.",
+      "name": "JOE Top 2000",
+      "url": "https://streams.radio.dpgmedia.cloud/redirect/top2000/aac",
+      "homepage": "https://www.joe.be/",
+      "favicon": "https://assets.radioplayer.org/056/0565054/1400/1400/lon2brh3.jpeg",
+      "tags": "60s,70s,80s,90s,top hits",
+      "iso_3166_2": "BE-VLG",
+      "languagecodes": "NL"
+    }
+  ]
+}
