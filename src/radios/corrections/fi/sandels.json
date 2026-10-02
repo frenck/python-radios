@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "5ebce343-df89-4add-91e4-35ae5fb43f47",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 137.",
+      "tags": "local,news,local news,local radio,pop",
+      "iso_3166_2": "FI-15",
+      "languagecodes": "FI"
+    },
+    {
+      "stationuuid": "df8a5795-f3bb-4e72-ae0a-87c8455625bf",
+      "reason": "Duplicate of 5ebce343-df89-4add-91e4-35ae5fb43f47 (RADIO SANDELS), with the same stream URL and fewer votes and clicks, from radio-database merge request 137.",
+      "delete": true
+    }
+  ]
+}
