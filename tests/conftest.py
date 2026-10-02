@@ -65,9 +65,13 @@ def srv_result(*targets: str) -> DNSResult:
     )
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def responses() -> Generator[aioresponses, None, None]:
-    """Yield an aioresponses instance that patches aiohttp client sessions."""
+    """Yield an aioresponses instance that patches aiohttp client sessions.
+
+    It is active in every test, also the ones that do not ask for it, so no
+    test can reach the real API by accident: an unmocked request fails.
+    """
     with aioresponses() as mocker:
         yield mocker
 
