@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c7980a38-4cf7-4390-9124-2f1d6eafc583",
+      "reason": "Corrects the favicon, from radio-database merge request 140. The old favicon was missing or broken.",
+      "favicon": "https://antennanetwork.net/_assets/images/305b6d38fb95d856205a587f045faf2d.png"
+    },
+    {
+      "stationuuid": "960beb61-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.r101.it/wp-content/uploads/2025/11/Logo-R101-1.png"
+    },
+    {
+      "stationuuid": "961a5a75-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.radiomontecarlo.net/wp-content/themes/rmc-radio-theme/public/images/logo_colored.9852f4.png"
+    },
+    {
+      "stationuuid": "9619ea14-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.105.net/wp-content/uploads/2026/01/Radio_105_logo.png"
+    },
+    {
+      "stationuuid": "962878f4-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://kisskissnapoli.it/wp-content/uploads/2022/03/cropped-logo-kisskiss-napoli.png.webp"
+    },
+    {
+      "stationuuid": "f8a910c3-fd87-4376-af20-1af5bfec6ab4",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.m2o.it/wp-content/themes/network-m2o/favicon.ico"
+    },
+    {
+      "stationuuid": "962b805d-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://radiofmitalia.it/wp-content/uploads/2026/02/FMITALIA_logo.webp"
+    },
+    {
+      "stationuuid": "d829242c-3412-44ac-9026-a00128d935bc",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.radiodancefloor.it/wp-content/uploads/2021/09/logo_2022_mobile.png"
+    },
+    {
+      "stationuuid": "e7a4fe38-d564-452c-b6a5-bf446cab1026",
+      "reason": "Corrects the favicon, from radio-database merge request 384. The old favicon was missing or broken.",
+      "favicon": "https://www.deejay.it/wp-content/themes/network-deejay/favicon.ico"
+    },
+    {
+      "stationuuid": "9634b7a6-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://radioempire.it/wp-content/uploads/2022/05/logoradioempire.webp"
+    }
+  ]
+}
