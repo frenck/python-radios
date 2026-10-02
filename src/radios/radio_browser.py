@@ -19,7 +19,7 @@ import orjson
 from aiodns import DNSResolver
 from aiodns.error import DNSError
 from aiohttp import hdrs
-from probatio import In, Invalid, Latitude, Longitude, NonNegative, probatio
+from probatio import In, Latitude, Longitude, NonNegative, probatio
 from pycares import SRVRecordData
 from yarl import URL
 
@@ -28,6 +28,7 @@ from .exceptions import (
     RadioBrowserConnectionError,
     RadioBrowserConnectionTimeoutError,
     RadioBrowserError,
+    RadioBrowserValidationError,
 )
 from .models import (
     Codec,
@@ -460,7 +461,7 @@ class RadioBrowser:
         with unexpected_response():
             return Stats.from_json(response)
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def checks(
         self,
         *,
@@ -490,7 +491,7 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The limit or seconds is negative.
+            RadioBrowserValidationError: The limit or seconds is negative.
 
         """
         checks_data = await self._history(
@@ -505,7 +506,7 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [StationCheck.from_dict(check) for check in checks]
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def clicks(
         self,
         *,
@@ -531,7 +532,7 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The limit or seconds is negative.
+            RadioBrowserValidationError: The limit or seconds is negative.
 
         """
         clicks_data = await self._history(
@@ -584,7 +585,7 @@ class RadioBrowser:
             params={key: value for key, value in params.items() if value is not None},
         )
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def station_click(self, *, uuid: str) -> str:
         """Register click on a station.
 
@@ -620,7 +621,7 @@ class RadioBrowser:
 
         return url
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def vote(self, *, uuid: str) -> None:
         """Vote for a station.
 
@@ -648,7 +649,7 @@ class RadioBrowser:
             msg = f"The Radio Browser API did not accept the vote: {message}"
             raise RadioBrowserError(msg)
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
     async def countries(  # noqa: PLR0913
         self,
@@ -677,8 +678,8 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The endpoint cannot sort by this order, or the limit
-                or offset is negative.
+            RadioBrowserValidationError: The endpoint cannot sort by this
+                order, or the limit or offset is negative.
 
         """
         # The API only knows country codes, so it sorts "by name" on the code,
@@ -731,7 +732,7 @@ class RadioBrowser:
                 for country in ordered[offset : offset + limit]
             ]
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
     async def languages(  # noqa: PLR0913
         self,
@@ -760,8 +761,8 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The endpoint cannot sort by this order, or the limit
-                or offset is negative.
+            RadioBrowserValidationError: The endpoint cannot sort by this
+                order, or the limit or offset is negative.
 
         """
         languages_data = await self._request(
@@ -783,7 +784,7 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [Language.from_dict(language) for language in languages]
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments, too-many-locals
     async def search(  # noqa: PLR0913
         self,
@@ -870,16 +871,17 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The filter_by value is not supported, filter_term
-                is missing, the location for a geo search is incomplete or
-                not a valid coordinate, the endpoint cannot sort by this
-                order, or a count like the limit or offset is negative.
+            RadioBrowserValidationError: The filter_by value is not
+                supported, filter_term is missing, the location for a geo
+                search is incomplete or not a valid coordinate, the endpoint
+                cannot sort by this order, or a count like the limit or offset
+                is negative.
 
         """
         location_incomplete = (geo_lat is None) != (geo_long is None)
         if location_incomplete or (geo_distance is not None and geo_lat is None):
             msg = "geo_lat and geo_long must be set together, also for geo_distance"
-            raise Invalid(msg)
+            raise RadioBrowserValidationError(msg)
 
         params: dict[str, Any] = {
             "hidebroken": hide_broken,
@@ -913,7 +915,7 @@ class RadioBrowser:
         if filter_by is not None:
             if filter_term is None:
                 msg = "filter_by requires a filter_term"
-                raise Invalid(msg)
+                raise RadioBrowserValidationError(msg)
 
             if filter_by in LOWERCASE_FILTERS:
                 filter_term = filter_term.lower()
@@ -928,7 +930,7 @@ class RadioBrowser:
         )
         return stations_from_json(stations_data)
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
 
@@ -950,7 +952,7 @@ class RadioBrowser:
             return None
         return stations[0]
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def stations_by_uuid(self, *, uuids: list[str]) -> list[Station]:
         """Get several stations by their UUID, in a single request.
 
@@ -974,7 +976,7 @@ class RadioBrowser:
         )
         return stations_from_json(stations_data)
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     async def stations_by_url(self, *, url: str) -> list[Station]:
         """Get the stations that stream from a URL.
 
@@ -996,7 +998,7 @@ class RadioBrowser:
         stations_data = await self._request("stations/byurl", params={"url": url})
         return stations_from_json(stations_data)
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
     async def stations(  # noqa: PLR0913
         self,
@@ -1027,8 +1029,9 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The endpoint cannot sort by this order, the limit or
-                offset is negative, or filter_by is set without a filter_term.
+            RadioBrowserValidationError: The endpoint cannot sort by this
+                order, the limit or offset is negative, or filter_by is set
+                without a filter_term.
 
         """
         uri = "stations"
@@ -1036,7 +1039,7 @@ class RadioBrowser:
             # Every by* path needs a term, without one the API answers 404.
             if filter_term is None:
                 msg = "filter_by requires a filter_term"
-                raise Invalid(msg)
+                raise RadioBrowserValidationError(msg)
 
             # Terms like "#original" or "AC/DC" would otherwise change the URL
             # instead of being part of it.
@@ -1057,7 +1060,7 @@ class RadioBrowser:
         )
         return stations_from_json(stations_data)
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
     async def tags(  # noqa: PLR0913
         self,
@@ -1086,8 +1089,8 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The endpoint cannot sort by this order, or the limit
-                or offset is negative.
+            RadioBrowserValidationError: The endpoint cannot sort by this
+                order, or the limit or offset is negative.
 
         """
         tags_data = await self._request(
@@ -1105,7 +1108,7 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [Tag.from_dict(tag) for tag in tags]
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
     async def codecs(  # noqa: PLR0913
         self,
@@ -1134,8 +1137,8 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The endpoint cannot sort by this order, or the limit
-                or offset is negative.
+            RadioBrowserValidationError: The endpoint cannot sort by this
+                order, or the limit or offset is negative.
 
         """
         codecs_data = await self._request(
@@ -1153,7 +1156,7 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [Codec.from_dict(codec) for codec in codecs]
 
-    @probatio
+    @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
     async def states(  # noqa: PLR0913
         self,
@@ -1185,8 +1188,8 @@ class RadioBrowser:
 
         Raises:
         ------
-            Invalid: The endpoint cannot sort by this order, or the limit
-                or offset is negative.
+            RadioBrowserValidationError: The endpoint cannot sort by this
+                order, or the limit or offset is negative.
 
         """
         # The API filters states on its own name for a country, like "The
