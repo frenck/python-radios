@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "0bb84fe1-e899-11e9-a96c-52543be04c81",
+      "reason": "Corrects the name, favicon, region and language codes, from radio-database merge request 217. The old favicon was missing or broken.",
+      "name": "dublab (Los Angeles)",
+      "favicon": "https://www.dublab.com/assets/icons/apple-touch-icon-180x180.png",
+      "iso_3166_2": "US-CA",
+      "languagecodes": "EN"
+    }
+  ]
+}

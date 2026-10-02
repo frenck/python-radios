@@ -1,0 +1,70 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9614537a-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135. The old favicon was missing or broken.",
+      "name": "Chilltrax • 128Kbps MP3",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    },
+    {
+      "stationuuid": "9e1377e3-623c-4b8f-a162-4da9c1fcdbf1",
+      "reason": "Corrects the name, homepage, favicon, region and language codes, from radio-database merge request 135. The old favicon was missing or broken.",
+      "name": "Chilltrax • 128Kbps MP3",
+      "homepage": "https://www.chilltrax.com/",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "iso_3166_2": "US-CA",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "8e3a59ac-a51b-40af-baf7-041051b06315",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135. The old favicon was missing or broken.",
+      "name": "Chilltrax • Highest (HD) Quality 128Kbps AAC+",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    },
+    {
+      "stationuuid": "6e224cfb-b6b7-40a7-bf96-b9758a255ddc",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135. The old favicon was missing or broken.",
+      "name": "Chilltrax • High Quality 64Kbps AAC+",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    },
+    {
+      "stationuuid": "c6418626-536c-4b12-92a6-e82256f2d132",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135. The old favicon was missing or broken.",
+      "name": "Chilltrax • Higher Quality 80Kbps AAC+",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    },
+    {
+      "stationuuid": "da2f84d6-edd1-4a87-b83d-39f6b6b3aa55",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135.",
+      "name": "Chilltrax • Highest (HD) Quality 128Kbps AAC+",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    },
+    {
+      "stationuuid": "5673a67d-dc00-47e7-8a74-eb83f997bb24",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135.",
+      "name": "Chilltrax • High Quality 64Kbps AAC+",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    },
+    {
+      "stationuuid": "dfbe0754-4b12-48f0-b669-f5ae3504fbb6",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 135. The old favicon was missing or broken.",
+      "name": "Chilltrax • Higher Quality 80Kbps AAC+",
+      "favicon": "https://www.chilltrax.com/images/specialty/default-album-cover.png",
+      "tags": "chillout,chill,downtempo,easy,easy listening,electronica,non stop,non-stop,just music,only music,ad free,ad-free,no ads,commercial free,commercial-free,no commercials,news free,news-free,no news",
+      "iso_3166_2": "US-CA"
+    }
+  ]
+}
