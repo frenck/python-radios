@@ -520,11 +520,24 @@ class RadioBrowser:
         -------
             The stream URL of the station, ready to play.
 
+        Raises:
+        ------
+            RadioBrowserError: The API did not register the click.
+
         """
         click_data = await self._request(f"url/{quote(uuid, safe='')}")
         with unexpected_response():
             click = orjson.loads(click_data)  # pylint: disable=no-member
-            return click["url"]
+            # The documentation shows "ok" both as a boolean and as a string.
+            registered = click["ok"] in (True, "true")
+            message = click.get("message", "")
+            url = click["url"] if registered else None
+
+        if url is None:
+            msg = f"The Radio Browser API did not register the click: {message}"
+            raise RadioBrowserError(msg)
+
+        return url
 
     async def vote(self, *, uuid: str) -> None:
         """Vote for a station.
