@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "python-radios station corrections",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "const": "../schema.json"
+    },
+    "corrections": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "stationuuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "delete": {
+                "const": true
+              }
+            },
+            "additionalProperties": false,
+            "required": ["stationuuid", "reason", "delete"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "stationuuid": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "homepage": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "const": ""
+                  }
+                ]
+              },
+              "favicon": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "const": ""
+                  }
+                ]
+              },
+              "tags": {
+                "type": "string"
+              },
+              "countrycode": {
+                "type": "string",
+                "pattern": "^[A-Z]{2}$"
+              },
+              "state": {
+                "type": "string"
+              },
+              "iso_3166_2": {
+                "type": "string",
+                "pattern": "^[A-Z]{2}-[A-Z0-9]{1,3}$"
+              },
+              "language": {
+                "type": "string"
+              },
+              "languagecodes": {
+                "type": "string"
+              },
+              "geo_lat": {
+                "minimum": -90,
+                "maximum": 90
+              },
+              "geo_long": {
+                "minimum": -180,
+                "maximum": 180
+              }
+            },
+            "additionalProperties": false,
+            "required": ["stationuuid", "reason"]
+          }
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+  "required": ["$schema", "corrections"]
+}

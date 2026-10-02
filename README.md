@@ -200,12 +200,35 @@ for check in checks:
 `clicks()` works the same way, for when stations were played. Both continue
 after an earlier result with `after=` and the UUID of the last check or click.
 
+### Station corrections
+
+Radio Browser is maintained by its community, and anyone can add a station.
+Fixing one is harder: the API has no way to edit a station, and corrections
+upstream take a long time to land, if they land at all. So this library ships
+corrections of its own, and applies them to every station it returns.
+
+A correction matches a station by its UUID, and either deletes it, like a
+duplicate, or overwrites some of its fields, like a stream URL that moved.
+`station_click()` still counts the click upstream, but returns the corrected
+stream URL. A page of results can be shorter than `limit` when a station on it
+is deleted.
+
+To get the stations exactly as the API returns them, turn the corrections off:
+
+```python
+RadioBrowser(user_agent="MyAwesomeApp/1.0.0", corrections=False)
+```
+
+Found a station with wrong data? See [CONTRIBUTING.md](.github/CONTRIBUTING.md#correcting-station-data)
+for how to add a correction.
+
 ### Connection options
 
 ```python
 RadioBrowser(
     user_agent="MyAwesomeApp/1.0.0",  # required, identifies your app
     request_timeout=8.0,  # per-request timeout in seconds
+    corrections=True,  # apply the station corrections this library ships
 )
 ```
 

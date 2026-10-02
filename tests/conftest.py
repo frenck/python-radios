@@ -106,6 +106,18 @@ def dns_resolver() -> Generator[MagicMock, None, None]:
         yield resolver
 
 
+@pytest.fixture(autouse=True)
+def corrections(monkeypatch: pytest.MonkeyPatch) -> dict[str, dict[str, Any]]:
+    """Run every test without the corrections the library ships.
+
+    Those change as station data gets fixed, and should never break a test
+    about something else. A test that wants corrections adds them here.
+    """
+    test_corrections: dict[str, dict[str, Any]] = {}
+    monkeypatch.setattr("radios.radio_browser.CORRECTIONS", test_corrections)
+    return test_corrections
+
+
 @pytest.fixture
 async def radios() -> AsyncGenerator[RadioBrowser, None]:
     """Yield a Radio Browser client that talks to example.com.
