@@ -165,6 +165,61 @@ def stations_from_json(
         return [Station.from_dict(station) for station in stations]
 
 
+def stream_key(url: str) -> str:
+    """Return a key for a stream URL, the same for every way to write it.
+
+    The scheme, the case of the host name, and a trailing "/" or "/;" (an old
+    Shoutcast trick) do not change the stream. The path does, so its case is
+    kept.
+
+    Args:
+    ----
+        url: The stream URL.
+
+    Returns:
+    -------
+        The key, the same for URLs that point to the same stream.
+
+    """
+    address = url.strip().split("://", 1)[-1]
+    host, _, path = address.partition("/")
+    path = path.removesuffix(";").rstrip("/")
+    return f"{host.lower()}/{path}"
+
+
+def without_duplicates(stations: list[Station]) -> list[Station]:
+    """Keep one station per stream: the one with the most votes, then clicks.
+
+    The station that stays takes the place of the first one with its stream,
+    so the order of the results holds.
+
+    Args:
+    ----
+        stations: The stations, in the order of the results.
+
+    Returns:
+    -------
+        The stations, without the duplicates.
+
+    """
+    # Without a stream URL, there is nothing to compare a station on.
+    keys = [
+        stream_key(station.url) if station.url else station.uuid for station in stations
+    ]
+
+    best: dict[str, Station] = {}
+    for key, station in zip(keys, stations, strict=True):
+        current = best.get(key)
+        if current is None or (station.votes, station.click_count) > (
+            current.votes,
+            current.click_count,
+        ):
+            best[key] = station
+
+    # dict.fromkeys keeps the order in which each stream first shows up.
+    return [best[key] for key in dict.fromkeys(keys)]
+
+
 def name_filter_uri(uri: str, name: str | None) -> str:
     """Add a name filter to the URI of a list endpoint.
 
@@ -239,6 +294,9 @@ class RadioBrowser:
     # Apply the corrections this library ships for the station data. Turn
     # them off to get the stations exactly as the API returns them.
     corrections: bool = True
+    # Return one station per stream in lists, the one with the most votes.
+    # Looking a station up by its UUID still finds every one of them.
+    deduplicate: bool = True
 
     _close_session: bool = False
     _host: str | None = None
@@ -253,6 +311,10 @@ class RadioBrowser:
     def _corrections(self) -> dict[str, dict[str, Any]]:
         """Return the corrections to apply, none when they are turned off."""
         return CORRECTIONS if self.corrections else {}
+
+    def _station_list(self, stations: list[Station]) -> list[Station]:
+        """Return a list of stations, without duplicates when asked for."""
+        return without_duplicates(stations) if self.deduplicate else stations
 
     async def _resolve_hosts(self) -> list[str]:
         """Look up the Radio Browser API servers, in a random order.
@@ -947,7 +1009,7 @@ class RadioBrowser:
             # yarl rejects None as a query value, so unset filters are left out.
             params={key: value for key, value in params.items() if value is not None},
         )
-        return stations_from_json(stations_data, self._corrections)
+        return self._station_list(stations_from_json(stations_data, self._corrections))
 
     @probatio(error=RadioBrowserValidationError)
     async def station(self, *, uuid: str) -> Station | None:
@@ -1077,7 +1139,7 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        return stations_from_json(stations_data, self._corrections)
+        return self._station_list(stations_from_json(stations_data, self._corrections))
 
     @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
