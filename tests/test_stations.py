@@ -4,6 +4,7 @@ import re
 
 import pytest
 from aioresponses import aioresponses
+from probatio import Invalid
 from syrupy.assertion import SnapshotAssertion
 
 from radios import FilterBy, Order, RadioBrowser, RadioBrowserError
@@ -68,7 +69,7 @@ async def test_stations_filter_by_without_term(
     responses: aioresponses, radios: RadioBrowser
 ) -> None:
     """Test filter_by without a term is refused, the API has no such path."""
-    with pytest.raises(ValueError, match="filter_by requires a filter_term"):
+    with pytest.raises(Invalid, match="filter_by requires a filter_term"):
         await radios.stations(filter_by=FilterBy.CODEC)
 
     assert not responses.requests
@@ -275,7 +276,7 @@ async def test_station_orders_unsupported(
     responses: aioresponses, radios: RadioBrowser, method: str, order: Order
 ) -> None:
     """Test station lists refuse the orders the API silently ignores."""
-    with pytest.raises(ValueError, match=f"Order.{order.name}"):
+    with pytest.raises(Invalid, match="at 'order'"):
         await getattr(radios, method)(order=order)
 
     assert not responses.requests

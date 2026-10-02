@@ -11,7 +11,7 @@ from asyncio import sleep
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from http import HTTPStatus
-from typing import TYPE_CHECKING, Any, Self
+from typing import TYPE_CHECKING, Annotated, Any, Self
 from urllib.parse import quote
 
 import aiohttp
@@ -19,6 +19,7 @@ import orjson
 from aiodns import DNSResolver
 from aiodns.error import DNSError
 from aiohttp import hdrs
+from probatio import In, Invalid, Latitude, Longitude, NonNegative, probatio
 from pycares import SRVRecordData
 from yarl import URL
 
@@ -45,6 +46,13 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
 _LOGGER = logging.getLogger(__name__)
+
+# Argument types the public methods validate, with probatio, before a request
+# is sent. Not every endpoint can sort by every order; see LIST_ORDERS and
+# STATION_ORDERS in const.py.
+Count = Annotated[int, NonNegative()]
+ListOrder = Annotated[Order, In(LIST_ORDERS)]
+StationOrder = Annotated[Order, In(STATION_ORDERS)]
 
 # How often a request is tried when the connection to the API fails.
 REQUEST_ATTEMPTS = 5
@@ -96,43 +104,6 @@ def name_sort_key(name: str) -> str:
     decomposed = unicodedata.normalize("NFKD", name)
     unaccented = "".join(char for char in decomposed if not unicodedata.combining(char))
     return unaccented.casefold()
-
-
-def validate_order(order: Order, allowed: frozenset[Order]) -> None:
-    """Make sure the endpoint can sort by the requested order.
-
-    Args:
-    ----
-        order: The requested order.
-        allowed: The orders the endpoint supports.
-
-    Raises:
-    ------
-        ValueError: The endpoint cannot sort by this order.
-
-    """
-    if order not in allowed:
-        supported = ", ".join(sorted(f"Order.{item.name}" for item in allowed))
-        msg = f"Cannot order by Order.{order.name} here, use one of: {supported}"
-        raise ValueError(msg)
-
-
-def validate_paging(limit: int, offset: int) -> None:
-    """Make sure the paging arguments are not negative.
-
-    Args:
-    ----
-        limit: The requested number of results.
-        offset: The requested number of results to skip.
-
-    Raises:
-    ------
-        ValueError: The limit or offset is negative.
-
-    """
-    if limit < 0 or offset < 0:
-        msg = f"limit and offset cannot be negative, got {limit=} and {offset=}"
-        raise ValueError(msg)
 
 
 def stations_from_json(data: str) -> list[Station]:
@@ -430,13 +401,14 @@ class RadioBrowser:
         with unexpected_response():
             return Stats.from_json(response)
 
+    @probatio
     async def checks(
         self,
         *,
         uuid: str | None = None,
         after: str | None = None,
-        seconds: int | None = None,
-        limit: int = 100000,
+        seconds: Count | None = None,
+        limit: Count = 100000,
     ) -> list[StationCheck]:
         """Get the results of the checks the Radio Browser does on stations.
 
@@ -459,7 +431,7 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The limit or seconds is negative.
+            Invalid: The limit or seconds is negative.
 
         """
         checks_data = await self._history(
@@ -474,13 +446,14 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [StationCheck.from_dict(check) for check in checks]
 
+    @probatio
     async def clicks(
         self,
         *,
         uuid: str | None = None,
         after: str | None = None,
-        seconds: int | None = None,
-        limit: int = 100000,
+        seconds: Count | None = None,
+        limit: Count = 100000,
     ) -> list[StationClick]:
         """Get the clicks on stations, that is, when they were played.
 
@@ -499,7 +472,7 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The limit or seconds is negative.
+            Invalid: The limit or seconds is negative.
 
         """
         clicks_data = await self._history(
@@ -539,15 +512,7 @@ class RadioBrowser:
         -------
             The response from the Radio Browser API.
 
-        Raises:
-        ------
-            ValueError: The limit or seconds is negative.
-
         """
-        if limit < 0 or (seconds is not None and seconds < 0):
-            msg = f"limit and seconds cannot be negative, got {limit=} and {seconds=}"
-            raise ValueError(msg)
-
         uri = endpoint
         if uuid:
             uri = f"{uri}/{quote(uuid, safe='')}"
@@ -560,6 +525,7 @@ class RadioBrowser:
             params={key: value for key, value in params.items() if value is not None},
         )
 
+    @probatio
     async def station_click(self, *, uuid: str) -> str:
         """Register click on a station.
 
@@ -595,6 +561,7 @@ class RadioBrowser:
 
         return url
 
+    @probatio
     async def vote(self, *, uuid: str) -> None:
         """Vote for a station.
 
@@ -622,15 +589,16 @@ class RadioBrowser:
             msg = f"The Radio Browser API did not accept the vote: {message}"
             raise RadioBrowserError(msg)
 
+    @probatio
     # pylint: disable-next=too-many-arguments
     async def countries(  # noqa: PLR0913
         self,
         *,
         name: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: ListOrder = Order.NAME,
         reverse: bool = False,
     ) -> list[Country]:
         """Get list of available countries.
@@ -650,13 +618,10 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, or the limit
+            Invalid: The endpoint cannot sort by this order, or the limit
                 or offset is negative.
 
         """
-        validate_order(order, LIST_ORDERS)
-        validate_paging(limit, offset)
-
         # The API only knows country codes, so it sorts "by name" on the code,
         # and it lists a code in lowercase as a country of its own. The whole
         # list is fetched instead (it is short), cleaned up, and sorted and
@@ -707,15 +672,16 @@ class RadioBrowser:
                 for country in ordered[offset : offset + limit]
             ]
 
+    @probatio
     # pylint: disable-next=too-many-arguments
     async def languages(  # noqa: PLR0913
         self,
         *,
         name: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: ListOrder = Order.NAME,
         reverse: bool = False,
     ) -> list[Language]:
         """Get list of available languages.
@@ -735,13 +701,10 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, or the limit
+            Invalid: The endpoint cannot sort by this order, or the limit
                 or offset is negative.
 
         """
-        validate_order(order, LIST_ORDERS)
-        validate_paging(limit, offset)
-
         languages_data = await self._request(
             name_filter_uri("languages", name),
             params={
@@ -761,16 +724,17 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [Language.from_dict(language) for language in languages]
 
+    @probatio
     # pylint: disable-next=too-many-arguments, too-many-locals
     async def search(  # noqa: PLR0913
         self,
         *,
-        filter_by: FilterBy | None = None,
+        filter_by: Annotated[FilterBy, In(SEARCH_FILTERS)] | None = None,
         filter_term: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: StationOrder = Order.NAME,
         reverse: bool = False,
         name: str | None = None,
         name_exact: bool = False,
@@ -785,14 +749,14 @@ class RadioBrowser:
         tag_exact: bool = False,
         tag_list: list[str] | None = None,
         codec: str | None = None,
-        bitrate_min: int = 0,
-        bitrate_max: int = 1000000,
+        bitrate_min: Count = 0,
+        bitrate_max: Count = 1000000,
         is_https: bool | None = None,
         has_geo_info: bool | None = None,
         has_extended_info: bool | None = None,
-        geo_lat: float | None = None,
-        geo_long: float | None = None,
-        geo_distance: float | None = None,
+        geo_lat: Annotated[float, Latitude()] | None = None,
+        geo_long: Annotated[float, Longitude()] | None = None,
+        geo_distance: Annotated[float, NonNegative()] | None = None,
     ) -> list[Station]:
         """Get list of radio stations.
 
@@ -846,19 +810,16 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The filter_by value is not supported, filter_term
-                is missing, the location for a geo search is incomplete, the
-                endpoint cannot sort by this order, or the limit or offset is
-                negative.
+            Invalid: The filter_by value is not supported, filter_term
+                is missing, the location for a geo search is incomplete or
+                not a valid coordinate, the endpoint cannot sort by this
+                order, or a count like the limit or offset is negative.
 
         """
         location_incomplete = (geo_lat is None) != (geo_long is None)
         if location_incomplete or (geo_distance is not None and geo_lat is None):
             msg = "geo_lat and geo_long must be set together, also for geo_distance"
-            raise ValueError(msg)
-
-        validate_order(order, STATION_ORDERS)
-        validate_paging(limit, offset)
+            raise Invalid(msg)
 
         params: dict[str, Any] = {
             "hidebroken": hide_broken,
@@ -890,12 +851,9 @@ class RadioBrowser:
         }
 
         if filter_by is not None:
-            if filter_by not in SEARCH_FILTERS:
-                msg = f"search() does not support filter_by {filter_by.name}"
-                raise ValueError(msg)
             if filter_term is None:
                 msg = "filter_by requires a filter_term"
-                raise ValueError(msg)
+                raise Invalid(msg)
 
             if filter_by in LOWERCASE_FILTERS:
                 filter_term = filter_term.lower()
@@ -910,6 +868,7 @@ class RadioBrowser:
         )
         return stations_from_json(stations_data)
 
+    @probatio
     async def station(self, *, uuid: str) -> Station | None:
         """Get station by UUID.
 
@@ -931,6 +890,7 @@ class RadioBrowser:
             return None
         return stations[0]
 
+    @probatio
     async def stations_by_uuid(self, *, uuids: list[str]) -> list[Station]:
         """Get several stations by their UUID, in a single request.
 
@@ -954,6 +914,7 @@ class RadioBrowser:
         )
         return stations_from_json(stations_data)
 
+    @probatio
     async def stations_by_url(self, *, url: str) -> list[Station]:
         """Get the stations that stream from a URL.
 
@@ -972,6 +933,7 @@ class RadioBrowser:
         stations_data = await self._request("stations/byurl", params={"url": url})
         return stations_from_json(stations_data)
 
+    @probatio
     # pylint: disable-next=too-many-arguments
     async def stations(  # noqa: PLR0913
         self,
@@ -979,9 +941,9 @@ class RadioBrowser:
         filter_by: FilterBy | None = None,
         filter_term: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: StationOrder = Order.NAME,
         reverse: bool = False,
     ) -> list[Station]:
         """Get list of radio stations.
@@ -1002,19 +964,16 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, the limit or
+            Invalid: The endpoint cannot sort by this order, the limit or
                 offset is negative, or filter_by is set without a filter_term.
 
         """
-        validate_order(order, STATION_ORDERS)
-        validate_paging(limit, offset)
-
         uri = "stations"
         if filter_by is not None:
             # Every by* path needs a term, without one the API answers 404.
             if filter_term is None:
                 msg = "filter_by requires a filter_term"
-                raise ValueError(msg)
+                raise Invalid(msg)
 
             # Terms like "#original" or "AC/DC" would otherwise change the URL
             # instead of being part of it.
@@ -1035,15 +994,16 @@ class RadioBrowser:
         )
         return stations_from_json(stations_data)
 
+    @probatio
     # pylint: disable-next=too-many-arguments
     async def tags(  # noqa: PLR0913
         self,
         *,
         name: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: ListOrder = Order.NAME,
         reverse: bool = False,
     ) -> list[Tag]:
         """Get list of available tags.
@@ -1063,13 +1023,10 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, or the limit
+            Invalid: The endpoint cannot sort by this order, or the limit
                 or offset is negative.
 
         """
-        validate_order(order, LIST_ORDERS)
-        validate_paging(limit, offset)
-
         tags_data = await self._request(
             name_filter_uri("tags", name),
             params={
@@ -1085,15 +1042,16 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [Tag.from_dict(tag) for tag in tags]
 
+    @probatio
     # pylint: disable-next=too-many-arguments
     async def codecs(  # noqa: PLR0913
         self,
         *,
         name: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: ListOrder = Order.NAME,
         reverse: bool = False,
     ) -> list[Codec]:
         """Get list of codecs the stations stream in.
@@ -1113,13 +1071,10 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, or the limit
+            Invalid: The endpoint cannot sort by this order, or the limit
                 or offset is negative.
 
         """
-        validate_order(order, LIST_ORDERS)
-        validate_paging(limit, offset)
-
         codecs_data = await self._request(
             name_filter_uri("codecs", name),
             params={
@@ -1135,6 +1090,7 @@ class RadioBrowser:
             # pylint: disable-next=not-an-iterable
             return [Codec.from_dict(codec) for codec in codecs]
 
+    @probatio
     # pylint: disable-next=too-many-arguments
     async def states(  # noqa: PLR0913
         self,
@@ -1142,9 +1098,9 @@ class RadioBrowser:
         country_code: str | None = None,
         name: str | None = None,
         hide_broken: bool = False,
-        limit: int = 100000,
-        offset: int = 0,
-        order: Order = Order.NAME,
+        limit: Count = 100000,
+        offset: Count = 0,
+        order: ListOrder = Order.NAME,
         reverse: bool = False,
     ) -> list[State]:
         """Get list of states, provinces and regions the stations are in.
@@ -1166,13 +1122,10 @@ class RadioBrowser:
 
         Raises:
         ------
-            ValueError: The endpoint cannot sort by this order, or the limit
+            Invalid: The endpoint cannot sort by this order, or the limit
                 or offset is negative.
 
         """
-        validate_order(order, LIST_ORDERS)
-        validate_paging(limit, offset)
-
         # The API filters states on its own name for a country, like "The
         # Netherlands", which is neither the code nor the name countries()
         # returns. Look that name up, so callers can use the country code.
