@@ -1,0 +1,30 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9611ecb1-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://s.libertaddigital.com/logos/esradio/256.png"
+    },
+    {
+      "stationuuid": "05a799c5-4864-412e-a146-4ecea577b4b0",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://imagenes.cadena100.es/files/image_168_168/uploads/2024/09/18/66eafb73bd8ab.jpeg"
+    },
+    {
+      "stationuuid": "a915d34b-98d4-4892-b885-2a564a2547e1",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://espluguesfm.cat/wp-content/uploads/sites/3/2025/09/espluguesfm-logo-scaled.jpg"
+    },
+    {
+      "stationuuid": "37774085-9527-43d4-beeb-4e09f453ef8f",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://fiestafmlevante.es/wp-content/uploads/2020/07/cropped-LOGO-OFICIAL-FIESTA-FM-LEVANTE-color-1-32x32.png"
+    },
+    {
+      "stationuuid": "44fefd48-3aae-4c64-bef7-261cae0da4cd",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.grabaradioibiza.com/assets/img/logo-graba.png"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "b1cae36e-6db3-455c-ab2e-60be72e55b7c",
+      "reason": "Corrects the favicon and region, from radio-database merge request 120. The old favicon was missing or broken.",
+      "favicon": "https://assets.laut.fm/51443b263d4b82dd4e7c24b811b8ddd7?t=_640x640",
+      "iso_3166_2": "ES-MD"
+    }
+  ]
+}

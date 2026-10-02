@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7fb5bc91-f718-456e-9c65-529440f1ffc8",
+      "reason": "Duplicate of 8cc2da8b-ae85-4e37-9027-9ad765a1ea7a (Los 40 Urban), with the same stream URL and fewer votes and clicks, from radio-database merge request 216.",
+      "delete": true
+    },
+    {
+      "stationuuid": "63fb77fb-4751-4cbe-96de-bfc7019d5ff3",
+      "reason": "Duplicate of b81c57c3-eb05-47ac-a0ea-eb01a6960cc4 (LOS 40 Principales España), with the same stream URL and fewer votes and clicks, from radio-database merge request 216.",
+      "delete": true
+    }
+  ]
+}
