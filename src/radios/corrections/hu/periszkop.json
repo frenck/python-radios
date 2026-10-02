@@ -1,0 +1,19 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "671ec970-d2ec-44ed-a908-88b4b073ac4e",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge request 106.",
+      "name": "Periszkóp Rádió",
+      "favicon": "https://periszkopradio.hu/kepek/perilogo-2014-4.jpg",
+      "tags": "community radio,free radio",
+      "iso_3166_2": "HU-BA",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "83c6b15d-850b-46a1-9d6f-b32fe1d97fa6",
+      "reason": "Duplicate of 671ec970-d2ec-44ed-a908-88b4b073ac4e (Periszkop Radio), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    }
+  ]
+}

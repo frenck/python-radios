@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "708bd211-73cf-403a-8ec9-2af4f87dc613",
+      "reason": "Corrects the name, homepage, tags, region and language codes, from radio-database merge request 323.",
+      "name": "Fallout '26 Radio",
+      "homepage": "https://radio.greenwoodlabs.ca/public/fallout26",
+      "tags": "1920s,jazz,blues,big band,orchestra,golden oldies,public domain",
+      "iso_3166_2": "CA-ON",
+      "languagecodes": "EN"
+    }
+  ]
+}

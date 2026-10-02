@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c3ef6bb9-d7d3-4679-952d-55c87e8e1f32",
+      "reason": "Corrects the favicon, country and region, from radio-database merge request 244. The old favicon was missing or broken.",
+      "favicon": "https://www.smoothradio.com/assets_v4r/smooth/img/apple-touch-icon-152x152.png",
+      "countrycode": "GB",
+      "iso_3166_2": "GB-LND"
+    }
+  ]
+}

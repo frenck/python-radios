@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f0b1f357-8467-4eed-b2c8-5f33592111fd",
+      "reason": "Corrects the favicon and region, from radio-database merge request 131. The old favicon was missing or broken.",
+      "favicon": "https://instrumentalhitsradio.com/assets/images/mini-copy-2-208x207-2.jpg",
+      "iso_3166_2": "MX-NLE"
+    }
+  ]
+}

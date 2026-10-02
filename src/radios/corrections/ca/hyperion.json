@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "faa7ba0b-2abc-4989-a2b2-b4e2b28e5027",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 374.",
+      "tags": "pop,rock,country",
+      "iso_3166_2": "CA-AB",
+      "languagecodes": "EN"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "96158e94-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon and tags, from radio-database merge request 194. The old favicon was missing or broken.",
+      "favicon": "https://bnrnews.bg/api/media/5ed76a93-2543-4d2d-bb5d-d7398537be6d",
+      "tags": "culture"
+    },
+    {
+      "stationuuid": "0dec7232-1b72-4316-996b-09d318a29b38",
+      "reason": "Corrects the favicon, from radio-database merge request 194. The old favicon was missing or broken.",
+      "favicon": "https://bnrnews.bg/api/media/5ed76a93-2543-4d2d-bb5d-d7398537be6d"
+    }
+  ]
+}

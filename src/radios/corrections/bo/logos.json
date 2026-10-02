@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "68e78c21-ad96-4fe2-a425-a81ddd551b3e",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://eslatinoradio.com/wp-content/uploads/2024/09/favicon1.png"
+    }
+  ]
+}

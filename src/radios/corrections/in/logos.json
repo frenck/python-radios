@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1f219a68-adcc-4224-8088-963529ab5811",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://freefmworld.com/assets/img/freefmworld-logo-oficial.jpg"
+    },
+    {
+      "stationuuid": "d3e8d3a0-d54e-4ae4-b8dc-45d57ad99074",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://radio24.in/wp-content/uploads/2023/09/LOGO-Sqr-Radio24-50x50.png"
+    },
+    {
+      "stationuuid": "de7b0868-91ab-4b25-a8dc-9d5f82314212",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://radioudaan.com/wp-content/themes/hello-elementor-child/assets/images/logo.png"
+    },
+    {
+      "stationuuid": "cd269772-d488-4285-a646-3f739039ae5e",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.sharda.ac.in/assets/imgs/suno-sharda-logo.jpg"
+    }
+  ]
+}

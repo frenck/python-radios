@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "6f424852-4bf4-431e-a715-3fcb553095b3",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://cdn.cnnindonesia.com/cnnid/images/logo.webp?v=12.5.9"
+    },
+    {
+      "stationuuid": "083d312c-59c5-47fc-a00a-5515cc6771f2",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://lokermusik.com/wp-content/uploads/2026/03/cropped-logo-loker-musik-icon-1-32x32.png"
+    }
+  ]
+}

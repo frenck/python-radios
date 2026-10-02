@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "91935dcb-e4fb-49fc-81d9-8b8f8e2549d5",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://103fm.maariv.co.il/images/logo_m_3fm.png"
+    }
+  ]
+}

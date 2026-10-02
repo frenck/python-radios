@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d4e023b0-d966-477f-9d4f-c51e329c04de",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.radiogorenc.si/wp-content/uploads/2022/02/logo-moder-1-300x87.png"
+    }
+  ]
+}

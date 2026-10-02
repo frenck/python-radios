@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c84ff061-3eb4-4ee6-8e69-f44e28b38221",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge request 139. The old favicon was missing or broken.",
+      "name": "FOX 91.4",
+      "favicon": "https://radio-in-asia.com/assets/logo/200/foxfm.png",
+      "tags": "rock,pop,r&b,edm,hip-hop,alternative",
+      "iso_3166_2": "LK-11",
+      "languagecodes": "EN,SI"
+    }
+  ]
+}

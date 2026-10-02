@@ -1,0 +1,146 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "960c0a73-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, favicon and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Kossuth Rádió (AAC+)",
+      "favicon": "https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2017/01/kossuth_radio_background-e1510237000651-220x220.png",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "48acbf47-f731-4c22-91b2-385d2fbb76c9",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Kossuth Rádió (MP3)",
+      "favicon": "https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2017/01/kossuth_radio_background-e1510237000651-220x220.png",
+      "tags": "duna média,news,public radio,talk",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "960e7334-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Petőfi Rádió (AAC+)",
+      "homepage": "https://mediaklikk.hu/petofi/",
+      "favicon": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts124/v4/a0/63/ec/a063eca1-8c37-8fa9-de34-db8606329a7f/mza_4738682942926744276.jpg/250x250bf-60.jpg",
+      "tags": "duna média,hits,hungarian pop music,pop,public radio",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "79d8bcc0-e8c8-49a7-a160-2b41923b054a",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 106.",
+      "name": "Petőfi Rádió (MP3)",
+      "tags": "duna média,hits,hungarian pop music,pop,public radio",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "08e90601-b7eb-4b41-a892-b897775286c8",
+      "reason": "Corrects the name, stream URL, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Bartók Rádió (AAC+ HQ)",
+      "url": "https://mr-stream.connectmedia.hu/4740/mr3hq.aac",
+      "favicon": "https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2021/12/Bartok_profile_1500x1500px.jpg",
+      "tags": "classical,cultural,duna média,jazz,public radio",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "961d7d8c-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Bartók Rádió (MP3 HQ)",
+      "homepage": "https://mediaklikk.hu/bartok/",
+      "favicon": "https://cdn.cms.mtv.hu/wp-content/uploads/sites/4/2021/12/Bartok_profile_1500x1500px.jpg",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "960c759c-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, tags and region, from radio-database merge request 106.",
+      "name": "Nemzetiségi Rádió (AAC+)",
+      "homepage": "https://mediaklikk.hu/nemzetisegiradio/",
+      "tags": "duna média,folk music,minority,public radio,talk",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "4cee2d0b-9957-45df-86c2-cb6571b3adeb",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Nemzetiségi Rádió (MP3)",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/nemzetisegi-radio/play_250_250.webp",
+      "tags": "duna média,folk music,minority,public radio,talk",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "960cb7ff-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Parlamenti Rádió (AAC+)",
+      "homepage": "https://mediaklikk.hu/parlamentiradio/",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/parlamenti-radio/play_250_250.webp",
+      "tags": "duna média,news,parliament,public radio,jazz",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "0b1168a4-3bf3-4682-8250-e0e5978d3cf4",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Parlamenti Rádió (MP3)",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/parlamenti-radio/play_250_250.webp",
+      "tags": "duna média,news,parliament,public radio,jazz",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "960c0804-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Dankó Rádió (AAC+)",
+      "homepage": "https://mediaklikk.hu/danko/",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/danko-radio/play_250_250.webp",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "f8b84389-4cc8-4dfb-b47c-3ff3c0901769",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Dankó Rádió (MP3)",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/danko-radio/play_250_250.webp",
+      "tags": "duna média,folk,operetta,public radio",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "e2638799-87c0-4029-a5de-d6dbcc88255b",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Szakcsi Rádió",
+      "favicon": "https://yt3.googleusercontent.com/lQzP_Cx9O4K_PFWqeiCGyO_wk39IEKOnJr9CbIcmmCNOO9xpMSn8_EfynskhWm3VZ1yfLS86=s900-c-k-c0x00ffffff-no-rj",
+      "tags": "duna média,jazz,public radio",
+      "iso_3166_2": "HU-BU",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "9df9d491-607a-49ad-9439-ed76a5abdd1d",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 106.",
+      "tags": "children,duna média,public radio",
+      "iso_3166_2": "HU-BU",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "bc28ee22-af0a-4519-ac97-a21bd8707100",
+      "reason": "Corrects the name, homepage, tags and region, from radio-database merge request 106.",
+      "name": "Nemzeti Sportrádió (AAC+)",
+      "homepage": "https://mediaklikk.hu/nemzetisportradio/",
+      "tags": "duna média,pop,public radio,sport,sports,talk",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "59d532c2-fddf-4f17-8a3d-50bf632ae553",
+      "reason": "Corrects the name, homepage, favicon, tags, region and language codes, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Nemzeti Sportrádió (MP3)",
+      "homepage": "https://mediaklikk.hu/nemzetisportradio/",
+      "favicon": "https://play-lh.googleusercontent.com/_vm1vmcSxQnNt-7D2DNSABdD43fhHc73jcZ7WP1iWVragEFPKi9jzd0eQ547b4b6wk4M",
+      "tags": "duna média,pop,public radio,sport,sports,talk",
+      "iso_3166_2": "HU-BU",
+      "languagecodes": "HU"
+    },
+    {
+      "stationuuid": "440f5925-fcf2-4393-b614-db40dcf5ced5",
+      "reason": "Duplicate of 960c0a73-0601-11e8-ae97-52543be04c81 (Kossuth Rádió), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    },
+    {
+      "stationuuid": "3eb5c673-aacc-47ee-94a8-66dd554207a6",
+      "reason": "Duplicate of 79d8bcc0-e8c8-49a7-a160-2b41923b054a (Petőfi Rádió), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    }
+  ]
+}

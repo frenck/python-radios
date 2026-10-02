@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "0275f1fc-e179-4c0e-a0ed-be03b1f22f4c",
+      "reason": "Corrects the stream URL, homepage, favicon, region and language codes, from radio-database merge request 129.",
+      "url": "https://club74.stream.laut.fm/club_74",
+      "homepage": "https://laut.fm/club_74",
+      "favicon": "https://assets.laut.fm/0e23a6c82018e9e7e1a1da1e20f62ec1?t=_120x120",
+      "iso_3166_2": "DE-HE",
+      "languagecodes": "DE,EN"
+    }
+  ]
+}

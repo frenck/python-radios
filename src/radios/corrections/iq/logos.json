@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "bc1e8eb3-a94e-48d7-892a-e790a1599b60",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.alsumaria.tv/images/sumerfm_bgNew.png"
+    }
+  ]
+}

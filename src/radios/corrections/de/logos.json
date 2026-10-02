@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "2446bc54-bfbb-41b4-afac-4a1c0fb4b141",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.antenne.de/logos/station-antenne-bayern/apple-touch-icon.png"
+    }
+  ]
+}

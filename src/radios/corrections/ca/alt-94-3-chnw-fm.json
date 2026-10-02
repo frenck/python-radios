@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "8067f79b-5e4a-4ae9-a868-276d52778b80",
+      "reason": "Corrects the name and region, from radio-database merge request 376.",
+      "name": "ALT 94.3 | CHNW-FM",
+      "iso_3166_2": "CA-MB"
+    }
+  ]
+}

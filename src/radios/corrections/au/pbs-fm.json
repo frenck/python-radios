@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f821dd0f-72b5-4604-bcc7-2921e46e5dd9",
+      "reason": "Corrects the name and region, from radio-database merge request 141.",
+      "name": "PBS FM - Melbourne - 106.7 FM (AAC LC)",
+      "iso_3166_2": "AU-VIC"
+    }
+  ]
+}
