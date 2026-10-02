@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "83bb028f-9cd6-489d-a9e0-6dc0821a071b",
+      "reason": "Its favicon is on Imgur, which shows a consent page instead of the image to apps in some regions. Use the logo on radiox.co.uk, as asked in radiobrowser-api-rust issue 254.",
+      "favicon": "https://www.radiox.co.uk/assets_v4r/xfm/img/favicon-196x196.png"
+    }
+  ]
+}
