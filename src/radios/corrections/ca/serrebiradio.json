@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "a9001ace-0a44-4abb-a5fb-f0977971be3c",
+      "reason": "Duplicate of 1ab9f31d-41ee-43bc-b92b-f3c54b0bcf06 (SerrebiRadio), with the same stream URL and fewer votes and clicks, from radio-database merge request 397.",
+      "delete": true
+    },
+    {
+      "stationuuid": "dcd73261-f866-4f1d-a8fe-acf05f064b78",
+      "reason": "Duplicate of 1ab9f31d-41ee-43bc-b92b-f3c54b0bcf06 (SerrebiRadio), with the same stream URL and fewer votes and clicks, from radio-database merge request 397.",
+      "delete": true
+    },
+    {
+      "stationuuid": "9c4eb345-7fd5-4020-af13-97a5f82ebdb8",
+      "reason": "Duplicate of 1ab9f31d-41ee-43bc-b92b-f3c54b0bcf06 (SerrebiRadio), with the same stream URL and fewer votes and clicks, from radio-database merge request 397.",
+      "delete": true
+    },
+    {
+      "stationuuid": "7f20bd70-13be-41e5-8243-2443d4581cd0",
+      "reason": "Duplicate of c3987ce1-0f93-42a6-8f7e-ed7b83a3ad55 (SerrebiRadio), with the same stream URL and fewer votes and clicks, from radio-database merge request 397.",
+      "delete": true
+    }
+  ]
+}
