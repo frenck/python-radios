@@ -118,6 +118,10 @@ stations = await radios.stations_by_url(
 )
 ```
 
+Without a `limit`, the lists return everything that matches. For
+`stations()` without a filter, that is the whole catalog of more than 60,000
+stations, close to 80 MB of JSON, so pass a `limit` there.
+
 ### Searching
 
 `search()` combines any number of filters. Text filters match part of a
