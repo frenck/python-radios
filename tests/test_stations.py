@@ -77,10 +77,10 @@ async def test_stations_filter_by_without_term(
 @pytest.mark.parametrize(
     ("filter_term", "path"),
     [
-        ("#original", "/json/stations/bytagexact/%23original"),
-        ("AC/DC", "/json/stations/bytagexact/AC%2FDC"),
-        ("r&b", "/json/stations/bytagexact/r%26b"),
-        ("80s 90s", "/json/stations/bytagexact/80s%2090s"),
+        ("#original", "/json/stations/bynameexact/%23original"),
+        ("AC/DC", "/json/stations/bynameexact/AC%2FDC"),
+        ("r&b", "/json/stations/bynameexact/r%26b"),
+        ("80s 90s", "/json/stations/bynameexact/80s%2090s"),
     ],
 )
 async def test_stations_filter_term_is_escaped(
@@ -88,14 +88,37 @@ async def test_stations_filter_term_is_escaped(
 ) -> None:
     """Test a filter term cannot change the URL it is part of."""
     responses.get(
-        re.compile(rf"^{re.escape(API_URL)}/stations/bytagexact/"), payload=[]
+        re.compile(rf"^{re.escape(API_URL)}/stations/bynameexact/"), payload=[]
     )
 
-    await radios.stations(filter_by=FilterBy.TAG_EXACT, filter_term=filter_term)
+    await radios.stations(filter_by=FilterBy.NAME_EXACT, filter_term=filter_term)
 
     ((_, url),) = responses.requests
     assert url.raw_path == path
     assert url.query["limit"] == "100000"
+
+
+@pytest.mark.parametrize(
+    ("filter_by", "path"),
+    [
+        (FilterBy.TAG, "/json/stations/bytag/jazz"),
+        (FilterBy.TAG_EXACT, "/json/stations/bytagexact/jazz"),
+        (FilterBy.LANGUAGE, "/json/stations/bylanguage/jazz"),
+        (FilterBy.LANGUAGE_EXACT, "/json/stations/bylanguageexact/jazz"),
+        (FilterBy.NAME_EXACT, "/json/stations/bynameexact/Jazz"),
+        (FilterBy.STATE, "/json/stations/bystate/Jazz"),
+    ],
+)
+async def test_stations_filter_term_case(
+    responses: aioresponses, radios: RadioBrowser, filter_by: FilterBy, path: str
+) -> None:
+    """Test tag and language terms are lowercased, the API matches on that."""
+    responses.get(re.compile(rf"^{re.escape(API_URL)}/stations/"), payload=[])
+
+    await radios.stations(filter_by=filter_by, filter_term="Jazz")
+
+    ((_, url),) = responses.requests
+    assert url.raw_path == path
 
 
 async def test_station(

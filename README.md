@@ -121,7 +121,8 @@ stations = await radios.stations_by_url(
 ### Searching
 
 `search()` combines any number of filters. Text filters match part of a
-value, unless you ask for an exact match:
+value, unless you ask for an exact match. An exact tag or language still
+matches stations that have other tags or languages next to it:
 
 ```python
 stations = await radios.search(
