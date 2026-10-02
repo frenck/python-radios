@@ -25,6 +25,7 @@ manager exits.
 | `  models.py`        | mashumaro dataclasses for stations, countries and more |
 | `  const.py`         | Enums, supported orders, and language flags            |
 | `  exceptions.py`    | `RadioBrowserError` and its connection subclasses      |
+| `  corrections/`     | Station corrections: loader, schema, data per country  |
 | `tests/`             | pytest suite; each test has a one-line docstring       |
 | `examples/`          | Runnable example against the live API                  |
 
@@ -100,6 +101,11 @@ See [AI_POLICY.md](AI_POLICY.md) for the contribution policy around AI tooling.
   escaped with `quote(..., safe="")`, so they cannot change the URL.
 - Several station fields (`tags`, `language`, `languagecodes`) arrive as comma
   separated strings and are split into lists by `CommaSeparatedString`.
+- The library ships corrections for station data, as JSON files in
+  `src/radios/corrections/<country>/`. They are loaded once, on import, and
+  applied to the raw API dictionaries before they become `Station` objects.
+  Tests run without them (the autouse `corrections` fixture); add to that
+  fixture to test with one. `test_corrections.py` validates the shipped files.
 
 ## Where to read next
 

@@ -24,6 +24,7 @@ from pycares import SRVRecordData
 from yarl import URL
 
 from .const import LIST_ORDERS, STATION_ORDERS, FilterBy, Order
+from .corrections import apply_corrections, load_corrections
 from .exceptions import (
     RadioBrowserConnectionError,
     RadioBrowserConnectionTimeoutError,
@@ -63,6 +64,12 @@ REQUEST_ATTEMPTS = 5
 # is used instead. Its plain A and AAAA records point to all API servers.
 SRV_RECORD = "_api._tcp.radio-browser.info"
 FALLBACK_HOST = "all.api.radio-browser.info"
+
+# The corrections this library ships for the station data of the API, see the
+# corrections package. They are read once, on import: reading files from the
+# event loop would block it, and an asyncio application like Home Assistant
+# imports its libraries outside of it.
+CORRECTIONS = load_corrections()
 
 
 @contextmanager
@@ -134,12 +141,15 @@ def list_from_json(data: str) -> list[Any]:
     return items
 
 
-def stations_from_json(data: str) -> list[Station]:
-    """Parse a list of stations from an API response.
+def stations_from_json(
+    data: str, corrections: dict[str, dict[str, Any]]
+) -> list[Station]:
+    """Parse a list of stations from an API response, and correct them.
 
     Args:
     ----
         data: The JSON response, a list of stations.
+        corrections: The corrections to apply, by station UUID.
 
     Returns:
     -------
@@ -151,8 +161,7 @@ def stations_from_json(data: str) -> list[Station]:
 
     """
     with unexpected_response():
-        stations = list_from_json(data)
-        # pylint: disable-next=not-an-iterable
+        stations = apply_corrections(list_from_json(data), corrections)
         return [Station.from_dict(station) for station in stations]
 
 
@@ -227,6 +236,9 @@ class RadioBrowser:
 
     request_timeout: float = 8.0
     session: aiohttp.client.ClientSession | None = None
+    # Apply the corrections this library ships for the station data. Turn
+    # them off to get the stations exactly as the API returns them.
+    corrections: bool = True
 
     _close_session: bool = False
     _host: str | None = None
@@ -236,6 +248,11 @@ class RadioBrowser:
     # change, so they are looked up once per client.
     _api_country_names: dict[str, str] | None = None
     _api_country_names_lock: asyncio.Lock = field(default_factory=asyncio.Lock)
+
+    @property
+    def _corrections(self) -> dict[str, dict[str, Any]]:
+        """Return the corrections to apply, none when they are turned off."""
+        return CORRECTIONS if self.corrections else {}
 
     async def _resolve_hosts(self) -> list[str]:
         """Look up the Radio Browser API servers, in a random order.
@@ -619,7 +636,9 @@ class RadioBrowser:
             msg = f"The Radio Browser API did not register the click: {message}"
             raise RadioBrowserError(msg)
 
-        return url
+        # The click still counts for the station, but the stream to play is
+        # the corrected one, when there is one.
+        return self._corrections.get(uuid, {}).get("url", url)
 
     @probatio(error=RadioBrowserValidationError)
     async def vote(self, *, uuid: str) -> None:
@@ -928,7 +947,7 @@ class RadioBrowser:
             # yarl rejects None as a query value, so unset filters are left out.
             params={key: value for key, value in params.items() if value is not None},
         )
-        return stations_from_json(stations_data)
+        return stations_from_json(stations_data, self._corrections)
 
     @probatio(error=RadioBrowserValidationError)
     async def station(self, *, uuid: str) -> Station | None:
@@ -974,7 +993,7 @@ class RadioBrowser:
         stations_data = await self._request(
             "stations/byuuid", params={"uuids": ",".join(uuids)}
         )
-        return stations_from_json(stations_data)
+        return stations_from_json(stations_data, self._corrections)
 
     @probatio(error=RadioBrowserValidationError)
     async def stations_by_url(self, *, url: str) -> list[Station]:
@@ -996,7 +1015,7 @@ class RadioBrowser:
 
         """
         stations_data = await self._request("stations/byurl", params={"url": url})
-        return stations_from_json(stations_data)
+        return stations_from_json(stations_data, self._corrections)
 
     @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments
@@ -1058,7 +1077,7 @@ class RadioBrowser:
                 "limit": limit,
             },
         )
-        return stations_from_json(stations_data)
+        return stations_from_json(stations_data, self._corrections)
 
     @probatio(error=RadioBrowserValidationError)
     # pylint: disable-next=too-many-arguments

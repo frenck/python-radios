@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "ad2349a3-eaec-4065-a624-0845e03f48e9",
+      "reason": "Duplicate of c3d37147-cc64-4f54-b8b3-b7b6b8b099f5, without tags or language. The station operator asked for its removal upstream, in radiobrowser-api-rust issue 267.",
+      "delete": true
+    }
+  ]
+}

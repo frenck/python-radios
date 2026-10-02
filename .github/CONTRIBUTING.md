@@ -25,6 +25,49 @@ When reporting a problem with a specific request, include the method you
 called and its arguments, and if you can, the raw JSON the Radio Browser API
 returned. That makes it easy to turn into a test fixture.
 
+## Correcting station data
+
+The library ships corrections for stations with wrong data in Radio Browser,
+like a stream URL that moved, a broken favicon, or a duplicate. They live in
+`src/radios/corrections/`, in a folder per country (the lowercase country
+code), with a JSON file per broadcaster or topic:
+
+```json
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "00000000-0000-4000-8000-000000000001",
+      "reason": "Example FM moved its stream, see https://example.com/listen",
+      "url": "https://stream.example.com/example-fm.mp3"
+    },
+    {
+      "stationuuid": "00000000-0000-4000-8000-000000000002",
+      "reason": "Duplicate of Example FM (00000000-0000-4000-8000-000000000001)",
+      "delete": true
+    }
+  ]
+}
+```
+
+For a real one, see `src/radios/corrections/fr/radio-odyssey.json`.
+
+- `stationuuid` is the UUID of the station, shown on its page on the
+  [Radio Browser website][radio-browser].
+- `reason` says why, so a reviewer can check it, and so it is clear later
+  whether the correction is still needed. Link to the source when there is
+  one, like the website of the station.
+- A correction either deletes the station with `"delete": true`, or overwrites
+  one or more of these fields, with the names and formats of the API: `name`,
+  `url`, `homepage`, `favicon`, `tags`, `countrycode`, `state`, `iso_3166_2`,
+  `language`, `languagecodes`, `geo_lat` and `geo_long`. Tags and languages are
+  comma separated, like `"news,pop"`.
+- A station has corrections in one place only.
+
+The format follows the [radio-database][radio-database] repository of Radio
+Browser, so a correction can be offered upstream as well. The test suite
+validates every file, and `schema.json` lets your editor check it as you type.
+
 ## Development
 
 The full setup, dependencies, and check/test commands live in the
@@ -54,4 +97,6 @@ style (clear names, why-comments, no silent failures).
 [github]: https://github.com/frenck/python-radios/issues
 [poetry]: https://python-poetry.org
 [prs]: https://github.com/frenck/python-radios/pulls
+[radio-browser]: https://www.radio-browser.info
+[radio-database]: https://gitlab.com/radiobrowser/radio-database
 [security]: https://github.com/frenck/python-radios/blob/main/.github/SECURITY.md
