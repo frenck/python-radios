@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "96394101-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the stream URL, tags and region, from radio-database merge request 179. The old stream no longer plays.",
+      "url": "http://stream2.nmih.hu:4120/live.mp3",
+      "tags": "news,pop,subotica,szabadka",
+      "iso_3166_2": "RS-VO"
+    },
+    {
+      "stationuuid": "96393fe9-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the stream URL, favicon, tags and region, from radio-database merge request 179. The old stream no longer plays; the old favicon was missing or broken.",
+      "url": "http://stream2.nmih.hu:4110/live.mp3",
+      "favicon": "https://zigistar.com/pics/szmr_250_250.png",
+      "tags": "news,pop,subotica,szabadka",
+      "iso_3166_2": "RS-VO"
+    }
+  ]
+}

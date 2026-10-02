@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "96105626-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "http://www.marginal.fm/images/logo-marginal.png"
+    }
+  ]
+}

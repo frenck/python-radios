@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7b03996e-6ea0-4db5-8168-ddd1463faec2",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://la100.cienradios.com/pf/resources/la100/logos/favicon.ico?d=86"
+    }
+  ]
+}

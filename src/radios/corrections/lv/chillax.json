@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f18809c9-1dc1-4e0c-ac76-da4a92c3a6c5",
+      "reason": "Corrects the tags and region, from radio-database merge request 333.",
+      "tags": "chillout,chill,relax,easy listening,lounge,pop",
+      "iso_3166_2": "LV-RIX"
+    }
+  ]
+}

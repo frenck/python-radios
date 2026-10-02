@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "026accc4-313a-11e9-8f31-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://superclasica.com/wp/wp-content/themes/legatus-theme/images/logo-peq-color.png"
+    }
+  ]
+}

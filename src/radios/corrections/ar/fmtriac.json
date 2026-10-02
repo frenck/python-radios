@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "ff7c813b-c283-44b1-8540-3a751554b421",
+      "reason": "Corrects the favicon, from radio-database merge request 386. The old favicon was missing or broken.",
+      "favicon": "https://fmtriac.com.ar/wp-content/uploads/2024/06/cropped-t-REX-sin-fondo.png"
+    }
+  ]
+}

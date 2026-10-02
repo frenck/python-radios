@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "4a3e0c55-774e-47db-929b-e8841d38a871",
+      "reason": "Corrects the tags and region, from radio-database merge request 210.",
+      "tags": "pop,news,local",
+      "iso_3166_2": "IL-HA"
+    },
+    {
+      "stationuuid": "08993f63-44f2-4fa0-8541-99194d5fd838",
+      "reason": "Corrects the favicon, tags and region, from radio-database merge request 210. The old favicon was missing or broken.",
+      "favicon": "https://cms.102fm.co.il/wp-content/uploads/2025/02/102fm_logo_vertical_3-1.png",
+      "tags": "contemporary,music,talk",
+      "iso_3166_2": "IL-TA"
+    },
+    {
+      "stationuuid": "962326cb-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the homepage, tags and region, from radio-database merge request 210.",
+      "homepage": "https://glz.co.il/",
+      "tags": "news,talk,military",
+      "iso_3166_2": "IL-M"
+    }
+  ]
+}

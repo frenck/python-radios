@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7cab5f11-08f4-4608-ad74-82ef586f433b",
+      "reason": "Duplicate of d1cdad9c-d30e-45a5-883e-942c54092b04 (Fenix FM Latino), with the same stream URL and fewer votes and clicks, from radio-database merge request 371.",
+      "delete": true
+    },
+    {
+      "stationuuid": "58a4d96c-58cf-46ed-b05b-e4453132df17",
+      "reason": "Duplicate of d1cdad9c-d30e-45a5-883e-942c54092b04 (Fenix FM Latino), with the same stream URL and fewer votes and clicks, from radio-database merge request 371.",
+      "delete": true
+    }
+  ]
+}
