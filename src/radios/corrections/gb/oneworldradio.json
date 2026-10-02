@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "35192ec4-e851-4ce3-a828-89992e99ba49",
+      "reason": "Corrects the homepage, favicon and tags, from radio-database merge request 114. The old favicon was missing or broken.",
+      "homepage": "https://tomorrowland.com",
+      "favicon": "https://www.tomorrowland.com/home/apple-touch-icon.png",
+      "tags": "electronic"
+    }
+  ]
+}

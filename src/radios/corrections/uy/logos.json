@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "74bb61ea-570f-41de-b588-0a2b8ac60ee8",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://megafm.com.uy/mega/images/logo_mega_fm_web_2020.png"
+    }
+  ]
+}

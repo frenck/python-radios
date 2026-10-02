@@ -1,0 +1,107 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7e6c07b7-c7d7-4d16-9ee9-a0964b159901",
+      "reason": "Corrects the name and favicon, from radio-database merge request 384.",
+      "name": "STEREOREY: La Máxima Dimensión del Radio",
+      "favicon": "https://www.stereorey.com/logomvsradio.png"
+    },
+    {
+      "stationuuid": "305056d4-b740-4823-8dad-32d2b49dad03",
+      "reason": "Corrects the name and favicon, from radio-database merge request 384.",
+      "name": "BEAT 100.9 (CDMX) - 100.9 FM - XHSON-FM - NRM Comunicaciones - Ciudad de México",
+      "favicon": "https://beatdigital.mx/img/beat-digital-logo.png"
+    },
+    {
+      "stationuuid": "77aab525-98fd-47c1-b961-31e0fa09d3bc",
+      "reason": "Corrects the name and favicon, from radio-database merge request 384.",
+      "name": "BJB 570 (Monterrey) - 570 AM - XEBJB-AM - Grupo Radio Alegría - Monterrey, Nuevo León",
+      "favicon": "https://gruporadioalegria.mx/wp-content/uploads/2025/09/logo.png"
+    },
+    {
+      "stationuuid": "50ac7519-fc4d-47b8-acfe-b82130dedce1",
+      "reason": "Corrects the name and favicon, from radio-database merge request 384.",
+      "name": "XEU 98.1 (Veracruz) - 98.1 FM - XHU-FM - Grupo Pazos Radio - Veracruz, Veracruz",
+      "favicon": "https://www.xeudeportes.mx/img/logo.png"
+    },
+    {
+      "stationuuid": "37d7969d-1e68-44aa-9b42-d2eb8e5d5a37",
+      "reason": "Corrects the name, from radio-database merge request 385.",
+      "name": "EXA FM 101.3 (Durango) - 101.3 FM - XHCAV-FM - Armas Radio - Durango, Durango"
+    },
+    {
+      "stationuuid": "2842f0c9-dd6e-4428-a4fc-a89a91bebb7d",
+      "reason": "Corrects the name, from radio-database merge request 385.",
+      "name": "EXA FM 93.3 (Veracruz) - 93.3 FM - XHPS-FM - MVS Radio - Veracruz, Veracruz"
+    },
+    {
+      "stationuuid": "49c9b516-2228-48a5-b67d-be9df8b87350",
+      "reason": "Corrects the name, from radio-database merge request 385.",
+      "name": "EXA FM 98.1 (Guasave) - 98.1 FM - XHGSE-FM - Grupo RSN - Guasave, Sinaloa"
+    },
+    {
+      "stationuuid": "9e08d3ca-5a7a-412e-8f64-db791e95ea92",
+      "reason": "Corrects the name, from radio-database merge request 385.",
+      "name": "EXA FM 98.3 (El Paso) - 98.3 FM - XHPX-FM - MVS Radio - Ciudad Juárez, Chihuahua"
+    },
+    {
+      "stationuuid": "f87f03a2-2824-435e-83d5-6b3f491bd0ba",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "FACTOR 96.1 (San Luis Potosí) - 96.1 FM - XHOB-FM - MG Comunicación - San Luis Potosí, San Luis Potosí",
+      "favicon": "https://factor961.fm/wp-content/uploads/2026/04/logofactor-150x150.png"
+    },
+    {
+      "stationuuid": "b9de6b01-ae25-4eef-af6a-c0d992767126",
+      "reason": "Corrects the name, from radio-database merge request 385.",
+      "name": "FIESTA MEXICANA 94.5 (Delicias) - 94.5 FM - XHCDS-FM - Promosat Chihuahua - Delicias, Chihuahua"
+    },
+    {
+      "stationuuid": "22e0516b-fcab-49e4-8346-882c7628840f",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "FUSIÓN 90.1 (Veracruz) - 90.1 FM - XHLL-FM - Grupo Pazos - Veracruz, Veracruz",
+      "favicon": "https://www.fusionradio.mx/imgicono/57530-20260831164755-constellation-brands-un-buen-vecino-que-construye-junto-a-las-comunidades-de-veracruz.webp"
+    },
+    {
+      "stationuuid": "96e63db6-0166-4d92-bf47-23522c0eb3e9",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "GENESIS 98.1 (MTY) - 98.1 FM - XHRL-FM - Núcleo Radio Monterrey - Monterrey, Nuevo León",
+      "favicon": "https://genesis981.com.mx/wp-content/themes/genesis/images/genesis-logo.png"
+    },
+    {
+      "stationuuid": "e04b3874-86a8-4b5f-8f21-ef697090bdc8",
+      "reason": "Corrects the name, from radio-database merge request 385.",
+      "name": "Globo 99.7 (Ciudad Acuña) - 99.7 FM - XHPL-FM - RCG Media - Ciudad Acuña, Coahuila"
+    },
+    {
+      "stationuuid": "5d1e38ab-b0f0-4292-b486-8fe76cbc39b2",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "HEART UK: Turn up the feel good! - Londres, Inglaterra",
+      "favicon": "https://assets.heart.co.uk/2024/22/heart-station-portrait-listen-logos---heart-70s-1717413060-editorial-short-form-0.png"
+    },
+    {
+      "stationuuid": "3be9bc47-1378-48c7-bf21-a083e700dda8",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "LA FIERA (Veracruz) - 94.1 FM - XHHV-FM - Grupo Pazos - Veracruz, Veracruz",
+      "favicon": "https://www.lafiera.mx/img/logo-gpazos.png"
+    },
+    {
+      "stationuuid": "277ce438-620c-4028-ae65-a90aae0fe28d",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "LA KEBUENA 95.5 (Colima) - 95.5 FM - XHCMM-FM - 95.5 FM - Luna Medios - Coalcomán, Michoacán",
+      "favicon": "https://www.kebuena.com.mx/wp-content/themes/nwp/src/Player/assets/images/player-logo.jpg"
+    },
+    {
+      "stationuuid": "a1abad0d-3b04-477d-bf72-139da17f951e",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "LA PATRONA 94.5 (Santiago) - 94.5 FM - XHSI-FM - Alica Medios - Santiago Ixcuintla, Nayarit",
+      "favicon": "https://lapatrona.fm/santiago/wp-content/uploads/sites/11/2024/08/logo-alica-medios-300x157-1.png"
+    },
+    {
+      "stationuuid": "c6d6a956-00f9-4b1a-a8de-72803fadb974",
+      "reason": "Corrects the name and favicon, from radio-database merge request 385.",
+      "name": "RADIO RED 1110 (CDMX) - 1110 AM - XERED-AM - Grupo Radio Centro - Ciudad de México",
+      "favicon": "https://pwaimg.listenlive.co/XERED_AM_1885301_config_station_logo_image_1692673479.png"
+    }
+  ]
+}

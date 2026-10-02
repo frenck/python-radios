@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "128a4337-41ce-423a-bedf-28ff5d27e8dd",
+      "reason": "Corrects the tags, from radio-database merge request 86.",
+      "tags": "pop music,pop,hit music"
+    }
+  ]
+}

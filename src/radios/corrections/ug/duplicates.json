@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7c94e1c8-c1ef-4c9e-aa71-41565643ee12",
+      "reason": "Duplicate of 1647efb2-a9aa-42d4-975b-2124b5530a5c (107.3 BBC Radio Uganda), with the same stream URL and fewer votes and clicks, from radio-database merge request 352.",
+      "delete": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "70efb24e-d5fa-43a4-9fcc-1caace55efb2",
+      "reason": "Corrects the tags and region, from radio-database merge request 336.",
+      "tags": "80s,90s,2000s,pop,rock,news,talk",
+      "iso_3166_2": "RU-VLG"
+    }
+  ]
+}

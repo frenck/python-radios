@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e4046469-8cef-4ffd-a95d-528e57e4641b",
+      "reason": "Duplicate of 43023b6f-5695-4108-8892-07d22e9b1181 (Al Jazeera - Arabic), with the same stream URL and fewer votes and clicks, from radio-database merge request 352.",
+      "delete": true
+    }
+  ]
+}

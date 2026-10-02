@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "b3317562-5d0c-4e49-981b-4247fb84f5be",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://atlfmnews.com/wp-content/uploads/2020/10/Asset-7.png"
+    }
+  ]
+}

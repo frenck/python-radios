@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "560f0844-69fd-4f17-b007-a8b8f6dfa6d8",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://poptarisznya.hu/wp-content/uploads/2025/04/favicon_poptarisznya_logo-150x150.webp?x59664"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "8f7ecd3e-7be3-4525-aa79-6408cef9fda8",
+      "reason": "Corrects the tags and region, from radio-database merge request 137.",
+      "tags": "music,dance,pop,rap,rock",
+      "iso_3166_2": "FI-18"
+    }
+  ]
+}

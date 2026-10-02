@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "489f3786-3ff8-46c1-ad14-2a7c5d9cea99",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge request 360. The old favicon was missing or broken.",
+      "name": "Energy Bern (NRJ)",
+      "favicon": "https://storage.energy.ch/broadcast/covers/channels/logo_v2_bern_1638178870.svg",
+      "tags": "mainstream,news,pop,swiss",
+      "iso_3166_2": "CH-BE",
+      "languagecodes": "DE,GSW"
+    }
+  ]
+}

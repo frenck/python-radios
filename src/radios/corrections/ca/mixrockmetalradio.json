@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "695aab8e-c413-4449-9f97-83c2926b1e58",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 234.",
+      "tags": "metal,heavy metal,hard rock,rock,classic rock,progressive rock,alternative,thrash metal,hardstyle",
+      "iso_3166_2": "CA-ON",
+      "languagecodes": "EN"
+    }
+  ]
+}

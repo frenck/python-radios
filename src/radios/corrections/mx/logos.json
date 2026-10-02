@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7739e3b5-fd1d-4f82-b3df-e8638ff0b46a",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://laoctava.com/img/logo.png"
+    },
+    {
+      "stationuuid": "241157a7-1129-40d2-9f94-43576d0d0bb5",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://quevivamexico.com/images/que-viva-mexico-radio-logo.jpg"
+    },
+    {
+      "stationuuid": "d31be487-8d63-4adf-9b9e-365f4d654818",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.fusionradio.mx/imgicono/57531-20260831174014-van-cuatro-veracruz-conquista-nuevamente-la-corona-nacional-de-miss-earth-mexico.webp"
+    },
+    {
+      "stationuuid": "232ca184-6303-4289-97c9-73d46cb87830",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.xeudeportes.mx/img/logo.png"
+    }
+  ]
+}

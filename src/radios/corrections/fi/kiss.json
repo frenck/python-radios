@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "06bf8b75-fc48-44e8-a9b4-24c0ab8dbc80",
+      "reason": "Corrects the region, from radio-database merge request 137.",
+      "iso_3166_2": "FI-18"
+    }
+  ]
+}

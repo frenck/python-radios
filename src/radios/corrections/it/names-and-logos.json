@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "30f99511-84c1-4716-ab76-fd29d6d8bdbc",
+      "reason": "Corrects the name and favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "name": "Rai Radio 1 Sport",
+      "favicon": "https://www.raiplaysound.it/resizegd/-x24/dl/components/img/sound/loghi/logo-rairadio1sport-transparent.png"
+    }
+  ]
+}

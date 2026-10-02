@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c7cbc7f7-1e5a-478f-adb6-424785835217",
+      "reason": "Corrects the homepage, favicon, tags and region, from radio-database merge request 189. The old favicon was missing or broken.",
+      "homepage": "https://www.los40.do/",
+      "favicon": "https://playertop.los40.do/psdmedia/media/top/skins/oneplayer/img/los40repdom.png",
+      "tags": "news,pop,latin",
+      "iso_3166_2": "DO-01"
+    }
+  ]
+}

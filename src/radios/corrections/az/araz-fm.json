@@ -1,0 +1,19 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "4ad3c0f9-61a5-4ebb-953a-a08fc1065a78",
+      "reason": "Corrects the name, homepage, tags and language codes, from radio-database merge request 401.",
+      "name": "Araz FM",
+      "homepage": "https://arazfm.az/",
+      "tags": "news,music",
+      "languagecodes": "AZ"
+    },
+    {
+      "stationuuid": "0ad8350d-7d03-4f0d-9f35-b38cc42c40af",
+      "reason": "Corrects the homepage and tags, from radio-database merge request 401.",
+      "homepage": "https://asanradio.az/",
+      "tags": "news,music"
+    }
+  ]
+}
