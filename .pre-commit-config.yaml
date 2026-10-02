@@ -70,7 +70,9 @@ repos:
         name: "\u2705 Check code for common misspellings"
         language: system
         types: [text]
-        exclude: ^poetry\.lock$
+        # Station corrections hold names, tags and URLs in many languages,
+        # not English prose: "Cadena SER" is a name, not a typo.
+        exclude: ^(poetry\.lock|src/radios/corrections/.+\.json)$
         entry: poetry run codespell
       - id: detect-private-key
         name: "\U0001F575\uFE0F  Detect Private Keys"
