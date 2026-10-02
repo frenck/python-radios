@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "95395105-135b-4c48-8d68-bddd45cae507",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://turbo98.com/wp-content/themes/emisoras_grupomedrano/assets/img/none-logo.png"
+    }
+  ]
+}

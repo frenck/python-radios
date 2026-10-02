@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1e003cdd-26ec-4de1-b17a-eb0add272c51",
+      "reason": "Corrects the homepage, favicon, tags, region and language codes, from radio-database merge request 113.",
+      "homepage": "https://www.river949.com.au/",
+      "favicon": "https://www.river949.com.au/wp-content/uploads/sites/20/2022/10/cropped-river-949-site-icon-01.png?w=196",
+      "tags": "adult contemporary",
+      "iso_3166_2": "AU-QLD",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "5e82f3fe-4277-4e43-91b7-2fc3000c3254",
+      "reason": "Corrects the homepage, favicon, tags, region and language codes, from radio-database merge request 113.",
+      "homepage": "https://www.river949.com.au/",
+      "favicon": "https://www.river949.com.au/wp-content/uploads/sites/20/2022/10/cropped-river-949-site-icon-01.png?w=196",
+      "tags": "adult contemporary",
+      "iso_3166_2": "AU-QLD",
+      "languagecodes": "EN"
+    }
+  ]
+}

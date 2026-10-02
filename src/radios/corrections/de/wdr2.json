@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "29292a02-bdac-11e9-acb2-52543be04c81",
+      "reason": "Corrects the name and region, from radio-database merge request 211.",
+      "name": "WDR 2 Bergisches Land",
+      "iso_3166_2": "DE-NW"
+    }
+  ]
+}

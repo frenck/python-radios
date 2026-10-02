@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "2dcb1d0c-c3af-4755-a429-f68f7fa37c68",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://1940sradio.com/images/Logos/1940s-Radio-White-Small.png#joomlaImage://local-images/Logos/1940s-Radio-White-Small.png?width=150&height=41"
+    },
+    {
+      "stationuuid": "1b5eb1b9-c892-45cd-b6b8-29998036892c",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://justhousemusic.co.uk/wp-content/uploads/2017/01/radio-sponsor-7.png"
+    }
+  ]
+}

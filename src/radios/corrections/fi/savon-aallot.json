@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "a00152c4-a3e3-416f-acf5-4e8d29709934",
+      "reason": "Corrects the tags and region, from radio-database merge request 137.",
+      "tags": "local,news,local news,local radio,pop",
+      "iso_3166_2": "FI-15"
+    }
+  ]
+}

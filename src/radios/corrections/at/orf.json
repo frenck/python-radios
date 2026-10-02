@@ -1,0 +1,27 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1e13ed4e-daa9-4728-8550-e08d89c1c8e7",
+      "reason": "Corrects the favicon, from radio-database merge request 129.",
+      "favicon": "https://tubestatic.orf.at/mojo/1_3/storyserver//tube/fm4/images/touch-icon-android.png"
+    },
+    {
+      "stationuuid": "206f93c5-5f3c-4ba1-82c2-19a42582fcc2",
+      "reason": "Corrects the favicon, from radio-database merge request 129.",
+      "favicon": "https://tubestatic.orf.at/mojo/1_3/storyserver//tube/fm4/images/touch-icon-android.png"
+    },
+    {
+      "stationuuid": "fa4463a4-cedf-490a-b941-3dc56b83d5b6",
+      "reason": "Corrects the favicon and tags, from radio-database merge request 380. The old favicon was missing or broken.",
+      "favicon": "https://burgenland.orf.at/player/apple-touch-icon-180x180.png",
+      "tags": "orf,local radio,regional radio,public radio,local news,tourism,excursions"
+    },
+    {
+      "stationuuid": "77bb2bea-2de1-4909-bf9f-25021e173092",
+      "reason": "Corrects the favicon and tags, from radio-database merge request 380. The old favicon was missing or broken.",
+      "favicon": "https://burgenland.orf.at/player/apple-touch-icon-180x180.png",
+      "tags": "orf,local radio,regional radio,public radio,local news,tourism,excursions"
+    }
+  ]
+}

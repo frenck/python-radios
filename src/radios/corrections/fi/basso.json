@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "2c794d05-0cc1-4dfa-be31-52c0ab2cc19d",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 137.",
+      "tags": "rap,rnb",
+      "iso_3166_2": "FI-18",
+      "languagecodes": "FI"
+    }
+  ]
+}

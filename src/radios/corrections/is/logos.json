@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "4cbc4571-b652-448b-b70d-35be49841d3e",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://bylgjan.visir.is/favIcons/bylgjan/apple-touch-icon.png"
+    }
+  ]
+}

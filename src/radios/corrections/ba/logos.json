@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1b52f3a0-2920-4f17-a549-73c85713385f",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://radiokakanj.co.ba/wp-content/uploads/2025/01/logo_web_25.png"
+    }
+  ]
+}

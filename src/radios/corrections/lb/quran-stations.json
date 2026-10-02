@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "773c11d0-01fe-4a1d-a6f2-666feaf50b52",
+      "reason": "Corrects the name and language codes, from radio-database merge request 239.",
+      "name": "مختصر التفسير",
+      "languagecodes": "AR"
+    },
+    {
+      "stationuuid": "ac7adcb0-496d-468f-bac5-6d91d290d00f",
+      "reason": "Corrects the name and language codes, from radio-database merge request 239.",
+      "name": "إذاعة القرآن الكريم",
+      "languagecodes": "AR"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9606f727-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the stream URL, tags and region, from radio-database merge request 111.",
+      "url": "https://wdr-1live-live.icecastssl.wdr.de/wdr/1live/live/mp3/128/stream.mp3",
+      "tags": "ard,pop,public radio,rock,wdr",
+      "iso_3166_2": "DE-NW"
+    },
+    {
+      "stationuuid": "ed43c035-129a-41e1-86ad-1c65a4e6db65",
+      "reason": "Duplicate of 9606f727-0601-11e8-ae97-52543be04c81 (1LIVE), with the same stream URL and fewer votes and clicks, from radio-database merge request 111.",
+      "delete": true
+    },
+    {
+      "stationuuid": "c1b544a8-8c05-4cad-8885-9a757094bc4b",
+      "reason": "Duplicate of 9606f727-0601-11e8-ae97-52543be04c81 (1LIVE), with the same stream URL and fewer votes and clicks, from radio-database merge request 111.",
+      "delete": true
+    }
+  ]
+}

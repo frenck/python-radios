@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "96295b39-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the stream URL, favicon and tags, from radio-database merge request 219. The old favicon was missing or broken.",
+      "url": "https://stream1.xdevel.com/audio0s975753-313/stream/icecast.audio",
+      "favicon": "https://www.radiomarte.it/wp-content/uploads/2025/01/Favicon.png",
+      "tags": "news,pop"
+    }
+  ]
+}

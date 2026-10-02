@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "a0a53101-7ce3-4a69-aa5c-cac3cef968cd",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.antenazagreb.hr/wp-content/uploads/2018/03/ANTENA-LOGOTIP-2018-color-landscape-2.png"
+    },
+    {
+      "stationuuid": "79bcec97-6d62-45c6-a861-85463c32f864",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.antenazagreb.hr/wp-content/uploads/2018/03/ANTENA-LOGOTIP-2018-color-landscape-2.png"
+    }
+  ]
+}

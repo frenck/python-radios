@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "5a346926-04b8-4daf-9a94-7deab4d02587",
+      "reason": "Corrects the favicon, tags, region and language codes, from radio-database merge requests 242 and 243.",
+      "favicon": "https://img.radios.com.br/radio/lg/radio14395_1543237337.jpg",
+      "tags": "news,brazilian,south brazil,gaucho,nativista,folk,world music,german folk,polka,sertanejo,mpb,latin,variety,regional,brazil",
+      "iso_3166_2": "BR-RS",
+      "languagecodes": "PT"
+    }
+  ]
+}

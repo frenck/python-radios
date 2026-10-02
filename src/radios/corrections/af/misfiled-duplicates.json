@@ -1,0 +1,130 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "0ad53c1a-b01e-481d-b7f4-aa26a4941efd",
+      "reason": "Duplicate of 7b4fcdc7-4e59-47cf-8062-87123715b4a5 (Powermix FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "e812f26d-ae88-4570-b15e-c0a05b0c1f2e",
+      "reason": "Duplicate of d84ba969-f1a3-49ef-830a-bd38e57c8e83 (AisaFM亚洲粤语台), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "3715c0d6-eba0-493a-a827-332947b2c41d",
+      "reason": "Duplicate of b9e1f76e-41fd-11e9-aa55-52543be04c81 (Blues Radio), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "02c1d76e-b9c9-46a8-964b-816a2d1ef058",
+      "reason": "Duplicate of 9616308f-0601-11e8-ae97-52543be04c81 (БНР Хоризонт), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "5a18e616-7292-43f5-832d-ef40e0654107",
+      "reason": "Duplicate of c447d0dc-6bb3-11ea-b1cf-52543be04c81 (Coast FM Tenerife), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "7545eb39-548d-4b15-a00c-3c6d8d4d58d5",
+      "reason": "Duplicate of 11ca14a9-f6a2-49cf-befb-2d0cc84c730a (WDR COSMO -- (https)), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "c1bf9999-56d9-4e5f-989f-b428b7040c53",
+      "reason": "Duplicate of bdf25682-4e19-45d6-b2ae-beb0da977738 (Dance Wave!), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "502058d6-d209-4136-9539-0ab5ad7a46dd",
+      "reason": "Duplicate of bdf25682-4e19-45d6-b2ae-beb0da977738 (Dance Wave!), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "38d6d402-e477-48e2-9f58-2ffd3f2c0915",
+      "reason": "Duplicate of 960eb9c7-0601-11e8-ae97-52543be04c81 (GAYFM), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "106f6c75-b52f-4ab2-9354-d9a9b8051ca3",
+      "reason": "Duplicate of dd72afd8-5613-427f-93bb-44ccf26f55d4 (Győr+), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "4875a51d-457c-4210-9231-94eae11d4143",
+      "reason": "Duplicate of e698b1df-bd9c-4084-9c21-22a452b27664 (Listen.moe J-Pop (MP3)), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "4359d779-144a-42cc-a3f3-5130c59a3db4",
+      "reason": "Duplicate of 961f78f1-0601-11e8-ae97-52543be04c81 (KQED 88.5 San Francisco, CA), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "1a0a82f6-88a3-4838-b91f-b41330ea0de3",
+      "reason": "Duplicate of f8c5d6a3-e29f-48f2-b4b4-6d0033ce9837 (louange radio), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "62e1a925-7ea1-4cf3-bbc9-6c5375b7a415",
+      "reason": "Duplicate of 04a69a7f-a245-4022-81f4-72e793d2fcf5 (BEST DEEP FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "1cb1fdd4-272a-4c86-aac6-506841fbed74",
+      "reason": "Duplicate of dd10c8a8-c9b3-4e00-b0b5-7e7a9926e88f (Radio Aashiqanaa), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "c663ac62-51aa-4a36-b1e3-20bb19a7204f",
+      "reason": "Duplicate of b5594dac-2dc3-48ef-a8f0-e65d0fef128c (Radio Caprice - Jazz / Fusion Metal), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "e9df186e-fdbb-4ff0-96af-cd1a9b2cecfa",
+      "reason": "Duplicate of 637f70ac-1493-4801-8928-ff3c6343ebd9 (Rock&Pop), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "93f09e87-4bd8-485d-9c5c-d5e219c0f7e5",
+      "reason": "Duplicate of b6be7550-8e04-42c3-8641-126c08eab71c (Radio Pogoda), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "532cecce-036d-4421-ba61-6299ed9f7cf3",
+      "reason": "Duplicate of b4651759-5f4c-11ea-be63-52543be04c81 (Вести FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "1385338f-ad7d-4922-afb6-c4027f2c225a",
+      "reason": "Duplicate of 8fbe9ffe-2ab4-4faa-85cc-251cc68d0f4f (Vocaloid Radio (320kbps)), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "ae2a4d9b-e304-4dff-92d1-4b1bd610ccf4",
+      "reason": "Duplicate of 8fbe9ffe-2ab4-4faa-85cc-251cc68d0f4f (Vocaloid Radio (320kbps)), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "9ff345e4-439d-4054-8108-9df5af8d0bdd",
+      "reason": "Duplicate of 9ea80928-719e-486d-b94e-58d92ba948fa (Монте Карло Вл), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "edfd9911-c6d0-4497-94ed-5bb2f5a268e6",
+      "reason": "Duplicate of e80f8181-32bd-4c76-a253-27fe074d7c1f (RUSSIAN RADIO VLADIVOSTOK), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "970577a4-58b5-4022-8a20-815cda13f0bd",
+      "reason": "Duplicate of 3b513e54-1e4f-4ea9-a0ab-ea6e1eabd5dc (إذاعة طريق السلف), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    },
+    {
+      "stationuuid": "fb1df47f-278f-416c-bec5-4205b9742e6e",
+      "reason": "Duplicate of af9433ca-33ce-46e5-ac7c-733740901bee (VOV5 WORLD RADIO), with the same stream URL and fewer votes and clicks, from radio-database merge request 129. Filed under Afghanistan by mistake.",
+      "delete": true
+    }
+  ]
+}

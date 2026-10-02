@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "962dd999-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, tags and region, from radio-database merge request 379. The old favicon was missing or broken.",
+      "favicon": "https://radio-osttirol.at/images/favicon/favicon_radio.png",
+      "tags": "oldies,pop,greatest hits,schlager,volksmusik,news,traffic,weather,mountain,tourism,events",
+      "iso_3166_2": "AT-7"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "fa4f0df3-5386-42ed-959d-e0ee2511fd36",
+      "reason": "Corrects the name, favicon, tags, region and language codes, from radio-database merge request 325.",
+      "name": "TOPradio Retro",
+      "favicon": "https://www.topradio.be/favicons/favicon-196x196.png",
+      "tags": "retro,dance,vlaanderen,flanders",
+      "iso_3166_2": "BE-VOV",
+      "languagecodes": "NL"
+    }
+  ]
+}
