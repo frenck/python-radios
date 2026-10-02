@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "24c9ce72-7f6e-4cf2-bac0-e2a5cbf2c7d0",
+      "reason": "Duplicate of 8dd6a16d-f994-455f-8f6a-a285f07abebd (Elshinta FM Jakarta), with the same stream URL and fewer votes and clicks, from radio-database merge request 352.",
+      "delete": true
+    },
+    {
+      "stationuuid": "37aaad0f-1cd6-4d68-9fd0-3a621251c546",
+      "reason": "Duplicate of 8dd6a16d-f994-455f-8f6a-a285f07abebd (Elshinta FM Jakarta), with the same stream URL and fewer votes and clicks, from radio-database merge request 352.",
+      "delete": true
+    },
+    {
+      "stationuuid": "6d66e5e3-bd84-49a5-978d-6c19560dcd14",
+      "reason": "Duplicate of af9d2835-a790-4741-9044-278467fbc297 (gen 987 FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 352.",
+      "delete": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "28b58640-e317-4778-9bba-a1992f8f0bf7",
+      "reason": "Corrects the tags and region, from radio-database merge request 321.",
+      "tags": "talk",
+      "iso_3166_2": "DK-84"
+    },
+    {
+      "stationuuid": "2d422514-5893-4845-808b-1292447d3144",
+      "reason": "Corrects the region, from radio-database merge request 321.",
+      "iso_3166_2": "DK-84"
+    },
+    {
+      "stationuuid": "9298e58e-3dd2-418c-bd39-6798f59b8b10",
+      "reason": "Corrects the region, from radio-database merge request 321.",
+      "iso_3166_2": "DK-84"
+    }
+  ]
+}

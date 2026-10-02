@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "63b45400-70ff-4967-90f9-7581d1b7aef9",
+      "reason": "Duplicate of 38ac4075-2723-11e8-91bf-52543be04c81 (Nightline Radio), with the same stream URL and fewer votes and clicks, from radio-database merge request 357.",
+      "delete": true
+    }
+  ]
+}

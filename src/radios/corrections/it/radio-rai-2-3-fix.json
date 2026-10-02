@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9b5aa56d-8009-44aa-9354-53f85018133c",
+      "reason": "Corrects the region, from radio-database merge request 335.",
+      "iso_3166_2": "IT-RM"
+    },
+    {
+      "stationuuid": "470dd31b-edfd-4abc-8f38-d5507dd091b6",
+      "reason": "Corrects the name, favicon and tags, from radio-database merge request 335. The old favicon was missing or broken.",
+      "name": "Radio Rai 3",
+      "favicon": "https://pbs.twimg.com/profile_images/1031406664719757312/hDvvYstO_400x400.jpg",
+      "tags": "culture,italian,rai"
+    }
+  ]
+}

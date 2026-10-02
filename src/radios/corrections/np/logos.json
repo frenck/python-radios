@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "6fe1411f-9aa6-42d1-a1ee-02ac2e6d0941",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.jpkhabar.com/themes/jpkhabar/images/logo.png"
+    }
+  ]
+}

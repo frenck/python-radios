@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f4eae943-1981-4f99-a249-2fa1247d8104",
+      "reason": "Duplicate of bf9c5161-5f8a-434a-8e0d-363edab8c886 (CaRaMe - Campusradio Merseburg), with the same stream URL and fewer votes and clicks, from radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "65882531-c52b-46ed-b410-ec3ba3ed8990",
+      "reason": "Duplicate of bf9c5161-5f8a-434a-8e0d-363edab8c886 (CaRaMe - Campusradio Merseburg), with the same stream URL and fewer votes and clicks, from radio-database merge request 348.",
+      "delete": true
+    },
+    {
+      "stationuuid": "8a3a287f-118b-4ad2-9cc6-81e032bcd59a",
+      "reason": "Duplicate of bf9c5161-5f8a-434a-8e0d-363edab8c886 (CaRaMe - Campusradio Merseburg), with the same stream URL and fewer votes and clicks, from radio-database merge request 348.",
+      "delete": true
+    }
+  ]
+}

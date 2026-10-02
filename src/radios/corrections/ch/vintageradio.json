@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "a7a61f38-61e3-4491-a7ba-8c978fe51935",
+      "reason": "Corrects the name, homepage and favicon, from radio-database merge request 165. The old favicon was missing or broken.",
+      "name": "Vintage Radio",
+      "homepage": "https://vintageradio.ch/",
+      "favicon": "https://images.ctfassets.net/ydbd72j4j18y/4hEqoCknKxN2FRiAKf5r2W/71dcaf23a45eed154de7bc117597a348/Vintageradio_Logo_Claim_black_SW.svg"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "19fa202f-4045-4bce-a544-588e3683a0f9",
+      "reason": "Corrects the stream URL and region, from radio-database merge request 162.",
+      "url": "https://stream.rcast.net/pls/62227",
+      "iso_3166_2": "RS-00"
+    }
+  ]
+}

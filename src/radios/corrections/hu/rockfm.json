@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "cf6f73d9-5d72-4074-83e7-735afd5d48d7",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106.",
+      "name": "103.9 Rock FM",
+      "favicon": "https://rockradio.hu/wp-content/themes/rockfm/assets/dist/img/favicon/android-icon-192x192.png",
+      "tags": "rock,classic rock,hard rock,heavy metal",
+      "iso_3166_2": "HU-BU"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "25c8c639-d9ef-4a29-ae39-eef8bfd6af6c",
+      "reason": "Corrects the tags, region and language codes, from radio-database merge request 398.",
+      "tags": "melodic house,melodic techno,progressive house,electronic",
+      "iso_3166_2": "RU-MOW",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "70de3076-4c4d-4e25-ba20-6f9dbe6ace8b",
+      "reason": "Duplicate of 25c8c639-d9ef-4a29-ae39-eef8bfd6af6c (MelodiClab Radio), with the same stream URL and fewer votes and clicks, from radio-database merge request 398.",
+      "delete": true
+    }
+  ]
+}

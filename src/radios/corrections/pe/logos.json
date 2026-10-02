@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1007ee6d-2d86-42ab-b041-9e514d9fb99f",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.radiolanube.com/images/logo-lanuberadio.png"
+    },
+    {
+      "stationuuid": "70846d7a-3de8-49cf-92ea-43795335191a",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://radiomelodia.com.pe/imgs/logo_melodia.png"
+    },
+    {
+      "stationuuid": "ecff50d1-ed5d-4845-b1ff-3ec2e8c1ef43",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.radiopanamericana.com/wp-content/themes/panamericana2/assets/images/logo/logo.png"
+    }
+  ]
+}

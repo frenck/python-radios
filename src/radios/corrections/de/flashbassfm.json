@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "2ab50118-6c8a-4576-bc05-bfb74d065031",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 193.",
+      "name": "Flashbass.FM",
+      "tags": "mainstream,pop,house,disco,80s,90s,remix,charts,english,german,party,dance",
+      "iso_3166_2": "DE-TH"
+    },
+    {
+      "stationuuid": "7c1638b7-1452-4690-b0b9-cba97fc78d08",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 193.",
+      "name": "Flashbass.FM - 80iger",
+      "favicon": "https://assets.laut.fm/2b8e32540cb7421db656600657dfaf29?t=_120x120",
+      "tags": "80s,pop,80iger,disco,classic-pop,remix,party,radio80s,mainstream",
+      "iso_3166_2": "DE-TH"
+    }
+  ]
+}

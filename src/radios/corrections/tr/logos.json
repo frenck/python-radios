@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "b3e6320b-0ffc-4d4e-a999-2467897b17e6",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://cdn.radyofenomen.com/artwork/logo20.png"
+    },
+    {
+      "stationuuid": "de28a78a-6cee-453d-b9df-13557334dfdb",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://radyoseymen.com.tr/wp-content/uploads/2023/04/radyo-seymen-logo1.png"
+    }
+  ]
+}
