@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "21838fd1-b14f-4ee5-b751-b28cf61600b2",
+      "reason": "Corrects the favicon, tags and region, from radio-database merge request 209. The old favicon was missing or broken.",
+      "favicon": "https://www.happy104.gr/images/logo/happy_104_logo_5.jpg",
+      "tags": "mainstream,pop,80s,90s",
+      "iso_3166_2": "GR-I"
+    },
+    {
+      "stationuuid": "9646068e-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the region, from radio-database merge request 209.",
+      "iso_3166_2": "GR-I"
+    },
+    {
+      "stationuuid": "1dc47f93-28b1-11e8-91bf-52543be04c81",
+      "reason": "Corrects the favicon and region, from radio-database merge request 209. The old favicon was missing or broken.",
+      "favicon": "https://www.atticaradios.gr/Content/ImagesDatabase/p/crop/both/be/beacb687958a453286a9bc7d07333915.svg?quality=85&404=default&v=4",
+      "iso_3166_2": "GR-I"
+    },
+    {
+      "stationuuid": "446a3e3d-a2fb-453d-abbd-3369bde1c214",
+      "reason": "Corrects the homepage, favicon, tags and region, from radio-database merge request 209. The old favicon was missing or broken.",
+      "homepage": "https://www.ertecho.gr/radio/eraspor/",
+      "favicon": "https://www.ertecho.gr/wp-content/uploads/2025/07/era-spor-logo.svg",
+      "tags": "sports,sport news",
+      "iso_3166_2": "GR-I"
+    },
+    {
+      "stationuuid": "d13972f9-95c6-4320-a132-ada4898220f1",
+      "reason": "Corrects the favicon, region and language codes, from radio-database merge request 209. The old favicon was missing or broken.",
+      "favicon": "https://music892.gr/wp-content/uploads/2025/05/cropped-cropped-music-89.2-horizontal-white.png",
+      "iso_3166_2": "GR-I",
+      "languagecodes": "EL"
+    }
+  ]
+}

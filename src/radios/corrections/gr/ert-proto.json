@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "961bcdba-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon, tags and region, from radio-database merge request 351. The old favicon was missing or broken.",
+      "name": "ΕΡΤNEWS RADIO 105.8",
+      "homepage": "https://www.ertecho.gr/radio/ertnewsradio/",
+      "favicon": "https://www.ertecho.gr/wp-content/uploads/2025/09/newsradio-logo.png",
+      "tags": "news,proto,ert,public radio",
+      "iso_3166_2": "GR-I"
+    }
+  ]
+}
