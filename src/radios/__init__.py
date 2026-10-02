@@ -5,6 +5,7 @@ from .exceptions import (
     RadioBrowserConnectionError,
     RadioBrowserConnectionTimeoutError,
     RadioBrowserError,
+    RadioBrowserValidationError,
 )
 from .models import (
     Codec,
@@ -29,6 +30,7 @@ __all__ = [
     "RadioBrowserConnectionError",
     "RadioBrowserConnectionTimeoutError",
     "RadioBrowserError",
+    "RadioBrowserValidationError",
     "State",
     "Station",
     "StationCheck",

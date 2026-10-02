@@ -6,10 +6,9 @@ from typing import Any
 import pytest
 from aioresponses import aioresponses
 from multidict import MultiDictProxy
-from probatio import Invalid
 from syrupy.assertion import SnapshotAssertion
 
-from radios import FilterBy, Order, RadioBrowser
+from radios import FilterBy, Order, RadioBrowser, RadioBrowserValidationError
 
 from .conftest import API_URL, load_fixture
 
@@ -156,7 +155,7 @@ async def test_search_geo_incomplete(location: dict[str, Any]) -> None:
     """Test search rejects a location that misses its latitude or longitude."""
     radios = RadioBrowser(user_agent="PythonRadios/Tests")
 
-    with pytest.raises(Invalid, match="geo_lat and geo_long"):
+    with pytest.raises(RadioBrowserValidationError, match="geo_lat and geo_long"):
         await radios.search(**location)
 
 
@@ -217,7 +216,7 @@ async def test_search_geo_out_of_range(
     responses: aioresponses, radios: RadioBrowser, location: dict[str, Any]
 ) -> None:
     """Test a location that is not a coordinate is refused, the API fails on it."""
-    with pytest.raises(Invalid):
+    with pytest.raises(RadioBrowserValidationError):
         await radios.search(**location)
 
     assert not responses.requests
@@ -303,5 +302,5 @@ async def test_search_filter_by_invalid(
     """Test search rejects filter_by values it cannot send to the API."""
     radios = RadioBrowser(user_agent="PythonRadios/Tests")
 
-    with pytest.raises(Invalid, match="filter_"):
+    with pytest.raises(RadioBrowserValidationError, match="filter_"):
         await radios.search(filter_by=filter_by, filter_term=filter_term)

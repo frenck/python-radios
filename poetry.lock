@@ -1079,14 +1079,14 @@ files = [
 
 [[package]]
 name = "probatio"
-version = "0.12.5"
+version = "0.13.0"
 description = "A modern Python data validation library"
 optional = false
 python-versions = ">=3.12"
 groups = ["main"]
 files = [
-    {file = "probatio-0.12.5-py3-none-any.whl", hash = "sha256:197154692d6058e6bec3b946e06163d02298a75918d530e3e7d61fb4052e6131"},
-    {file = "probatio-0.12.5.tar.gz", hash = "sha256:ad9a76be96065d1fb83edf2e0b7b8266e2b2b80812ac917b78ac19193d4cef95"},
+    {file = "probatio-0.13.0-py3-none-any.whl", hash = "sha256:b592d11c89b536fa42617c3f23fb8798aeb659da2113cc2ec1ff8759f8a34d8a"},
+    {file = "probatio-0.13.0.tar.gz", hash = "sha256:b5941dfdb68d813fbe49551d8802b241c4774f756fe51dfdedbad33e27797373"},
 ]
 
 [[package]]
@@ -1834,4 +1834,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "838890b887def54c9b0c37f233d404a840a154bff56db3649c8e419d951ed48d"
+content-hash = "5a60383b79b33c5742161760226262b787b0f26ba0865775dc4b90eda5b8aa80"

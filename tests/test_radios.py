@@ -20,6 +20,7 @@ from radios import (
     RadioBrowserConnectionError,
     RadioBrowserConnectionTimeoutError,
     RadioBrowserError,
+    RadioBrowserValidationError,
 )
 
 from .conftest import API_URL, srv_result
@@ -564,7 +565,7 @@ async def test_negative_paging(
     responses: aioresponses, radios: RadioBrowser, method: str, paging: dict[str, int]
 ) -> None:
     """Test a negative limit or offset is refused before a request is sent."""
-    with pytest.raises(Invalid, match="must be at least 0"):
+    with pytest.raises(RadioBrowserValidationError, match="must be at least 0"):
         await getattr(radios, method)(**paging)
 
     assert not responses.requests
@@ -660,10 +661,22 @@ async def test_invalid_arguments(
     call: Callable[[RadioBrowser], Awaitable[object]],
 ) -> None:
     """Test arguments of the wrong type or out of range are refused up front."""
-    with pytest.raises(Invalid):
+    with pytest.raises(RadioBrowserValidationError):
         await call(radios)
 
     assert not responses.requests
+
+
+async def test_invalid_argument_error(radios: RadioBrowser) -> None:
+    """Test an invalid argument is a RadioBrowserError and a ValueError."""
+    with pytest.raises(RadioBrowserValidationError, match="at 'limit'") as exc_info:
+        await radios.tags(limit=-1)
+
+    assert isinstance(exc_info.value, RadioBrowserError)
+    assert isinstance(exc_info.value, ValueError)
+    # The probatio error stays reachable, with the path to the argument.
+    assert isinstance(exc_info.value.__cause__, Invalid)
+    assert exc_info.value.__cause__.path == ["limit"]
 
 
 @pytest.mark.parametrize(

@@ -11,3 +11,7 @@ class RadioBrowserConnectionError(RadioBrowserError):
 
 class RadioBrowserConnectionTimeoutError(RadioBrowserConnectionError):
     """Radio Browser connection Timeout exception."""
+
+
+class RadioBrowserValidationError(RadioBrowserError, ValueError):
+    """Radio Browser exception for an invalid argument, raised before a request."""

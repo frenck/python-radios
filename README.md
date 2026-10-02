@@ -147,8 +147,7 @@ The results of a geo search carry their `distance` to the location, in
 meters. On other results it is `None`.
 
 Invalid arguments, like a latitude of 91 or a `geo_distance` without a
-location, raise a [probatio](https://probatio.frenck.dev) `Invalid` error
-before a request is sent.
+location, raise a `RadioBrowserValidationError` before a request is sent.
 
 ### Playing a station
 
@@ -234,23 +233,28 @@ logging.getLogger("radios").setLevel(logging.DEBUG)
 
 ### Error handling
 
-Everything that can go wrong while talking to the API raises a
-`RadioBrowserError`, so a single `except` covers it all. Calling a method with
-invalid arguments raises a `probatio.Invalid` instead, since that is a bug to
-fix rather than a failure to handle. The arguments of every method are
-validated with [probatio](https://probatio.frenck.dev), and its error says
-which argument is wrong and why, like `value must be at most 90 at 'geo_lat'`.
+Everything that can go wrong raises a `RadioBrowserError`, so a single
+`except` covers it all. Calling a method with invalid arguments raises a
+`RadioBrowserValidationError`, before any request is sent. It is a
+`RadioBrowserError` and a `ValueError` at the same time. The arguments of every
+method are validated with [probatio](https://probatio.frenck.dev), and the
+error says which argument is wrong and why, like
+`value must be at most 90 at 'geo_lat'`.
 
 ```python
 from radios import (
     RadioBrowser,
     RadioBrowserConnectionError,
     RadioBrowserError,
+    RadioBrowserValidationError,
 )
 
 try:
     async with RadioBrowser(user_agent="MyAwesomeApp/1.0.0") as radios:
         stats = await radios.stats()
+except RadioBrowserValidationError:
+    # A bug in the call, like a negative limit
+    ...
 except RadioBrowserConnectionError:
     # Could not reach the API, even after retrying (includes timeouts)
     ...
