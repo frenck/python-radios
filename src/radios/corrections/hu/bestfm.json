@@ -1,0 +1,78 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "ad1ccf58-9748-4f2f-946e-11026b171ab7",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 106.",
+      "name": "Best FM Budapest",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-BU"
+    },
+    {
+      "stationuuid": "960c0cbf-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, homepage, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Best FM Debrecen",
+      "homepage": "https://www.bestfmdebrecen.hu/",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/best-fm/play_250_250.jpg",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-HB"
+    },
+    {
+      "stationuuid": "a88893f7-62c7-4748-b43c-2cf03c56e399",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106.",
+      "name": "Best FM Eger",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/fm-7/play_250_250.webp",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-HE"
+    },
+    {
+      "stationuuid": "3c94be67-ad12-49d3-900a-59d06c9420e2",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106. The old favicon was missing or broken.",
+      "name": "Best FM Nyíregyháza",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/retro-radio-nyiregyhaza/play_250_250.webp",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-SZ"
+    },
+    {
+      "stationuuid": "ec52970d-802c-4145-812f-f8fa822c8a41",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 106.",
+      "name": "Best FM Pécs",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-BA"
+    },
+    {
+      "stationuuid": "bc577ed9-725d-466c-a273-1a7b13dbfc26",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106.",
+      "name": "Best FM Székesfehérvár",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/best-fm-szekesfehervar/play_250_250.webp",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-FE"
+    },
+    {
+      "stationuuid": "c4324714-dbd3-4ae4-8978-d8123351a5c4",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106.",
+      "name": "Best FM Szolnok",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/amadeus-radio/play_250_250.webp",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-JN"
+    },
+    {
+      "stationuuid": "540b2348-2e63-4f9b-bda5-e077a8557385",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 106.",
+      "name": "Best FM Zalaegerszeg",
+      "favicon": "https://myonlineradio.hu/public/uploads/radio_img/best-fm-zalaegerszeg/play_250_250.webp",
+      "tags": "adult contemporary,hits,local news,pop,top hits",
+      "iso_3166_2": "HU-ZA"
+    },
+    {
+      "stationuuid": "8f090ad7-2e78-4925-98c0-c404dd200971",
+      "reason": "Duplicate of 960c0cbf-0601-11e8-ae97-52543be04c81 (Best FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    },
+    {
+      "stationuuid": "ff4c0ff6-1f3c-4b43-a2fc-46d1d75eda61",
+      "reason": "Duplicate of 960c0cbf-0601-11e8-ae97-52543be04c81 (Best FM), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    }
+  ]
+}

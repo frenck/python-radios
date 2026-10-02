@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9e077bed-f46f-4506-8237-c26be0538fdc",
+      "reason": "Corrects the name, tags and region, from radio-database merge request 106.",
+      "name": "Klubrádió",
+      "tags": "news,talk",
+      "iso_3166_2": "HU-BU"
+    }
+  ]
+}

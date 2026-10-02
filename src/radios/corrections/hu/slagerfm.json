@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "961429cd-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the homepage and region, from radio-database merge request 106.",
+      "homepage": "https://slagerfm.hu/",
+      "iso_3166_2": "HU-BU"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "962cc6df-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, from radio-database merge request 106.",
+      "name": "Dance Wave! (MP3 128k)"
+    },
+    {
+      "stationuuid": "43cf1869-6849-4fff-954d-fdbad6e412e2",
+      "reason": "Corrects the name, stream URL and language codes, from radio-database merge request 106.",
+      "name": "Dance Wave! (AAC+ 64k)",
+      "url": "https://dancewave.online/dance.aac",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "b943ed28-3edd-4638-8754-cdd9953af2e3",
+      "reason": "Corrects the name, from radio-database merge request 106.",
+      "name": "Dance Wave! (Opus)"
+    },
+    {
+      "stationuuid": "648b2abd-92a0-11e9-a605-52543be04c81",
+      "reason": "Corrects the name, from radio-database merge request 106.",
+      "name": "Dance Wave! (OGG Vorbis)"
+    },
+    {
+      "stationuuid": "9b67ef8f-272e-4922-a88d-095189f2d0a5",
+      "reason": "Corrects the name, from radio-database merge request 106.",
+      "name": "Dance Wave! (FLAC)"
+    },
+    {
+      "stationuuid": "964be8b7-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name and stream URL, from radio-database merge request 106.",
+      "name": "Dance Wave Retro! (MP3 128k)",
+      "url": "https://retro.dancewave.online/retrodance.mp3"
+    },
+    {
+      "stationuuid": "7863fbdf-9687-466b-b784-675e898f92e6",
+      "reason": "Corrects the name and stream URL, from radio-database merge request 106.",
+      "name": "Dance Wave Retro! (AAC+ 64k)",
+      "url": "https://retro.dancewave.online/retrodance.aac"
+    },
+    {
+      "stationuuid": "438cf074-d324-482f-9cfa-e0d41641b0eb",
+      "reason": "Corrects the name and stream URL, from radio-database merge request 106.",
+      "name": "Dance Wave Retro! (Opus)",
+      "url": "https://retro.dancewave.online/retrodance.opus"
+    },
+    {
+      "stationuuid": "5cb9261c-c3a5-4b08-974c-4c069bdf71ae",
+      "reason": "Corrects the name and stream URL, from radio-database merge request 106.",
+      "name": "Dance Wave Retro! (OGG Vorbis)",
+      "url": "https://retro.dancewave.online/retrodance.ogg"
+    },
+    {
+      "stationuuid": "77cd3a60-1db5-4a08-b188-443137b00bc2",
+      "reason": "Corrects the name and stream URL, from radio-database merge request 106.",
+      "name": "Dance Wave Retro! (FLAC)",
+      "url": "https://retro.dancewave.online/retrodance.flac.ogg"
+    },
+    {
+      "stationuuid": "2ffe5219-ba4d-4fa1-bfd8-6cf926c65f8f",
+      "reason": "Duplicate of 962cc6df-0601-11e8-ae97-52543be04c81 (Dance Wave!), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    },
+    {
+      "stationuuid": "b1fc30ab-95b3-4eb9-9309-2d93ac24d96f",
+      "reason": "Duplicate of b943ed28-3edd-4638-8754-cdd9953af2e3 (Dance Wave!), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    },
+    {
+      "stationuuid": "09411514-ee92-4afa-8be1-5a21945a5502",
+      "reason": "Duplicate of 964be8b7-0601-11e8-ae97-52543be04c81 (Dance Wave Retro!), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    },
+    {
+      "stationuuid": "c03283a0-bd33-438b-9b31-173bf7ab8e02",
+      "reason": "Duplicate of 7863fbdf-9687-466b-b784-675e898f92e6 (Dance Wave Retro!), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    },
+    {
+      "stationuuid": "58731948-665a-4f8e-8bca-49ef9ffed231",
+      "reason": "Duplicate of 438cf074-d324-482f-9cfa-e0d41641b0eb (Dance Wave Retro!), with the same stream URL and fewer votes and clicks, from radio-database merge request 106.",
+      "delete": true
+    }
+  ]
+}
