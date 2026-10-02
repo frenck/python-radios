@@ -28,6 +28,18 @@
       "favicon": "https://cdn-profiles.tunein.com/s308770/images/logod.jpg",
       "tags": "rock",
       "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "7bfe222c-6b98-4aec-8550-93c491bb2d1f",
+      "reason": "Corrects the tags and region, from radio-database merge request 318.",
+      "tags": "alternative,rock",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "c89e0869-1247-4d43-9a96-84a4e1524b0b",
+      "reason": "Corrects the tags and region, from radio-database merge request 318.",
+      "tags": "alternative,rock,classic rock",
+      "iso_3166_2": "BE-VLG"
     }
   ]
 }
