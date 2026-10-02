@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1c939e3b-4ea1-491d-9fdc-a5e31eef06dd",
+      "reason": "Corrects the homepage, favicon, region and language codes, from radio-database merge request 359. The old favicon was missing or broken.",
+      "homepage": "https://www.radiogong.com/",
+      "favicon": "https://www.radiogong.com/storage/thumbs/512x512/r:1768406066/zpnikwqe8bwdc.png",
+      "iso_3166_2": "DE-BY",
+      "languagecodes": "DE"
+    }
+  ]
+}
