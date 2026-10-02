@@ -245,7 +245,11 @@ class RadioBrowser:
 
         """
         try:
-            result = await DNSResolver().query_dns(SRV_RECORD, "SRV")
+            # Close the resolver also when the lookup is cut short, like by the
+            # request timeout. A lookup left pending in an unclosed resolver
+            # can crash the Python process once the event loop shuts down.
+            async with DNSResolver() as resolver:
+                result = await resolver.query_dns(SRV_RECORD, "SRV")
         except DNSError:
             return [FALLBACK_HOST]
 

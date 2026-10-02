@@ -358,6 +358,38 @@ async def test_host_lookup_falls_back(
     assert radios._host == "all.api.radio-browser.info"
 
 
+async def test_host_lookup_closes_the_resolver(
+    responses: aioresponses, radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test the DNS resolver is closed after a lookup."""
+    responses.get(f"{API_URL}/test", payload={})
+    radios._host = None
+
+    await radios._request("test")
+
+    dns_resolver.return_value.__aexit__.assert_awaited_once()
+
+
+@pytest.mark.usefixtures("retry_sleep")
+async def test_host_lookup_cut_short_closes_the_resolver(
+    radios: RadioBrowser, dns_resolver: MagicMock
+) -> None:
+    """Test the DNS resolver is closed when the timeout cuts a lookup short."""
+
+    async def unanswered_lookup(*_args: object) -> None:
+        await asyncio.Event().wait()
+
+    dns_resolver.return_value.query_dns.side_effect = unanswered_lookup
+    radios._host = None
+    radios.request_timeout = 0.01
+
+    with pytest.raises(RadioBrowserConnectionTimeoutError):
+        await radios._request("test")
+
+    # One lookup per attempt, and every one of them closed its resolver.
+    assert dns_resolver.return_value.__aexit__.await_count == 5
+
+
 @pytest.mark.usefixtures("retry_sleep")
 async def test_host_lookup_timeout(
     radios: RadioBrowser, dns_resolver: MagicMock
