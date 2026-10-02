@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "8535963a-c8d0-421e-8774-1a5a031d2b27",
+      "reason": "Corrects the name, stream URL, favicon, tags, region, language codes and location, from radio-database merge request 184. The old stream no longer plays.",
+      "name": "Radio Seabreeze AM 1395 & 1098",
+      "url": "https://live.radioseabreeze.nl",
+      "favicon": "https://radioseabreeze.nl/wp-content/uploads/2026/01/Seabreeze-logo.png",
+      "tags": "oldies,pop,rock,golden oldies",
+      "iso_3166_2": "NL-FR",
+      "languagecodes": "NL,EN",
+      "geo_lat": 53.098458,
+      "geo_long": 5.821301
+    }
+  ]
+}

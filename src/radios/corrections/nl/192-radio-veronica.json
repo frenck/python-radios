@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f3e1b20f-c985-4671-9987-7d16eeb45d23",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.192radio.nl/192radio/wp-content/uploads/192-Radio-logo.png"
+    }
+  ]
+}

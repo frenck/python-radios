@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f0e970de-1ce8-11ea-a955-52543be04c81",
+      "reason": "Corrects the name and region, from radio-database merge request 394.",
+      "name": "538 Dance Department",
+      "iso_3166_2": "NL-NH"
+    }
+  ]
+}

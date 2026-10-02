@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "db93a00f-9191-46ab-9e87-ec9b373b3eee",
+      "reason": "Corrects the name, stream URL, favicon, tags, region and language codes, from radio-database merge request 154.",
+      "name": "Arrow Classic Rock",
+      "url": "https://stream.player.arrow.nl/arrow",
+      "favicon": "https://www.arrow.nl/wp-content/uploads/2021/12/Arrow-Classic-Rock-Logo-2021.png",
+      "tags": "classic rock,rock",
+      "iso_3166_2": "NL-ZH",
+      "languagecodes": "NL"
+    }
+  ]
+}

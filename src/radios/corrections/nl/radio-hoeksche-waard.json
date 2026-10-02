@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "f06b4cb9-3a86-4546-9b8a-663faa16d558",
+      "reason": "Corrects the stream URL and region, from radio-database merge request 350. The old stream no longer plays.",
+      "url": "https://radiostream.omroephw.nl/",
+      "iso_3166_2": "NL-ZH"
+    },
+    {
+      "stationuuid": "61e5e7e5-7a9d-44bb-aae7-8a09e7fe7a2a",
+      "reason": "Duplicate of f06b4cb9-3a86-4546-9b8a-663faa16d558 (Radio Hoeksche Waard), with the same stream URL and fewer votes and clicks, from radio-database merge request 350.",
+      "delete": true
+    }
+  ]
+}
