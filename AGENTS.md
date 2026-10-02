@@ -106,6 +106,10 @@ See [AI_POLICY.md](AI_POLICY.md) for the contribution policy around AI tooling.
   applied to the raw API dictionaries before they become `Station` objects.
   Tests run without them (the autouse `corrections` fixture); add to that
   fixture to test with one. `test_corrections.py` validates the shipped files.
+- `stations()` and `search()` drop duplicate streams (`without_duplicates`,
+  keyed by `stream_key`), after the corrections are applied. Lookups by UUID
+  and `stations_by_url()` never do, so saved stations keep working. Duplicates
+  are handled there, not as deletions in the corrections data.
 
 ## Where to read next
 

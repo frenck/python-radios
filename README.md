@@ -222,6 +222,27 @@ RadioBrowser(user_agent="MyAwesomeApp/1.0.0", corrections=False)
 Found a station with wrong data? See [CONTRIBUTING.md](.github/CONTRIBUTING.md#correcting-station-data)
 for how to add a correction.
 
+### Duplicate stations
+
+Many streams are listed more than once, added again by someone who could not
+edit the existing station. `stations()` and `search()` return one station per
+stream: the one with the most votes, then the most clicks, in the place where
+that stream first shows up in the results. Streams count as the same when only
+the scheme, the case of the host name, or a trailing `/` or `/;` differs.
+
+Looking a station up by its UUID, with `station()` or `stations_by_uuid()`,
+still finds every one of them, so a station someone saved keeps working.
+`stations_by_url()` returns every station with that stream too, as that is what
+it is for.
+
+Only the duplicates within one response are found, so a page of results can be
+shorter than `limit`, and two copies on different pages both show up. To get
+every station, turn it off:
+
+```python
+RadioBrowser(user_agent="MyAwesomeApp/1.0.0", deduplicate=False)
+```
+
 ### Connection options
 
 ```python
@@ -229,6 +250,7 @@ RadioBrowser(
     user_agent="MyAwesomeApp/1.0.0",  # required, identifies your app
     request_timeout=8.0,  # per-request timeout in seconds
     corrections=True,  # apply the station corrections this library ships
+    deduplicate=True,  # return one station per stream in lists
 )
 ```
 
