@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "e1d428c9-6896-4b27-ae75-e00e69e0ca7d",
+      "reason": "Corrects the favicon, from radio-database merge request 383. The old favicon was missing or broken.",
+      "favicon": "https://www.fm80.fr/wafx_res/Images/0-230-FM80_LogoSite_230x801.png"
+    },
+    {
+      "stationuuid": "d25d3f80-d0d4-4784-98c2-e11102ca98a5",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.radiofrance.fr/external/favicons/fip/favicon.png"
+    },
+    {
+      "stationuuid": "11fc712b-96cb-408d-bc09-57af825ff448",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.bccrock.fr/media/yootheme/cache/38/Logo_BCC_ROCK_-38e285b0.webp?src=images/logo/Logo_BCC_ROCK_.png&thumbnail=200"
+    }
+  ]
+}

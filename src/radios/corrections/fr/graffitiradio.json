@@ -1,0 +1,14 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "ac9c27f8-ed13-40be-81cb-8e90abb1d2a8",
+      "reason": "Corrects the name, stream URL, favicon, tags and region, from radio-database merge request 212. The old favicon was missing or broken.",
+      "name": "Graffiti Radio",
+      "url": "https://diffusion.lafrap.fr/graffiti.mp3",
+      "favicon": "https://www.graffitiradio.fr/3000x3000.png",
+      "tags": "alternative,community,local",
+      "iso_3166_2": "FR-PDL"
+    }
+  ]
+}

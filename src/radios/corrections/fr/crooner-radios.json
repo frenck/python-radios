@@ -1,0 +1,164 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "03bbefa7-bc08-4b5d-a2d3-f4c6efa50d19",
+      "reason": "Corrects the stream URL, favicon, tags, region and language codes, from radio-database merge request 143. The old favicon was missing or broken.",
+      "url": "https://croonerradio-zen.ice.infomaniak.ch/croonerradio-zen-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-ZEN.jpg",
+      "tags": "relax",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "24340331-c16f-4e8d-9bfc-bc7a1dc6a00d",
+      "reason": "Corrects the stream URL, favicon, region and language codes, from radio-database merge request 143.",
+      "url": "https://croonerradio-classicgold.ice.infomaniak.ch/croonerradio-classicgold-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-CLASSIC-GOLD.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "2718e9ee-4225-47ea-9f79-450b317c2b0a",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-love.ice.infomaniak.ch/croonerradio-love-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-LOVE.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "2b85511c-232f-464f-94ee-4a61e1c621f4",
+      "reason": "Corrects the stream URL, favicon, tags, region and language codes, from radio-database merge request 143.",
+      "url": "https://croonerradio-inprivate.ice.infomaniak.ch/croonerradio-inprivate-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-PREMIUM.jpg",
+      "tags": "hotel,restaurant,bar,casino",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "303c6318-8faa-47c6-a38e-f2e6348f3ea7",
+      "reason": "Corrects the stream URL, homepage, favicon and region, from radio-database merge request 143. The old favicon was missing or broken.",
+      "url": "https://croonerradio-elvispresley.ice.infomaniak.ch/croonerradio-elvispresley-midfi.mp3",
+      "homepage": "https://www.croonerradio.fr/stations-de-radio/crooner-radio-elvis-presley-webradio-artiste-musique-discographie-complete/",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-ELVIS-PRESLEY.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "3ca291c7-8b0d-4a20-8044-df6f45e1f434",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-michaelbuble.ice.infomaniak.ch/croonerradio-michaelbuble-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-MICHAEL-BUBLE.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "3fb647f3-93af-4d33-9cad-3d69e2efb048",
+      "reason": "Corrects the name, stream URL, homepage, favicon, tags, region and language codes, from radio-database merge request 143.",
+      "name": "Crooner Radio Julio Iglesias",
+      "url": "https://croonerradio-julioiglesias.ice.infomaniak.ch/croonerradio-julioiglesias-midfi.mp3",
+      "homepage": "https://www.croonerradio.fr/stations-de-radio/crooner-radio-julio-iglesias-webradio-artiste-musique-discographie-complete/",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-JULIO-IGLESIAS.jpg",
+      "tags": "julio iglesias",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "es,it,de,fr,en,pt"
+    },
+    {
+      "stationuuid": "40c6d95f-fc9b-417a-9a60-38ab2d6f6ad4",
+      "reason": "Corrects the stream URL, favicon, tags, region and language codes, from radio-database merge request 143. The old favicon was missing or broken.",
+      "url": "https://croonerradio-american.ice.infomaniak.ch/croonerradio-american-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-AMERICAN.jpg",
+      "tags": "american",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "40d1066e-4903-4775-b137-07fa1b4b1cf9",
+      "reason": "Corrects the name, stream URL, favicon, region and language codes, from radio-database merge request 143.",
+      "name": "Crooner Radio Swing",
+      "url": "https://croonerradio-swing.ice.infomaniak.ch/croonerradio-swing-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-SWING.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "5dfeeef5-334c-4159-95a5-2af653656c59",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-deanmartin.ice.infomaniak.ch/croonerradio-deanmartin-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-DEAN-MARTIN.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "673fc8e6-286a-465b-ad0e-7b3aecfbb19b",
+      "reason": "Corrects the stream URL, favicon, region and language codes, from radio-database merge request 143.",
+      "url": "https://croonerradio-lounge.ice.infomaniak.ch/croonerradio-lounge-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-LOUNGE.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "fr,en"
+    },
+    {
+      "stationuuid": "6e526a16-9e90-48e4-a3f8-039336ce1860",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-celinedion.ice.infomaniak.ch/croonerradio-celinedion-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-CELINE-DION.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "71e5f2b6-5db6-48dc-9854-6133e07c0a1e",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-barbrastreisand.ice.infomaniak.ch/croonerradio-barbrastreisand-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-BARBRA-STREISAND.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "b2a1a04e-b264-4e99-8af3-0db5cc0aef96",
+      "reason": "Corrects the stream URL, favicon, region and language codes, from radio-database merge request 143.",
+      "url": "https://croonerradio-frenchy.ice.infomaniak.ch/croonerradio-frenchy-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-FRENCHY.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "fr"
+    },
+    {
+      "stationuuid": "b3b83be8-042c-4e1a-93de-b6f5323a70f3",
+      "reason": "Corrects the stream URL, favicon, region and language codes, from radio-database merge request 143.",
+      "url": "https://croonerradio-italiano.ice.infomaniak.ch/croonerradio-italiano-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-ITALIANO.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "it"
+    },
+    {
+      "stationuuid": "bb08fe70-1112-4cb6-9dcf-166f35473abd",
+      "reason": "Corrects the stream URL and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-gentlemendrivers.ice.infomaniak.ch/croonerradio-gentlemendrivers-midfi.mp3",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "c4668753-11ed-463b-8b76-c4a8fca9cbd6",
+      "reason": "Corrects the name, stream URL, homepage, favicon and region, from radio-database merge request 143. The old favicon was missing or broken.",
+      "name": "Crooner Radio Movies",
+      "url": "https://croonerradio-movies.ice.infomaniak.ch/croonerradio-movies-midfi.mp3",
+      "homepage": "https://www.croonerradio.fr/stations-de-radio/crooner-radio-movies-webradio/",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-MOVIES.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "d2afc425-ed16-474e-be9d-050d4f71688d",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 143.",
+      "url": "https://croonerradio-christmas.ice.infomaniak.ch/croonerradio-christmas-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-CHRISTMAS.jpg",
+      "iso_3166_2": "FR-IDF"
+    },
+    {
+      "stationuuid": "ec952681-b808-4b77-aa5d-892b7d14331c",
+      "reason": "Corrects the stream URL, favicon, region and language codes, from radio-database merge request 143. The old favicon was missing or broken.",
+      "url": "https://croonerradio-legends.ice.infomaniak.ch/croonerradio-legends-midfi.mp3",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-WR-LEGENDS.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "en"
+    },
+    {
+      "stationuuid": "efedae79-7cd7-43c0-ad23-a149466efec8",
+      "reason": "Corrects the favicon, region and language codes, from radio-database merge request 143.",
+      "favicon": "https://www.croonerradio.fr/datas/logos/512w/LOGO-CROONER-RADIO-TDR.jpg",
+      "iso_3166_2": "FR-IDF",
+      "languagecodes": "fr,en"
+    }
+  ]
+}
