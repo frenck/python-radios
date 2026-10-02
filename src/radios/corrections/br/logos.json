@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "447a1a5f-aee6-4b21-b85f-10ceb1896ad3",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://alphafm.com.br/assets/logo_alpha_new-CG7zP6e2.webp"
+    },
+    {
+      "stationuuid": "92d364fc-2bbe-48af-b0a5-847af1b0a1ec",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://www.sociedadenewsfm.com.br/wp-content/uploads/2021/09/logo_292x90.png"
+    }
+  ]
+}
