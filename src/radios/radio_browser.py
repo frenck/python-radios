@@ -170,6 +170,29 @@ def name_filter_uri(uri: str, name: str | None) -> str:
     return f"{uri}/{quote(name.lower(), safe='')}"
 
 
+# The API stores tags and languages in lowercase and matches them case
+# sensitive, so "Jazz" or "Dutch" would find nothing. Their filter values are
+# lowercased before they are sent.
+LOWERCASE_FILTERS = frozenset(
+    {FilterBy.LANGUAGE, FilterBy.LANGUAGE_EXACT, FilterBy.TAG, FilterBy.TAG_EXACT}
+)
+
+
+def lowercase(value: str | None) -> str | None:
+    """Lowercase a filter value, if there is one.
+
+    Args:
+    ----
+        value: The filter value.
+
+    Returns:
+    -------
+        The lowercased value, or None when there is no value.
+
+    """
+    return value.lower() if value is not None else None
+
+
 # The stations/search endpoint has no by* paths, so search() turns each
 # FilterBy value into search query parameters instead.
 SEARCH_FILTERS: dict[FilterBy, tuple[str, dict[str, bool]]] = {
@@ -759,13 +782,16 @@ class RadioBrowser:
             country_code: Search by country code.
             state: Search by state.
             state_exact: Search by exact state.
-            language: Search by language.
-            language_exact: Search by exact language.
-            tag: Search by tag.
-            tag_exact: Search by exact tag.
-            tag_list: Only stations that match all of these tags. Like
-                `tag`, this matches part of a tag: "blues" also finds
-                "blues rock".
+            language: Search by language, ignoring case.
+            language_exact: Match the language exactly instead of part of
+                it. A station with more than one language still matches when
+                one of them is this language.
+            tag: Search by tag, ignoring case.
+            tag_exact: Match the tag exactly instead of part of it. A station
+                with more tags still matches when one of them is this tag.
+            tag_list: Only stations that match all of these tags, ignoring
+                case. Like `tag`, this matches part of a tag: "blues" also
+                finds "blues rock".
             codec: Search by codec, for example "MP3" or "AAC".
             bitrate_min: Search by minimum bitrate.
             bitrate_max: Search by maximum bitrate.
@@ -814,11 +840,11 @@ class RadioBrowser:
             "countrycode": country_code,
             "state": state,
             "stateExact": state_exact,
-            "language": language,
+            "language": lowercase(language),
             "languageExact": language_exact,
-            "tag": tag,
+            "tag": lowercase(tag),
             "tagExact": tag_exact,
-            "tagList": ",".join(tag_list) if tag_list else None,
+            "tagList": ",".join(tag_list).lower() if tag_list else None,
             "codec": codec,
             "bitrateMin": bitrate_min,
             "bitrateMax": bitrate_max,
@@ -837,6 +863,9 @@ class RadioBrowser:
             if filter_term is None:
                 msg = "filter_by requires a filter_term"
                 raise ValueError(msg)
+
+            if filter_by in LOWERCASE_FILTERS:
+                filter_term = filter_term.lower()
 
             key, flags = SEARCH_FILTERS[filter_by]
             params.update({key: filter_term, **flags})
@@ -956,6 +985,9 @@ class RadioBrowser:
 
             # Terms like "#original" or "AC/DC" would otherwise change the URL
             # instead of being part of it.
+            if filter_by in LOWERCASE_FILTERS:
+                filter_term = filter_term.lower()
+
             uri = f"{uri}/{filter_by.value}/{quote(filter_term, safe='')}"
 
         stations_data = await self._request(

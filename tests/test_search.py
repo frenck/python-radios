@@ -158,6 +158,48 @@ async def test_search_geo_incomplete(location: dict[str, Any]) -> None:
         await radios.search(**location)
 
 
+async def test_search_lowercases_tags_and_languages(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test tags and languages are sent in lowercase, other filters as given."""
+    query = await _search(
+        responses,
+        radios,
+        name="Radio 538",
+        state="Utrecht",
+        language="Dutch",
+        tag="Pop",
+        tag_list=["Jazz", "Blues"],
+    )
+
+    assert query["language"] == "dutch"
+    assert query["tag"] == "pop"
+    assert query["tagList"] == "jazz,blues"
+    assert query["name"] == "Radio 538"
+    assert query["state"] == "Utrecht"
+
+
+@pytest.mark.parametrize(
+    ("filter_by", "key", "value"),
+    [
+        (FilterBy.TAG_EXACT, "tag", "jazz"),
+        (FilterBy.LANGUAGE, "language", "jazz"),
+        (FilterBy.NAME, "name", "Jazz"),
+    ],
+)
+async def test_search_filter_by_case(
+    responses: aioresponses,
+    radios: RadioBrowser,
+    filter_by: FilterBy,
+    key: str,
+    value: str,
+) -> None:
+    """Test filter_by lowercases tag and language terms, and only those."""
+    query = await _search(responses, radios, filter_by=filter_by, filter_term="Jazz")
+
+    assert query[key] == value
+
+
 async def test_search_omits_unset_filters(
     responses: aioresponses, radios: RadioBrowser
 ) -> None:
