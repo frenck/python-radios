@@ -1,0 +1,12 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "c998524b-a7e5-4d7e-8b9f-cf9f7e6c0bb4",
+      "reason": "Corrects the stream URL, favicon and region, from radio-database merge request 218.",
+      "url": "https://stream.amazingradio.com:8443",
+      "favicon": "https://amazingradio.com/assets/icons/icon-512x512.png",
+      "iso_3166_2": "GB-NET"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "00d72477-99af-402c-ba0e-8eb3865a8225",
+      "reason": "Corrects the stream URL, homepage and favicon, from radio-database merge request 345. The old favicon was missing or broken.",
+      "url": "http://urk.fm:8000/urkfm.mp3",
+      "homepage": "https://www.urkfm.nl",
+      "favicon": "https://www.urkfm.nl/favicon.ico"
+    },
+    {
+      "stationuuid": "5abcdcd5-474b-4130-9311-df1fa65e3c8c",
+      "reason": "Corrects the name, homepage, favicon and language codes, from radio-database merge request 345. The old favicon was missing or broken.",
+      "name": "Urk FM - Geestelijk",
+      "homepage": "https://www.urkfm.nl",
+      "favicon": "https://www.urkfm.nl/favicon.ico",
+      "languagecodes": "NL"
+    }
+  ]
+}

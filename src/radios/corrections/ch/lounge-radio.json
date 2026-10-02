@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9051470d-87fa-4177-bda7-6a87be58f066",
+      "reason": "Corrects the name, stream URL, favicon, region and language codes, from radio-database merge request 181.",
+      "name": "LOUNGE-RADIO.COM - swiss made",
+      "url": "https://player.streamhosting.ch/lounge128.mp3",
+      "favicon": "https://lounge-radio.com/images/lounge-radio_logo.png",
+      "iso_3166_2": "CH-AG",
+      "languagecodes": "EN"
+    },
+    {
+      "stationuuid": "de16f83f-deda-4e22-a324-c3f83f4e582b",
+      "reason": "Corrects the tags and region, from radio-database merge request 181.",
+      "tags": "lounge,downtempo,chillout,ambient,easy listening,nu-jazz,brazil electro,summer lounge,relax,switzerland,swiss made",
+      "iso_3166_2": "CH-AG"
+    },
+    {
+      "stationuuid": "a5ebab51-dadf-41bc-8068-770aaa46db10",
+      "reason": "Corrects the language codes, from radio-database merge request 181.",
+      "languagecodes": "EN"
+    }
+  ]
+}

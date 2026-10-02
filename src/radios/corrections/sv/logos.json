@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "6fcac531-7330-4e03-aa74-ad49907c17df",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.radiocoolfm.com/img/logocool.png"
+    },
+    {
+      "stationuuid": "90bb3e88-c954-4a6d-a5fa-781643e4adfb",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://femenina.com.sv/wp-content/themes/radioFemenina/Femenina-logo.png"
+    }
+  ]
+}

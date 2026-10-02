@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "74b3bc62-f871-4804-a90b-badb4132ca0a",
+      "reason": "Duplicate of f1a8f4ea-1f02-4432-9c0f-3221aa7f8f16 (Radio Nowy Świat 64k), with the same stream URL and fewer votes and clicks, from radio-database merge request 369.",
+      "delete": true
+    }
+  ]
+}

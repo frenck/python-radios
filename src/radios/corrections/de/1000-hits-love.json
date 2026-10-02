@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9634bcf0-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the favicon, tags, region and language codes, from radio-database merge requests 203 and 204. The old favicon was missing or broken.",
+      "favicon": "https://1000hitslove.eu/favicon.ico",
+      "tags": "70s,80s,90s,romantic,love,easy listening,oldies",
+      "iso_3166_2": "DE-BY",
+      "languagecodes": "DE"
+    }
+  ]
+}

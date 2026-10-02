@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "1231ed9e-9697-4242-92b2-2d94a6ade243",
+      "reason": "Corrects the stream URL, favicon, tags and region, from radio-database merge request 195. The old favicon was missing or broken.",
+      "url": "https://icecast.radiofrance.fr/fipcultes-hifi.aac",
+      "favicon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/FIP_logo_2021.svg/500px-FIP_logo_2021.svg.png",
+      "tags": "music,pop,public radio,radio france",
+      "iso_3166_2": "FR-IDF"
+    }
+  ]
+}

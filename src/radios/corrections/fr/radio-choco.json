@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "d2b47f3c-ef68-4949-9f61-7eed459221d2",
+      "reason": "Duplicate of 5c781485-ee91-47bc-aa2d-bbe66024ff52 (Radio Choco), with the same stream URL and fewer votes and clicks, from radio-database merge request 349.",
+      "delete": true
+    }
+  ]
+}

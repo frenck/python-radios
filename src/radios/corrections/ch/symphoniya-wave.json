@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "21747f11-f6a0-4f5d-8170-1264bf187b1a",
+      "reason": "Corrects the name, homepage, favicon, tags, region and language codes, from radio-database merge request 391.",
+      "name": "Symphoniya Wave — Symphoniya.com",
+      "homepage": "https://symphoniya.com/en/wave/",
+      "favicon": "https://symphoniya.com/wp-content/uploads/2026/09/symphoniya-wave-favicon-512.png",
+      "tags": "ambient,classical,instrumental,meditation,orchestral,symphonic,transe symphonic",
+      "iso_3166_2": "CH-VD",
+      "languagecodes": "FR"
+    }
+  ]
+}

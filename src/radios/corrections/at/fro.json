@@ -1,0 +1,15 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "9605fc47-0601-11e8-ae97-52543be04c81",
+      "reason": "Corrects the name, stream URL, favicon, tags, region and language codes, from radio-database merge requests 158 and 159. The old favicon was missing or broken.",
+      "name": "Radio FRO | HQ",
+      "url": "https://stream.fro.at/fro192.mp3",
+      "favicon": "https://www.fro.at/wp-content/uploads/2007/03/fro_logo_b_os-480x480.jpg",
+      "tags": "radio fro,community radio,freies radio,nichtkommerzielles lokalradio,non-commercial,feminist,queer,lgbtq+,music,information,politics,society",
+      "iso_3166_2": "AT-4",
+      "languagecodes": "DE,EN,AR,BG,BS,ES,FR,HU,HR,KU,PL,PT,TR"
+    }
+  ]
+}

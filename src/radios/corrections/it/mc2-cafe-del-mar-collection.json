@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "197dc1ca-9295-4527-90a1-8b1139219cc0",
+      "reason": "Corrects the name, from radio-database merge request 225.",
+      "name": "MC2 Cafè Del Mar Collection"
+    }
+  ]
+}

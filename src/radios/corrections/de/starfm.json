@@ -1,0 +1,13 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "7025b61a-812b-4b23-be55-d966db3a83d5",
+      "reason": "Corrects the homepage, favicon, region and language codes, from radio-database merge request 150. The old favicon was missing or broken.",
+      "homepage": "https://www.starfm.de",
+      "favicon": "https://upload.wikimedia.org/wikipedia/de/3/3c/Star-fm-logo.png",
+      "iso_3166_2": "DE-BY",
+      "languagecodes": "DE,EN"
+    }
+  ]
+}
