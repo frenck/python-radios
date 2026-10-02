@@ -1,0 +1,33 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "07b53b92-2892-4996-8e60-d3a626c46cb4",
+      "reason": "Corrects the name, region and language codes, from radio-database merge request 169.",
+      "name": "Willy ClassX | AAC",
+      "iso_3166_2": "BE-VLG",
+      "languagecodes": "nld"
+    },
+    {
+      "stationuuid": "053cc818-fc17-41cd-9447-c3f38264dd91",
+      "reason": "Corrects the name, favicon and region, from radio-database merge request 169.",
+      "name": "Willy ClassX | MP3",
+      "favicon": "https://cdn-profiles.tunein.com/s322560/images/logod.jpg",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "c44a072c-f08f-429f-be16-a017ff3628a0",
+      "reason": "Corrects the name and region, from radio-database merge request 169.",
+      "name": "Willy | MP3",
+      "iso_3166_2": "BE-VLG"
+    },
+    {
+      "stationuuid": "d046dce1-80ed-4c99-97e5-dbad24560e34",
+      "reason": "Corrects the name, favicon, tags and region, from radio-database merge request 169.",
+      "name": "Willy | AAC",
+      "favicon": "https://cdn-profiles.tunein.com/s308770/images/logod.jpg",
+      "tags": "rock",
+      "iso_3166_2": "BE-VLG"
+    }
+  ]
+}
