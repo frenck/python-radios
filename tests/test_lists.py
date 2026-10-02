@@ -389,3 +389,22 @@ async def test_states_unknown_country_code(
 
     assert await radios.states(country_code=country_code) == []
     assert [url.path for _, url in responses.requests] == ["/json/countries"]
+
+
+async def test_states_look_up_country_names_once(
+    responses: aioresponses, radios: RadioBrowser
+) -> None:
+    """Test the API country names are fetched once, not for every call."""
+    responses.get(
+        f"{API_URL}/countries", status=200, body=load_fixture("countries.json")
+    )
+    responses.get(
+        re.compile(rf"^{re.escape(API_URL)}/states/"), payload=[], repeat=True
+    )
+
+    await radios.states(country_code="NL")
+    await radios.states(country_code="DE")
+    await radios.states(country_code="ZZ")
+
+    paths = [url.path for _, url in responses.requests]
+    assert paths.count("/json/countries") == 1

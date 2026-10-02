@@ -230,6 +230,9 @@ class RadioBrowser:
     _host: str | None = None
     # The servers not tried yet, in the random order they will be tried in.
     _hosts: list[str] = field(default_factory=list)
+    # The names the API uses for countries, by country code. They hardly ever
+    # change, so they are looked up once per client.
+    _api_country_names: dict[str, str] | None = None
 
     async def _resolve_hosts(self) -> list[str]:
         """Look up the Radio Browser API servers, in a random order.
@@ -1193,18 +1196,17 @@ class RadioBrowser:
             as unknown too.
 
         """
-        countries_data = await self._request("countries")
-        with unexpected_response():
-            countries = orjson.loads(countries_data)  # pylint: disable=no-member
-            return next(
-                (
-                    country["name"] or None
+        if self._api_country_names is None:
+            countries_data = await self._request("countries")
+            with unexpected_response():
+                countries = orjson.loads(countries_data)  # pylint: disable=no-member
+                self._api_country_names = {
+                    country["iso_3166_1"].upper(): country["name"]
                     # pylint: disable-next=not-an-iterable
                     for country in countries
-                    if country["iso_3166_1"].upper() == country_code.upper()
-                ),
-                None,
-            )
+                }
+
+        return self._api_country_names.get(country_code.upper()) or None
 
     async def close(self) -> None:
         """Close open client session."""
