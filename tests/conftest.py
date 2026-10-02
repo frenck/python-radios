@@ -96,6 +96,8 @@ def dns_resolver() -> Generator[MagicMock, None, None]:
     """
     resolver = MagicMock()
     resolver.return_value.query_dns = AsyncMock(return_value=srv_result("example.com"))
+    # The resolver is used as an async context manager, which hands out itself.
+    resolver.return_value.__aenter__.return_value = resolver.return_value
     with patch("radios.radio_browser.DNSResolver", resolver):
         yield resolver
 
