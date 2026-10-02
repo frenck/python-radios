@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "2ef5ba1d-0536-4fcb-b75b-e08849f2ef02",
+      "reason": "Corrects the favicon, from radio-database merge request 384.",
+      "favicon": "https://b19fm.com/b19fm.jpg"
+    },
+    {
+      "stationuuid": "da858352-e07b-40da-808d-248d9080db2f",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://www.berock-radio.com/html/shows_players/back-2-80s-90s/back_to-logo-base.png"
+    },
+    {
+      "stationuuid": "e49351ef-ae39-11e8-aa67-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://cdn.radioart.com/templates/yootheme/cache/logo-0e87d8f1.png"
+    },
+    {
+      "stationuuid": "7b80726d-67fa-4c13-a271-a7e47dc4a4cf",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://cdn.radioart.com/templates/yootheme/cache/logo-0e87d8f1.png"
+    },
+    {
+      "stationuuid": "3726ce71-ae38-11e8-aa67-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://cdn.radioart.com/templates/yootheme/cache/logo-0e87d8f1.png"
+    },
+    {
+      "stationuuid": "51bd83f5-e2b3-4ea5-a0ad-a072455a3c35",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://cdn.radioart.com/templates/yootheme/cache/logo-0e87d8f1.png"
+    },
+    {
+      "stationuuid": "26b82327-ae3c-11e8-aa67-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://cdn.radioart.com/templates/yootheme/cache/logo-0e87d8f1.png"
+    },
+    {
+      "stationuuid": "db31ee08-ae3a-11e8-aa67-52543be04c81",
+      "reason": "Corrects the favicon, from radio-database merge request 385.",
+      "favicon": "https://cdn.radioart.com/templates/yootheme/cache/logo-0e87d8f1.png"
+    }
+  ]
+}

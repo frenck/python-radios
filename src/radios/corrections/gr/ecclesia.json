@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema.json",
+  "corrections": [
+    {
+      "stationuuid": "cbeb2f38-5283-4663-98ef-f26ab2356ca1",
+      "reason": "Corrects the tags, from radio-database merge request 342.",
+      "tags": "religious,orthodox christian,ortodox,orthodoxy,greek orthodox,church,religious music,ancient music,greek music,greek traditionnal music"
+    }
+  ]
+}
