@@ -6,13 +6,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import datetime
 
-import pycountry
 from awesomeversion import AwesomeVersion
 from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 from mashumaro.types import SerializationStrategy
 
 from .const import LANGUAGE_FLAGS
+from .country_names import COUNTRY_NAMES
 
 
 def country_name(country_code: str) -> str | None:
@@ -27,15 +27,7 @@ def country_name(country_code: str) -> str | None:
         The country name, or None if the code is unknown.
 
     """
-    # Kosovo has a user-assigned code that is not part of ISO 3166-1, so
-    # pycountry does not know it. https://github.com/frenck/python-radios/issues/19
-    if country_code.upper() == "XK":
-        return "Kosovo"
-
-    if country := pycountry.countries.get(alpha_2=country_code):
-        return country.name  # type: ignore[return-value]
-
-    return None
+    return COUNTRY_NAMES.get(country_code.upper())
 
 
 class CommaSeparatedString(SerializationStrategy):

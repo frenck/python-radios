@@ -70,9 +70,9 @@ repos:
         name: "\u2705 Check code for common misspellings"
         language: system
         types: [text]
-        # Station corrections hold names, tags and URLs in many languages,
-        # not English prose: "Cadena SER" is a name, not a typo.
-        exclude: ^(poetry\.lock|src/radios/corrections/.+\.json)$
+        # Station corrections and country names are data in many languages,
+        # not English prose: "Cadena SER" is a name, and "FO" a country code.
+        exclude: ^(poetry\.lock|src/radios/corrections/.+\.json|src/radios/country_names\.py)$
         entry: poetry run codespell
       - id: detect-private-key
         name: "\U0001F575\uFE0F  Detect Private Keys"

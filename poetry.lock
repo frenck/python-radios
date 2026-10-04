@@ -1326,14 +1326,14 @@ idna = ["idna (>=2.1)"]
 
 [[package]]
 name = "pycountry"
-version = "26.2.16"
+version = "24.6.1"
 description = "ISO country, subdivision, language, currency and script definitions and their translations"
 optional = false
-python-versions = ">=3.10"
-groups = ["main"]
+python-versions = ">=3.8"
+groups = ["dev"]
 files = [
-    {file = "pycountry-26.2.16-py3-none-any.whl", hash = "sha256:115c4baf7cceaa30f59a4694d79483c9167dbce7a9de4d3d571c5f3ea77c305a"},
-    {file = "pycountry-26.2.16.tar.gz", hash = "sha256:5b6027d453fcd6060112b951dd010f01f168b51b4bf8a1f1fc8c95c8d94a0801"},
+    {file = "pycountry-24.6.1-py3-none-any.whl", hash = "sha256:f1a4fb391cd7214f8eefd39556d740adcc233c778a27f8942c8dca351d6ce06f"},
+    {file = "pycountry-24.6.1.tar.gz", hash = "sha256:b61b3faccea67f87d10c1f2b0fc0be714409e8fcdcc1315613174f6466c10221"},
 ]
 
 [[package]]
@@ -1834,4 +1834,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "5a60383b79b33c5742161760226262b787b0f26ba0865775dc4b90eda5b8aa80"
+content-hash = "9aa84ef8566f8c498b764ad836d22bcfd3d5c901b1c30c8c8d1e0d1444fab5e0"
