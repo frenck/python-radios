@@ -26,8 +26,10 @@ manager exits.
 | `  const.py`         | Enums, supported orders, and language flags            |
 | `  exceptions.py`    | `RadioBrowserError` and its connection subclasses      |
 | `  corrections/`     | Station corrections: loader, schema, data per country  |
+| `  country_names.py` | Country names by code, generated from the Unicode CLDR |
 | `tests/`             | pytest suite; each test has a one-line docstring       |
 | `examples/`          | Runnable example against the live API                  |
+| `scripts/`           | Maintenance scripts, like the country names generator  |
 
 ## Commands
 
@@ -90,8 +92,9 @@ See [AI_POLICY.md](AI_POLICY.md) for the contribution policy around AI tooling.
   that is what the API expects.
 - The API returns countries as ISO 3166-1 alpha-2 codes, and lists a few of
   them twice, once in lowercase. `countries()` fetches the whole list, merges
-  those, resolves the codes to names with `pycountry` (with a special case for
-  Kosovo, `XK`), and sorts and pages locally.
+  those, resolves the codes to names with `COUNTRY_NAMES`, and sorts and pages
+  locally. `country_names.py` is generated from the Unicode CLDR by
+  `scripts/update_country_names.py`; do not edit it by hand.
 - The API uses names of its own for countries in some places, like "The
   Netherlands" for states. `states()` looks those up from a country code.
 - Not every endpoint can sort by every `Order`. `LIST_ORDERS` and

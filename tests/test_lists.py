@@ -39,7 +39,7 @@ async def test_countries(
     countries = await radios.countries()
 
     assert countries == snapshot
-    # Kosovo is not in pycountry, and unknown codes keep their code as name.
+    # Kosovo has a user-assigned code, and unknown codes keep their code as name.
     assert [country.name for country in countries] == [
         "Germany",
         "Kosovo",

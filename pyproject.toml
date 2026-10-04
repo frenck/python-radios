@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Asynchronous Python client for the Radio Browser API."
 authors = [{ name = "Franck Nijhof", email = "opensource@frenck.dev" }]
 maintainers = [{ name = "Franck Nijhof", email = "opensource@frenck.dev" }]
-license = "MIT"
+license = "MIT AND Unicode-3.0"
 requires-python = ">=3.12"
 readme = "README.md"
 keywords = [
@@ -41,7 +41,6 @@ dependencies = [
   'orjson (>=3.9.8)',
   'probatio (>=0.13.0)',
   'pycares (>=5.0.0)',
-  'pycountry (>=24.0.0)',
   'yarl (>=1.6.0)',
 ]
 
@@ -71,6 +70,7 @@ syrupy = "6.1.1"
 ty = "0.0.84"
 yamllint = "1.38.0"
 zizmor = "1.30.1"
+pycountry = "24.6.1"
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
@@ -126,6 +126,9 @@ ignore = [
 "tests/**/*.py" = [
   "FBT001", # Boolean positional args are idiomatic in parametrized tests
   "FBT002", # Boolean defaults are idiomatic in parametrized tests
+]
+"scripts/*.py" = [
+  "INP001", # Standalone scripts, run by hand, not a package
 ]
 
 [tool.ruff.lint.flake8-pytest-style]

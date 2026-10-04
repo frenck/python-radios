@@ -25,7 +25,7 @@ def test_station_country() -> None:
 
 
 def test_station_country_kosovo() -> None:
-    """Test a station in Kosovo resolves its country, which pycountry lacks."""
+    """Test a station in Kosovo resolves its country, a user-assigned code."""
     station, _, _ = _stations()
     station.country_code = "XK"
 
