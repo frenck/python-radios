@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Asynchronous Python client for the Radio Browser API."
 authors = [{ name = "Franck Nijhof", email = "opensource@frenck.dev" }]
 maintainers = [{ name = "Franck Nijhof", email = "opensource@frenck.dev" }]
-license = "MIT AND Unicode-3.0"
+license = "MIT"
 requires-python = ">=3.12"
 readme = "README.md"
 keywords = [
